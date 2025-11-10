@@ -12,9 +12,7 @@ This combo makes possible building small size yet powerful and extensible remote
 <a href="https://postimg.cc/NK0Q9mMB" target="_blank"><img src="https://i.postimg.cc/NK0Q9mMB/IMG-1613.jpg" alt="IMG-1613"></a>
 <a href="https://postimg.cc/640NTpx6" target="_blank"><img src="https://i.postimg.cc/640NTpx6/IMG-1620.jpg" alt="IMG-1620"></a>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kP-kjG4N_zI?si=6rnQKtTcKHTkpxnl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-YouTube [demo 1](https://www.youtube.com/watch?v=nqUzDYmt8Ac), [demo 2](https://www.youtube.com/watch?v=292cAnSWLGk)
+[**YouTube demo**](https://www.youtube.com/watch?v=p6Zdq-76Pew)
 
 # Using BluepadHub with other controllers
 While this library was initially created for using with Atom-Lite, it is also compatible with other M5Stack controllers based on 
