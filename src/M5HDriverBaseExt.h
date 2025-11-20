@@ -10,10 +10,10 @@
 #ifndef _M5HDRIVER_BASE_EXT_H_
 #define _M5HDRIVER_BASE_EXT_H_
 
-#include "MotorHBridgeDriver.h"
+#include "MotorDriverHBridge.h"
 #include "VoltageMonitor.h"
 
-class M5HDriverBaseExt : public MotorHBridgeDriver, public VoltageMonitor {
+class M5HDriverBaseExt : public MotorDriverHBridge, public VoltageMonitor {
 
     public:
         void begin(int pwm_frequency = 1000);

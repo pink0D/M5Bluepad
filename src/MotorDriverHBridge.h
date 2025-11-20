@@ -13,10 +13,10 @@
 #include <ESP32PWM.h>
 #include "GenericMotor.h"
 
-class MotorHBridgeDriver : public GenericMotor, private GenericMotorController {
+class MotorDriverHBridge : public GenericMotor, private GenericMotorController {
 
     public:
-        MotorHBridgeDriver() {};
+        MotorDriverHBridge() {};
         
         void begin(int pwm_pin1, int pwm_pin2, int pwm_frequency);
 

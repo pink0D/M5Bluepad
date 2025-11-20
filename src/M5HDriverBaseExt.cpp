@@ -14,7 +14,7 @@ void M5HDriverBaseExt::begin(int pwm_frequency) {
   pinMode(22, INPUT_PULLUP);
   pinMode(33, INPUT);
 
-  MotorHBridgeDriver::begin(19, 23, pwm_frequency);
+  MotorDriverHBridge::begin(19, 23, pwm_frequency);
 }
 
 double M5HDriverBaseExt::readVoltage() {

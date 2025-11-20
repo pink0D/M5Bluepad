@@ -7,9 +7,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#include "MotorHBridgeDriver.h"
+#include "MotorDriverHBridge.h"
 
-void MotorHBridgeDriver::begin(int pwm_pin1, int pwm_pin2, int pwm_frequency) {
+void MotorDriverHBridge::begin(int pwm_pin1, int pwm_pin2, int pwm_frequency) {
   pwm_c1.attachPin(pwm_pin1, pwm_frequency);
   pwm_c2.attachPin(pwm_pin2, pwm_frequency);
   pwm_c1.write(0);
@@ -18,7 +18,7 @@ void MotorHBridgeDriver::begin(int pwm_pin1, int pwm_pin2, int pwm_frequency) {
   setController(this, 0); 
 }
 
-void MotorHBridgeDriver::outputMotorSpeed(int channel, double normalized_speed) {
+void MotorDriverHBridge::outputMotorSpeed(int channel, double normalized_speed) {
   if (isZeroValue(normalized_speed)) {
     pwm_c1.write(0);
     pwm_c2.write(0);
@@ -33,7 +33,7 @@ void MotorHBridgeDriver::outputMotorSpeed(int channel, double normalized_speed) 
   }
 }
 
-void MotorHBridgeDriver::outputMotorBrake(int channel) {
+void MotorDriverHBridge::outputMotorBrake(int channel) {
   pwm_c1.writeScaled(1.0);
   pwm_c2.writeScaled(1.0);
 }
