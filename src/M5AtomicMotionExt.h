@@ -12,61 +12,32 @@
 
 #include <M5AtomicMotion.h>
 
-#define M5_ATOMIC_MOTION_SERVO_COUNT 4
-#define M5_ATOMIC_MOTION_MOTOR_COUNT 2
+#include "MultiServoUnit.h"
+#include "MultiMotorUnit.h"
 
-#define CHANNEL_SERVO_1 0
-#define CHANNEL_SERVO_2 1
-#define CHANNEL_SERVO_3 2
-#define CHANNEL_SERVO_4 3
-
-#define CHANNEL_MOTOR_1 0
-#define CHANNEL_MOTOR_2 1
-
-class M5AtomicMotionExt : public M5AtomicMotion {
+class M5AtomicMotionExt : private M5AtomicMotion, public MultiServoUnit<4>, public MultiMotorUnit<2> {
   public:
-    M5AtomicMotionExt();
-  
-    void stopMotors();
+    M5AtomicMotionExt() {};
 
-    void setAntiJitter(double _antiJitter) { 
-      antiJitter = _antiJitter;
+    bool begin(TwoWire *_wire = &Wire, uint8_t addr = M5_ATOMIC_MOTION_I2C_ADDR,
+      uint8_t sda = 25, uint8_t scl = 21, long freq = 100000) {
+        
+      return M5AtomicMotion::begin(_wire, addr, sda, scl, freq);
     };
 
-    void setServoPulseRange(uint8_t servo_ch, uint16_t pulse_min, uint16_t pulse_max);
-    void setServoMaxAngle(uint8_t servo_ch, uint16_t angle_max);
-    void setMotorLimits(uint8_t motor_ch, double limit_min, double limit_max);
+    void stop() {
+      stopMotors();
+      stopServos();
+    };
 
-    void updateServo(uint8_t servo_ch, double normalized_value);
-    void updateMotor(uint8_t motor_ch, double normalized_value);
+    void updateMotor(uint8_t channel, double normalized_speed) {
+      updateMotorSpeed(channel, normalized_speed);
+    };
 
   private:
-
-    double antiJitter = 0.025;
-
-    class ChannelFilter {
-
-      public:
-        ChannelFilter() {};    
-
-        void setLimits(double _limitMin, double _limitMax);
-        void setAntiJitter(double _antiJitter);
-
-        // returns new filtered value
-        double updateValue(double newValue);
-
-      private:
-        double antiJitter;
-        double limitMin = 0.0;
-        double limitMax = 1.0;
-        double value = 0.0;
-    };
-
-    uint16_t servoPulseMin[M5_ATOMIC_MOTION_SERVO_COUNT];
-    uint16_t servoPulseMax[M5_ATOMIC_MOTION_SERVO_COUNT];
-
-    ChannelFilter servoFilter[M5_ATOMIC_MOTION_SERVO_COUNT];
-    ChannelFilter motorFilter[M5_ATOMIC_MOTION_MOTOR_COUNT];
+    virtual void outputServoPulse(int channel, uint16_t pulse);
+    virtual void outputMotorSpeed(int channel, double normalized_speed);
+    
 };
 
 #endif

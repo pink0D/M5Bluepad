@@ -12,10 +12,8 @@
 // https://github.com/pink0D/M5Bluepad
 //
 
-#include <M5Unified.h>
 #include <BluepadHub.h>
-#include <NeoPixelStatusIndicator.h>
-#include <M5AtomicMotionExt.h>
+#include <M5Extensions.h>
 
 NeoPixelStatusIndicator LedRGB;     // RGB Led in Atom Lite
 M5AtomicMotionExt AtomicMotionExt;  // M5AtomicMotion extension
@@ -48,7 +46,7 @@ class : public bluepadhub::ControlProfile {
       accelerator = -accelerator;
 
     // toggle easy mode 
-    static bool easyMode = false;
+    static bool easyMode = true;
     if (wasClicked(ctl->l1()))
       easyMode = !easyMode;
 
@@ -76,7 +74,7 @@ class : public bluepadhub::ControlProfile {
   };
 
   void failsafe() {
-    AtomicMotionExt.stopMotors();
+    AtomicMotionExt.stop();
   };
 
 } MonsterProfile;
@@ -84,8 +82,6 @@ class : public bluepadhub::ControlProfile {
 void setup() {
   
   Serial.begin(115200);
-
-  M5.begin();
   
   LedRGB.setBrightness(20);
   LedRGB.begin();
@@ -96,42 +92,21 @@ void setup() {
 
   while(!AtomicMotionExt.begin()) {
      Serial.println("Atomic Motion begin failed");
-     LedRGB.setStatusPattern(bluepadhub::StatusIndicator::StatusPattern::Error);
+     LedRGB.setErrorStatus();
      delay(1000);
   }
+
+  // hold Atom button for 2.5secs to enable pairing, 5secs to forget paired devices
+  BluetoothPairingButton.begin(2500, 5000);
 
   Serial.println("Setup finished");
 }
 
+// Arduino loop function
 void loop() {
-  // updates
-  M5.update();
+
+  // handle inputs and update outputs
   BluepadHub.update();
 
-  // hold button for 5 secs to enter pairing mode
-  static bool hold1 = false;
-  if (M5.BtnA.pressedFor(5000)) {
-    if (!hold1) {
-      BluepadHub.enablePairing();
-      hold1 = true;
-    }
-  }
-
-  // hold button for 10 secs to forget paired gamepads and enter pairing mode
-  static bool hold2 = false;
-  if (M5.BtnA.pressedFor(10000)) {
-    if (!hold2) {
-      BluepadHub.resetPairing();
-      BluepadHub.enablePairing();
-      hold2 = true;
-    }
-  }
-
-  // reset hold state manually since pressedFor(ms) in M5Unified returns 'true' multiple times 
-  if (M5.BtnA.wasReleased()) {
-    hold1 = false;
-    hold2 = false;
-  } 
-
-  //no delay here because it's inside BluepadHub.update();
+  //no delay here because it's inside BluepadHub.update()
 }

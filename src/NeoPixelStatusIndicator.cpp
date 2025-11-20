@@ -76,4 +76,11 @@ void NeoPixelStatusIndicator::showEventPattern() {
       vTaskDelayMillis(200);
     }
   }
+
+  if (eventPattern == EventPattern::ProfileSelect) {
+    setLedColor(0xFFFFFF);  
+    vTaskDelayMillis(250);
+    setLedColor(0);  
+    vTaskDelayMillis(250);
+  }
 }

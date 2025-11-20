@@ -28,6 +28,8 @@ namespace bluepadhub {
 
   class ControlProfile; // forward declaration
 
+  typedef std::function<bool()> CheckFunctionPtr;
+
   struct BluepadHubConfig { 
 
     /*
@@ -59,7 +61,38 @@ namespace bluepadhub {
       virtual void begin() {};
 
       void setStatusPattern(StatusPattern statusPattern) {
+        
+        if (this->statusPattern != statusPattern) {
+          statusPatternPrevious = this->statusPattern;
+        }
+
         this->statusPattern = statusPattern;
+      };
+
+      void restorePreviousStatusPattern() {
+        if (statusPatternPrevious != StatusPattern::None) {
+          this->statusPattern = statusPatternPrevious;
+        }
+      }
+
+      void setErrorStatus() {
+        setStatusPattern(StatusPattern::Error);
+      };
+
+      void clearErrorStatus() {
+        if (statusPattern == StatusPattern::Error) {
+          restorePreviousStatusPattern();
+        }
+      };
+
+      void setWarningStatus() {
+        setStatusPattern(StatusPattern::Warning);
+      };
+
+      void clearWarningStatus() {
+        if (statusPattern == StatusPattern::Warning) {
+          restorePreviousStatusPattern();
+        }
       };
 
       void setEventPattern(EventPattern eventPattern) {
@@ -71,6 +104,7 @@ namespace bluepadhub {
 
     protected:
       StatusPattern statusPattern = StatusPattern::None;
+      StatusPattern statusPatternPrevious = StatusPattern::None;
       EventPattern eventPattern = EventPattern::None;
 
       void patternDelayMillis(int timeout);
@@ -103,13 +137,19 @@ namespace bluepadhub {
 
       void enablePairing();
       void resetPairing();
-    
+      void disconnectController();
+
+      void setLowBatteryCheck(const CheckFunctionPtr &isLowBatteryFPtr) {
+        this->isLowBatteryFPtr = isLowBatteryFPtr;
+      };
+
+      void setFaultCheck(const CheckFunctionPtr &isFaultFPtr) {
+        this->isFaultFPtr = isFaultFPtr;
+      };
 
     private:
 
       BluepadHubConfig cfg;
-
-      void disconnectController();
 
       static void onConnectedController(ControllerPtr ctl);
       static void onDisconnectedController(ControllerPtr ctl);
@@ -122,6 +162,9 @@ namespace bluepadhub {
       StatusIndicator *indicator = nullptr;
 
       static void taskStatusIndicator(void *param);
+
+      CheckFunctionPtr isLowBatteryFPtr = nullptr;
+      CheckFunctionPtr isFaultFPtr = nullptr;
   };
 }
 

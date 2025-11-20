@@ -24,6 +24,7 @@ normalizeTriggerInput	KEYWORD2
 normalizeStickInput	KEYWORD2
 enablePairing	KEYWORD2
 resetPairing	KEYWORD2
+disconnectController    KEYWORD2
 wasClicked	KEYWORD2
 setLimits	KEYWORD2
 setAntiJitter	KEYWORD2

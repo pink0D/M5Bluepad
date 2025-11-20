@@ -12,6 +12,7 @@
 
 NeoPixelStatusIndicator LedRGB;     // RGB Led in Atom Lite
 M5AtomicMotionExt AtomicMotionExt;  // M5AtomicMotion extension
+M5Unit8ServosExt Unit8ServosExt;    // Unit8Servos extension
 
 
 // this class handles controller input ans sets channel outputs
@@ -21,24 +22,21 @@ class : public bluepadhub::ControlProfile {
   // set channel parameters here
   void begin() {
 
+    // by default, M5Unit8ServosExt.begin() sets all pins to servo mode
+    // it's still posible to change mode with setOnePinMode() and use pin as Input/Output/ADC/NeoPixel/PWM
+
     // specify 500..2500us pulse for 360-servo
     // if no pulse range is specified, then default 1000..2000us will be used (180-servo)
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_1, 500, 2500);
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_2, 500, 2500);
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_3, 500, 2500);
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_4, 500, 2500);
+    for (int channel=0; channel<8; channel++)
+      Unit8ServosExt.setServoPulseRange(channel, 500, 2500);
+
+    for (int channel=0; channel<4; channel++)
+      AtomicMotionExt.setServoPulseRange(channel, 500, 2500);
 
     // alternatevely, you can specify servo rotation angle in degrees
     // this will be recalculated to corresponding pulse range internally
-    // AtomicMotionExt.setServoMaxAngle(CHANNEL_SERVO_1, 45);
-    // AtomicMotionExt.setServoMaxAngle(CHANNEL_SERVO_2, 90);
-
-    // PWM duty cycle for M1 & M2 can be limited from 0 to 100% (default is full range)
-    // usually this is not needed, but some motors start only when PWM is more than 25-30%
-    // AtomicMotionExt.setMotorLimits(CHANNEL_MOTOR_1, 0.25, 1.0);
-
-    // if necessary, the upper PWM limit can be also specified to limit maximum motor power 
-    // AtomicMotionExt.setMotorLimits(CHANNEL_MOTOR_2, 0.25, 0.75);
+    // Unit8ServosExt.setServoMaxAngle(CHANNEL_SERVO_1, 45);
+    // Unit8ServosExt.setServoMaxAngle(CHANNEL_SERVO_2, 90);
   };
 
   // process updates from controller
@@ -54,6 +52,19 @@ class : public bluepadhub::ControlProfile {
     if (wasClicked(ctl->r1()))
       motor2_direction = -motor2_direction;
 
+    static int active_channel_atomic_motion = 0;
+    static int active_channel_unit_8servos = 0;
+
+    // press sticks to select servo channels
+    if (wasClicked(ctl->thumbL())) {
+      active_channel_atomic_motion = (active_channel_atomic_motion+1) % 4;
+      LedRGB.setEventPattern(bluepadhub::StatusIndicator::EventPattern::ProfileSelect);
+    }
+
+    if (wasClicked(ctl->thumbR())) {
+      active_channel_unit_8servos = (active_channel_unit_8servos+1) % 8;
+      LedRGB.setEventPattern(bluepadhub::StatusIndicator::EventPattern::ProfileSelect);
+    }
 
     // updateServo/updateMotor methods set new values for servo/motor channels output with anti-jitter filtering
     // argument is expected to be a normalized value between -1.0 and +1.0
@@ -65,10 +76,11 @@ class : public bluepadhub::ControlProfile {
     // normalizeStickInput/normalizeTriggerInput methods apply deadzone correction to raw values
     // then integer values from controller are mapped to normalized range (-1.0, 1.0) 
    
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_1, normalizeStickInput(ctl->axisX()));
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_2, normalizeStickInput(ctl->axisY()));
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_3, normalizeStickInput(ctl->axisRX()));
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_4, normalizeStickInput(ctl->axisRY()));
+    // all channels in Atomic Motion Base and Unit 8Servos can be controlled simultaneously and independently
+    // this example controls just selected channels with left and right stick
+    Unit8ServosExt.updateServo(active_channel_unit_8servos, normalizeStickInput(ctl->axisRX()));
+    
+    AtomicMotionExt.updateServo(active_channel_atomic_motion, normalizeStickInput(ctl->axisX()));
 
     AtomicMotionExt.updateMotor(CHANNEL_MOTOR_1, motor1_direction * normalizeTriggerInput(ctl->brake()));
     AtomicMotionExt.updateMotor(CHANNEL_MOTOR_2, motor2_direction * normalizeTriggerInput(ctl->throttle()));
@@ -79,6 +91,7 @@ class : public bluepadhub::ControlProfile {
   // this method is called when no data is received from controller after timeout
   void failsafe() {
     AtomicMotionExt.stop();
+    Unit8ServosExt.stop();
   };
 
 } TestProfile;
@@ -94,23 +107,15 @@ void setup() {
   BluepadHub.setStatusIndicator(&LedRGB);
   BluepadHub.setControlProfile(&TestProfile);
   BluepadHub.begin();
-
-  // begin() can be called with config params to adjust controller settings
-  // actual deadzone values depend on type of controller used
-  // BluePad32 example can be used to analyze raw values sent by controller
-
-  /*
-  auto cfg = BluepadHubConfig();
-  cfg.controllerStickDeadzoneLow = 50;        // 0 = lowest value for stick input
-  cfg.controllerStickDeadzoneHigh = 500;      // 512 = highest value for stick input
-  cfg.controllerTriggerDeadzoneLow = 5;       // 0 = lowest value for trigger input
-  cfg.controllerTriggerDeadzoneHigh = 1000;   // 1024 = highest value for trigger input 
-
-  BluepadHub.begin(cfg);
-  */
-
+  
   while(!AtomicMotionExt.begin()) {
      Serial.println("Atomic Motion begin failed");
+     LedRGB.setErrorStatus();
+     delay(1000);
+  }
+
+  while(!Unit8ServosExt.begin()) {
+     Serial.println("Unit 8Servos begin failed");
      LedRGB.setErrorStatus();
      delay(1000);
   }

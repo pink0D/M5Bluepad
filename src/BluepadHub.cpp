@@ -55,8 +55,39 @@ namespace bluepadhub {
       if (cfg.controllerAutoDisconnect) {
         disconnectController();
 
+        //if (indicator != nullptr)
+        //  indicator->setStatusPattern(StatusIndicator::StatusPattern::Idle);
+      }
+    }
+
+    // check fault condition
+    if (isFaultFPtr) {
+      if (isFaultFPtr()) {
+        
         if (indicator != nullptr)
-          indicator->setStatusPattern(StatusIndicator::StatusPattern::Idle);
+          indicator->setErrorStatus();  
+
+      } else {
+        if (indicator != nullptr)
+          indicator->clearErrorStatus();
+      }
+    }
+
+    // check battery condition
+    if (isLowBatteryFPtr) {
+      if (isLowBatteryFPtr()) {
+        
+        if (profile != nullptr)
+          profile->failsafe();
+
+          if (indicator != nullptr)
+          indicator->setWarningStatus();  
+          
+          return; // no controls in low battery mode
+
+      } else {
+        if (indicator != nullptr)
+          indicator->clearWarningStatus();
       }
     }
 
@@ -66,8 +97,8 @@ namespace bluepadhub {
       if (bp32Controller && bp32Controller->isConnected() && bp32Controller->hasData()) {
         if (bp32Controller->isGamepad()) {
 
-          if (indicator != nullptr)
-            indicator->setStatusPattern(StatusIndicator::StatusPattern::Connected);  
+          //if (indicator != nullptr)
+          //  indicator->setStatusPattern(StatusIndicator::StatusPattern::Connected);  
 
           if (profile != nullptr)
             profile->update(bp32Controller); 

@@ -7,20 +7,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#include "M5AtomicMotionExt.h"
+#include "M5Unit8ServosExt.h"
 
-void M5AtomicMotionExt::outputServoPulse(int channel, uint16_t pulse) {
+void M5Unit8ServosExt::outputServoPulse(int channel, uint16_t pulse) {
 
   if (channel < 0) 
     return;
 
   setServoPulse(channel, pulse);
-}
-
-void M5AtomicMotionExt::outputMotorSpeed(int channel, double normalized_speed) {
-
-  if (channel < 0) 
-    return;
-
-  setMotorSpeed(channel, normalized_speed * 127.0);
 }
