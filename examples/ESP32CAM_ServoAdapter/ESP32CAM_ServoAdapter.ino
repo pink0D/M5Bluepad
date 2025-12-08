@@ -87,7 +87,7 @@ class : public bluepadhub::Profile {
     MK.updateMotorSpeed(CHANNEL_A, speed);  
 
     // all channel outputs are combined into a single Bluetooth packet for MK module, 
-    // so the the outgoing payload is refreshed once after all channels where updated
+    // so the outgoing payload is refreshed once after all channels where updated
     MK.applyUpdates();
 
     // for more details on controller data processing see TestBluePad32 example and Bluepad32 docs
