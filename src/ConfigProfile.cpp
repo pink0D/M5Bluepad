@@ -80,11 +80,13 @@ namespace bluepadhub {
     }
 
     // bluetooth pairing
-    if ( (eventType == MultiFunctionButton::EventType::Hold1) && (buttonState == MultiFunctionButton::ButtonState::Pressed) ) {
+    if ( (eventType == MultiFunctionButton::EventType::Hold1) 
+          && (buttonState == MultiFunctionButton::ButtonState::Pressed) ) {
       ::BluepadHub.enablePairing();
     }
 
-    if ( (eventType == MultiFunctionButton::EventType::Hold2) && (buttonState == MultiFunctionButton::ButtonState::Pressed) ) {
+    if ( (eventType == MultiFunctionButton::EventType::Hold2) 
+          && (buttonState == MultiFunctionButton::ButtonState::Pressed) ) {
       ::BluepadHub.resetPairing();
       ::BluepadHub.enablePairing();
     }

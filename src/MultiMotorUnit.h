@@ -30,8 +30,15 @@ namespace bluepadhub {
                     motors[i].stop(); 
                 } 
             };
+
+            void stop() {
+                stopMotors();
+            };
             
             GenericMotor* motor(int channel) {
+                if (channel < 0)
+                    return &dummyMotor;
+                    
                 if (channel < numMotors)
                     return &motors[channel];
 

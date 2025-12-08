@@ -68,6 +68,8 @@ namespace bluepadhub {
     statusIndicator->setStatusPattern(initialStatusPattern);
 
     Serial.println("BluepadHub::begin completed");
+
+    profile->afterSetup();
   };
 
   void BluepadHub::update() {

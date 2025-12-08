@@ -30,8 +30,15 @@ namespace bluepadhub {
                     servos[i].stop(); 
                 } 
             };
+
+            void stop() {
+                stopServos();
+            };
             
             GenericServo* servo(int channel) {
+                if (channel < 0)
+                    return &dummyServo;
+
                 if (channel < numServos)
                     return &servos[channel];
 

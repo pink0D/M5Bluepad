@@ -53,7 +53,8 @@ namespace bluepadhub {
     public:
       Profile(bool setBluepadHubProfile = true);
 
-      virtual void setup() {};      
+      virtual void setup() {};   
+      virtual void afterSetup() {};   
       virtual void processBluepadController(BluepadController *ctl) {};
       virtual void failsafe() {};
       virtual void processButtonEvent(MultiFunctionButton::EventType eventType, MultiFunctionButton::ButtonState buttonState);

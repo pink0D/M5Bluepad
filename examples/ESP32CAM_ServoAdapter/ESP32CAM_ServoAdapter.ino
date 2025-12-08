@@ -1,0 +1,121 @@
+//
+// Copyright (c) Dmitry Akulov. All rights reserved.
+//
+// Repository info:     https://github.com/pink0D/M5Bluepad
+// Contact information: pink0D.github@gmail.com
+//
+// Licensed under the MIT license. See LICENSE file in the project root for details.
+//
+
+//
+// See https://github.com/pink0D/CameraBrick for more details on creating GeekServo adapter with ESP32CAM
+//
+// This sketch is an alternate way for controlling the servo with the adapter:
+// 1. The gamepad is connected to ESP32
+// 2. Input is processed by ESP32
+// 3. ESP32 directly outputs servo signal to a PWM-pin
+// 4. Power Functions motors are connected to the Mould King module, which is controlled by ESP32 via Bluetooth
+//
+
+#include <BluepadHub.h>
+#include <ServoPWM.h>
+#include <MouldKing.h>
+
+#include "LedIndicator.h"
+
+bluepadhub::ServoPWM GeekServo(12);   // servo signal pin = 12
+
+// MK 4.0 module
+MouldKing40 MK;   //MK 6.0 is also supported (see MouldKing60 class)
+
+LedIndicator LED;
+
+// this class handles controller input ans sets channel outputs
+class : public bluepadhub::Profile {
+
+  // this method is implicitly called after controller startup
+  void setup() {
+  
+    // use Atom Lite RGB LED for status indication
+    LED.setBrightness(2); 
+    LED.begin(4);         // ESP32CAM LED pin
+        
+    // uncomment to adjust controller sensivity
+    //
+    // controllerStickDeadzoneLow = 50;        // 0 = lowest value for stick input
+    // controllerStickDeadzoneHigh = 500;      // 512 = highest value for stick input
+    // controllerTriggerDeadzoneLow = 5;       // 0 = lowest value for trigger input
+    // controllerTriggerDeadzoneHigh = 1000;   // 1024 = highest value for trigger input 
+
+    // actual deadzone values depend on type of controller used
+    // BluePad32 example can be used to analyze raw values sent by controller
+
+    // specify pulse range for a 360-servo
+    // without this call, the default range (1000..2000) will be used for a 180-servo
+    // GeekServo.setServoPulseRange(500, 2500);  
+
+    // limit servo rotation to 75 degrees (pulse range is calculated internally)
+    GeekServo.setServoMaxAngle(75);
+    GeekServo.begin();
+
+    // setup the MK module
+    MK.begin();
+  };
+
+  // this method is called after BLE initialization is complete
+  // since MK module is controlled over Bluetooth, connect() method must be here, not in setup()
+  void afterSetup() {
+    MK.connect();
+  };  
+
+  // process updates from controller
+  void processBluepadController(BluepadController* ctl) {
+
+    // normalizeStickInput/normalizeTriggerInput methods apply deadzone correction to raw values
+    // then integer values from controller are mapped to normalized range (-1.0, 1.0) 
+
+    double speed = normalizeTriggerInput(ctl->throttle());  // R trigger to accelerate
+    double steer = normalizeStickInput(ctl->axisX());       // L stick to steer
+
+    if (ctl->y() || ctl->r1()) // reverse while holding Y or R1
+      speed = -speed;
+
+    // update servo position
+    GeekServo.updateServo(steer);
+
+    // update motor speed: value > 0 (forward), value < 0 (reverse), value = 0 (coast)
+    MK.updateMotorSpeed(CHANNEL_A, speed);  
+
+    // all channel outputs are combined into a single Bluetooth packet for MK module, 
+    // so the the outgoing payload is refreshed once after all channels where updated
+    MK.applyUpdates();
+
+    // for more details on controller data processing see TestBluePad32 example and Bluepad32 docs
+  };
+
+  // failsafe() is called when no data is received from controller after timeout
+  void failsafe() {
+    GeekServo.stop();
+    MK.stop();
+  };
+
+  // this method is called after 5 minutes of inactivity (no controller input and no motor output)
+  void idleTimer() {
+    // stop sending packets so MK module will power off after a while
+    MK.disconnect();
+  }
+
+} MyProfile;
+// global class instance - default Profile constructor sets itself as BluepadHub profile
+
+
+//  Arduino setup function
+void setup() {
+  BluepadHub.begin();
+}
+
+// Arduino loop function
+void loop() {
+  BluepadHub.update();
+  //no delay here because it's inside BluepadHub.update()
+}

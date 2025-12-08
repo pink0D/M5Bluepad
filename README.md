@@ -59,5 +59,11 @@ Description of some most common setups is available on this [wiki page](https://
 3. Continue to explore [AtomicLiteMotion](https://github.com/pink0D/M5Bluepad/blob/main/examples/AtomicLiteMotion/AtomicLiteMotion.ino) sketch and learn how BluepadHub handles gamepad's input to control motors and servos
 4. Check out more [examples](https://github.com/pink0D/M5Bluepad/tree/main/examples) for supported M5Stack units
 
+# License & credits
+- M5Bluepad is open source and licensed under the MIT License
+- Bluepad32, on which the M5Bluepad greatly depends, is also open source, licensed under Apache 2.
+- However, Bluepad32 depends on the [BTstack](https://github.com/bluekitchen/btstack) made by BlueKitchen GmbH. BTStack is free to use for personal open source projects, but commercial for other uses
+- Mould King BLE protocol was originally implemented by @J0EK3R and @vicocz in [brickcontroller2](https://github.com/vicocz/brickcontroller2) 
+
 # Contacts
 EMail: [pink0D.github@gmail.com](mailto:pink0d.github@gmail.com)
