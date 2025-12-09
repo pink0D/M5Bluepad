@@ -23,11 +23,9 @@
 
 #include "LedIndicator.h"
 
-bluepadhub::ServoPWM GeekServo(12);   // servo signal pin = 12
-
 // MK 4.0 module
 MouldKing40 MK;   //MK 6.0 is also supported (see MouldKing60 class)
-
+bluepadhub::ServoPWM GeekServo(12);   // servo signal pin = 12
 LedIndicator LED;
 
 // this class handles controller input ans sets channel outputs
@@ -66,6 +64,9 @@ class : public bluepadhub::Profile {
   // since MK module is controlled over Bluetooth, connect() method must be here, not in setup()
   void afterSetup() {
     MK.connect();
+
+    // comment this line after first pairing
+    BluepadHub.enablePairing();
   };  
 
   // process updates from controller

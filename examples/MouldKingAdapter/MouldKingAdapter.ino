@@ -44,7 +44,6 @@ class : public bluepadhub::Profile {
     AtomLiteIndicator.setBrightness(20);
     AtomLiteIndicator.begin();
         
-    // click Atom button for Deep Sleep / Wake Up
     // hold button to enable pairing, continue holding to forget paired devices  
     AtomLiteButton.begin();
 
