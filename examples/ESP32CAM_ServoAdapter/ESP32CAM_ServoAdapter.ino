@@ -19,12 +19,12 @@
 
 #include <BluepadHub.h>
 #include <ServoPWM.h>
-#include <MouldKing.h>
+#include <MouldKingExtensions.h>
 
 #include "LedIndicator.h"
 
 // MK 4.0 module
-MouldKing40 MK;   //MK 6.0 is also supported (see MouldKing60 class)
+MouldKing40Ext MK;   //MK 6.0 is also supported (see MouldKing60Ext class)
 bluepadhub::ServoPWM GeekServo(12);   // servo signal pin = 12
 LedIndicator LED;
 

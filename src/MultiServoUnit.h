@@ -25,13 +25,13 @@ namespace bluepadhub {
                 dummyServo.setController(nullptr, -1);            
             };
             
-            void stopServos() {
+            virtual void stopServos() {
                 for (int i=0; i<numServos; i++) {
                     servos[i].stop(); 
                 } 
             };
 
-            void stop() {
+            virtual void stop() {
                 stopServos();
             };
             

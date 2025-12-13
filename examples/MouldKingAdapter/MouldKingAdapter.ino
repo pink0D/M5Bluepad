@@ -24,7 +24,7 @@
 
 #include <BluepadHub.h>
 #include <M5Extensions.h>
-#include <MouldKing.h>
+#include <MouldKingExtensions.h>
 
 M5AtomLiteIndicator   AtomLiteIndicator;
 M5AtomLiteButton      AtomLiteButton;
@@ -32,7 +32,7 @@ M5HDriverBaseExt      HDriverBaseExt;              // HDriverBase is used as a p
 M5GroveServo GroveServo(SERVO_ATOM_LITE_PORT_A);   // Servo connected directy to Atom's grove port
 
 // MK 4.0 module
-MouldKing40 MK;   //MK 6.0 is also supported (see MouldKing60 class)
+MouldKing40Ext MK;   //MK 6.0 is also supported (see MouldKing60Ext class)
 
 // this class handles controller input ans sets channel outputs
 class : public bluepadhub::Profile {

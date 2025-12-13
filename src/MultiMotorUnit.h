@@ -25,13 +25,13 @@ namespace bluepadhub {
                 dummyMotor.setController(nullptr, -1); 
             };
             
-            void stopMotors() {
+            virtual void stopMotors() {
                 for (int i=0; i<numMotors; i++) {
                     motors[i].stop(); 
                 } 
             };
 
-            void stop() {
+            virtual void stop() {
                 stopMotors();
             };
             
@@ -47,7 +47,7 @@ namespace bluepadhub {
 
             void setMotorLimits(uint8_t channel, double limit_min, double limit_max) {
                 if (channel >= 0 && channel < numMotors) {
-                    motors[channel].setMotorLimits(limit_min, limit_max);
+                    motors[channel].setLimits(limit_min, limit_max);
                 }
             };
 
