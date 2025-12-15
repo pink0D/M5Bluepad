@@ -74,8 +74,7 @@ Description of some most common setups is available on this [wiki page](https://
 
 # License & credits
 - M5Bluepad is open source and licensed under the MIT License
-- Bluepad32, on which the M5Bluepad greatly depends, is also open source, licensed under Apache 2.
-- However, Bluepad32 depends on the [BTstack](https://github.com/bluekitchen/btstack) made by BlueKitchen GmbH. BTStack is free to use for personal open source projects, but commercial for other uses
+- Bluepad32, on which the M5Bluepad greatly depends, is also open source, licensed under Apache 2. Bluepad32 depends on the [BTstack](https://github.com/bluekitchen/btstack) made by BlueKitchen GmbH. BTStack is free to use for personal open source projects, but commercial for other uses
 - Mould King BLE protocol was originally implemented by **[@J0EK3R](https://github.com/J0EK3R)** and **[@vicocz](https://github.com/vicocz)** in [brickcontroller2](https://github.com/vicocz/brickcontroller2) 
 
 # Contacts
