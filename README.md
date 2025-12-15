@@ -60,8 +60,8 @@ Description of some most common setups is available on this [wiki page](https://
 | [M5Stack Atomic HDriver Base](https://docs.m5stack.com/en/atom/Atomic%20H-Driver%20Base)  | :white_check_mark: Supported |
 | [M5Stack Unit 8Servos](https://docs.m5stack.com/en/unit/8Servos%20Unit)  | :white_check_mark: Supported |
 | [M5Stack Unit HBridge](https://docs.m5stack.com/en/unit/HBridge%20v1.1%20Unit)   | Planned |
-| **MouldKing Power Module 4.0**  | :white_check_mark: Supported |
-| **MouldKing Power Module 6.0**  | :white_check_mark: Supported |
+| **Mould King Power Module 4.0**  | :white_check_mark: Supported |
+| **Mould King Power Module 6.0**  | :white_check_mark: Supported |
 | **GeekServo**  | :white_check_mark: Supported |
 | Other units and devices | Can be impemented with custom code in sketch |
 
