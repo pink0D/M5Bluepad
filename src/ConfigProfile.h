@@ -57,8 +57,9 @@ namespace bluepadhub {
       virtual void afterSetup() {};   
       virtual void processBluepadController(BluepadController *ctl) {};
       virtual void failsafe() {};
+      virtual void processButtonClick() {};
       virtual void processButtonEvent(MultiFunctionButton::EventType eventType, MultiFunctionButton::ButtonState buttonState);
-      virtual bool isLowBatteryState() {return false; };
+      virtual bool isLowBatteryState() { return false; };
       virtual bool isFaultState() { return false; };
       virtual void idleTimer() {};
       virtual void deepSleepTimer() {};

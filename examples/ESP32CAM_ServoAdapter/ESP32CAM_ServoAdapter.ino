@@ -24,9 +24,9 @@
 #include "LedIndicator.h"
 
 // MK 4.0 module
-MouldKing40Ext MK;   //MK 6.0 is also supported (see MouldKing60Ext class)
-bluepadhub::ServoPWM GeekServo(12);   // servo signal pin = 12
-LedIndicator LED;
+MouldKing40Ext mk;   //MK 6.0 is also supported (see MouldKing60Ext class)
+GeekServo servo(12);   // servo signal pin = 12
+LedIndicator led;
 
 // this class handles controller input ans sets channel outputs
 class : public bluepadhub::Profile {
@@ -34,9 +34,9 @@ class : public bluepadhub::Profile {
   // this method is implicitly called after controller startup
   void setup() {
   
-    // use Atom Lite RGB LED for status indication
-    LED.setBrightness(2); 
-    LED.begin(4);         // ESP32CAM LED pin
+    // use Atom Lite RGB led for status indication
+    led.setBrightness(2); 
+    led.begin(4);         // ESP32CAM LED pin
         
     // uncomment to adjust controller sensivity
     //
@@ -50,20 +50,17 @@ class : public bluepadhub::Profile {
 
     // specify pulse range for a 360-servo
     // without this call, the default range (1000..2000) will be used for a 180-servo
-    // GeekServo.setServoPulseRange(500, 2500);  
+    // servo.setServoPulseRange(500, 2500);  
 
     // limit servo rotation to 75 degrees (pulse range is calculated internally)
-    GeekServo.setServoMaxAngle(75);
-    GeekServo.begin();
-
-    // setup the MK module
-    MK.begin();
+    servo.setServoMaxAngle(75);
+    servo.begin();
   };
 
   // this method is called after BLE initialization is complete
   // since MK module is controlled over Bluetooth, connect() method must be here, not in setup()
   void afterSetup() {
-    MK.connect();
+    mk.connect();
 
     // comment this line after first pairing
     BluepadHub.enablePairing();
@@ -82,28 +79,28 @@ class : public bluepadhub::Profile {
       speed = -speed;
 
     // update servo position
-    GeekServo.updateServo(steer);
+    servo.updateServo(steer);
 
     // update motor speed: value > 0 (forward), value < 0 (reverse), value = 0 (coast)
-    MK.updateMotorSpeed(CHANNEL_A, speed);  
+    mk.updateMotorSpeed(CHANNEL_A, speed);  
 
     // all channel outputs are combined into a single Bluetooth packet for MK module, 
     // so the outgoing payload is refreshed once after all channels where updated
-    MK.applyUpdates();
+    mk.applyUpdates();
 
     // for more details on controller data processing see TestBluePad32 example and Bluepad32 docs
   };
 
   // failsafe() is called when no data is received from controller after timeout
   void failsafe() {
-    GeekServo.stop();
-    MK.stop();
+    servo.stop();
+    mk.stop();
   };
 
   // this method is called after 5 minutes of inactivity (no controller input and no motor output)
   void idleTimer() {
     // stop sending packets so MK module will power off after a while
-    MK.disconnect();
+    mk.disconnect();
   }
 
 } MyProfile;

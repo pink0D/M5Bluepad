@@ -34,4 +34,6 @@ namespace bluepadhub {
     };
 }
 
+typedef bluepadhub::ServoPWM GeekServo;
+
 #endif

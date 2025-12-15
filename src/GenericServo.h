@@ -10,7 +10,8 @@
 #ifndef _GENERIC_SERVO_H_
 #define _GENERIC_SERVO_H_
 
-#include "BluepadHub.h"
+#include <Arduino.h>
+#include "OutputFilter.h"
 
 namespace bluepadhub {
 

@@ -61,7 +61,7 @@ namespace bluepadhub {
 
   void Profile::processButtonEvent(MultiFunctionButton::EventType eventType, MultiFunctionButton::ButtonState buttonState) {
 
-    // click is processed only when Deep Sleep is configured
+    // click is processed here when Deep Sleep is configured
     if (::BluepadHub.isDeepSleepEnabled() ) {
 
       // turn off the LED to indicate that the click is being processed 
@@ -77,6 +77,11 @@ namespace bluepadhub {
 
         ::BluepadHub.startDeepSleep();
       } 
+    } else { // otherwise when no Deep Sleep is configured click processing can be overriden
+        if ( (eventType == MultiFunctionButton::EventType::Click) 
+            && (buttonState == MultiFunctionButton::ButtonState::Released) ) {
+              processButtonClick();
+        }
     }
 
     // bluetooth pairing

@@ -23,6 +23,7 @@
 #include "StatusIndicator.h"
 #include "OutputFilter.h"
 #include "DeepSleep.h"
+#include "ServoPWM.h"
 
 namespace bluepadhub {
 

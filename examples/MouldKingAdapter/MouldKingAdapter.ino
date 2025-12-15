@@ -67,9 +67,6 @@ class : public bluepadhub::Profile {
 
     // initialize the HDriverBase so it can check supply voltage and prevent running servo from USB power
     HDriverBaseExt.begin(); 
-
-    // setup the MK module
-    MK.begin();
   };
 
   // this method is called after BLE initialization is complete
@@ -119,6 +116,19 @@ class : public bluepadhub::Profile {
   void idleTimer() {
     // stop sending packets so MK module will power off after a while
     MK.disconnect();
+  }
+
+  // Atom Lite button click
+  void processButtonClick() {
+    
+    static int instanceNum = 0;
+
+    // set which MK module is controlled - up to three modules can be selected
+    MK.setInstanceNumber( (++instanceNum) % 3 ); 
+    MK.connect(); // broadcast connect message to module
+
+    // indicate event
+    AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::ProfileSelect);
   }
 
 } MyProfile;
