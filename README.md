@@ -23,6 +23,8 @@ Most M5Stack units have LEGO-compatible mounts so if used together with GeekServ
 
 <a href='https://postimg.cc/kVfRLcym' target='_blank'><img src='https://i.postimg.cc/kVfRLcym/IMG-1678.jpg' alt='IMG-1678'></a>
 
+[More info](https://github.com/pink0D/M5Bluepad/wiki/Attaching-Power-Functions-motor-to-M5Stack-Atomic-HDriver-Base)
+
 
 # Using BluepadHub with other controllers
 While this library was initially created for using with Atom-Lite, it is also compatible with other M5Stack controllers based on 
