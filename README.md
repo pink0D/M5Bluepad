@@ -29,7 +29,7 @@ Most M5Stack units have LEGO-compatible mounts so if used together with GeekServ
 
 [**Atom-Lite**](https://docs.m5stack.com/en/core/ATOM%20Lite) and [**Atomic HDriver Base**](https://docs.m5stack.com/en/atom/Atomic%20H-Driver%20Base) can be used together to make an adapter which can control Mould King 4.0 or 6.0 modules with a gamepad. An additional **GeekServo** can be attached to the grove port.
 
-<a href='https://postimg.cc/4KdBnymC' target='_blank'><img src='https://i.postimg.cc/4KdBnymC/Mould-King-M5-cover.jpg' alt='Mould-King-M5-cover'></a>
+<a href="https://postimg.cc/bGc1fvkZ" target="_blank"><img src="https://i.postimg.cc/bGc1fvkZ/Mould_King_M5_cover.jpg" alt="Mould_King_M5_cover"></a>
 
 [More info](https://github.com/pink0D/M5Bluepad/wiki/Controlling-Mould-King-modules-and-GeekServo-with-ESP32)
 
