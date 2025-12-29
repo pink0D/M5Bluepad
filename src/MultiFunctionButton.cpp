@@ -20,14 +20,19 @@ namespace bluepadhub {
 
   void MultiFunctionButton::task() {
 
-    delay(1000); // wait 1sec after startup
+    vTaskDelayMillis(1000); // wait 1sec after startup
+
+    // power button might remain pressed after startup - wait until it is released
+    while (readButtonState(button_pin) == LOW) {
+      vTaskDelayMillis(100);
+    }
 
     while (1) {
-      delay(100);
+      vTaskDelayMillis(100);
 
       // wait while button is up
-      while (digitalRead(button_pin) == HIGH) {
-        delay(100);
+      while (readButtonState(button_pin) == HIGH) {
+        vTaskDelayMillis(100);
       }
 
       unsigned long time_click = esp_timer_get_time();
@@ -37,9 +42,9 @@ namespace bluepadhub {
       bool hold2_handled = false;
 
       // wait while button is pressed
-      while (digitalRead(button_pin) == LOW) {
+      while (readButtonState(button_pin) == LOW) {
 
-        delay(10);
+        vTaskDelayMillis(10);
         unsigned long time_now = esp_timer_get_time();
 
         if (time_now > time_click + click_time * 1000) {
@@ -89,6 +94,10 @@ namespace bluepadhub {
     pinMode(button_pin, _pin_mode);
 
     xTaskCreate(button_task, "button_task", 8*1024, this, 0, nullptr);
+  }
+
+  int MultiFunctionButton::readButtonState(int pin) {
+    return digitalRead(pin);
   }
 
 }

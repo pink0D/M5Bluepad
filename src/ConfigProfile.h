@@ -40,19 +40,21 @@ namespace bluepadhub {
     Timeouts (milliseconds)
     */
 
-    bool controllerAutoDisconnect = true;  // drop BT connection after idle timeout
-    long controllerTimeout = 500;          // stop motors when no data from controller is received (possibly out of range)
-    long idleTimeout       = 300000;       // power off when there's no input/output
-    long deepSleepTimeout  = 30*60000;     // deep sleep timer wakeup
-    long deepSleepTaskMaxDuration = 60000; // max duration for executing task in deep sleep mode
+    bool controllerAutoDisconnect = true;   // drop BT connection after idle timeout
+    long controllerTimeout = 500;           // stop motors when no data from controller is received (possibly out of range)
+    long idleTimeout       = 300000;        // power off when there's no input/output
+    long deepSleepTimeout  = 30*60000;      // deep sleep timer wakeup
+    long deepSleepTaskMaxDuration = 60000;  // max duration for executing task in deep sleep mode
 
-    bool forgetBluetoothDevices = false;   // reset BT pairing on every startup
+    bool forgetBluetoothDevices = false;    // reset BT pairing on every startup
+    bool enablePairingAfterStartup = false; // go to pairing mode after every startup
   };  
   
   class Profile : public ConfigParams {
     public:
       Profile(bool setBluepadHubProfile = true);
 
+      virtual void beforeSetup() {};
       virtual void setup() {};   
       virtual void afterSetup() {};   
       virtual void processBluepadController(BluepadController *ctl) {};

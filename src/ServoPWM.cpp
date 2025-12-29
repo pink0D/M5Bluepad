@@ -12,6 +12,13 @@
 namespace bluepadhub {
 
   void ServoPWM::begin(int pwm_pin) {
+    
+    if (pwm_pin == 0)
+    {
+      Serial.print("ServoPWM::begin pin not set"); 
+      return;
+    }
+
     attach(pwm_pin, servoPulseMin, servoPulseMax);  
     writeMicroseconds(1500);
     setController(this, 0);         

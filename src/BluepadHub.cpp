@@ -43,6 +43,8 @@ namespace bluepadhub {
       profile = new Profile(false);
     }
 
+    profile->beforeSetup();
+
     profile->setup();
 
     if (statusIndicator == nullptr) {
@@ -70,6 +72,10 @@ namespace bluepadhub {
     Serial.println("BluepadHub::begin completed");
 
     profile->afterSetup();
+
+    if (profile->enablePairingAfterStartup) {
+      enablePairing();
+    }
   };
 
   void BluepadHub::update() {
@@ -193,7 +199,7 @@ namespace bluepadhub {
 
       statusIndicator->setStatusPattern(StatusIndicator::StatusPattern::Idle);
 
-      delay(100); // delay to ensure BT communication is completed before power off
+      vTaskDelayMillis(100); // delay to ensure BT communication is completed before power off
     }
   }
 

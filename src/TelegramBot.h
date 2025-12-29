@@ -35,6 +35,10 @@ namespace bluepadhub {
                 this->chat_id = _chat_id;
             };
 
+            void setDeviceName(const String& _device_name) {
+                this->device_name = _device_name;
+            };
+
             void sendVoltageStatus(double voltage, bool isLowVoltage);
             void sendMessage(const String& text, const String& parse_mode);
 
@@ -43,6 +47,7 @@ namespace bluepadhub {
             String wifi_password;
             String bot_token;
             String chat_id;
+            String device_name;
             
     };
 

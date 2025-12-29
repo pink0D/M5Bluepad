@@ -47,6 +47,11 @@ class : public bluepadhub::Profile {
     // hold button to enable pairing, continue holding to forget paired devices  
     AtomLiteButton.begin();
 
+    // uncomment to automatically start pairing every time the controller is started
+
+    // enablePairingAfterStartup = true;
+
+    
     // uncomment to adjust controller sensivity
     //
     // controllerStickDeadzoneLow = 50;        // 0 = lowest value for stick input
@@ -91,7 +96,7 @@ class : public bluepadhub::Profile {
     GroveServo.updateServo(steer);
 
     // update motor speed: value > 0 (forward), value < 0 (reverse), value = 0 (coast)
-    MK.updateMotorSpeed(CHANNEL_A, speed);  
+    MK.updateMotorSpeed(MOTOR_A, speed);  
 
     // all channel outputs are combined into a single Bluetooth packet for MK module, 
     // so the the outgoing payload is refreshed once after all channels where updated
@@ -114,8 +119,8 @@ class : public bluepadhub::Profile {
 
   // this method is called after 5 minutes of inactivity (no controller input and no motor output)
   void idleTimer() {
-    // stop sending packets so MK module will power off after a while
-    MK.disconnect();
+    // stop sending packets so MK module will power off after a while (does not work - MK remains powered on)
+    //MK.disconnect();
   }
 
   // Atom Lite button click

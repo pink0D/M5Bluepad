@@ -21,6 +21,10 @@ namespace bluepadhub {
 
     String msg = "";
 
+    if (device_name.length() > 0) {
+      msg += "<b>" + device_name + "</b>\n";
+    }
+
     if (isLowVoltage) {
       msg += "\xF0\x9F\x9B\x9C " + mac + " \xF0\x9F\xAA\xAB " + String(voltage, 1) + "V\n";
       msg += "\xE2\x9D\x97 <b>LOW BATTERY</b> \xE2\x9D\x97\n";
@@ -42,7 +46,7 @@ namespace bluepadhub {
     client.setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
     
     while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
+      vTaskDelay(pdMS_TO_TICKS(500));
     }
 
     Serial.println("WiFi connected");

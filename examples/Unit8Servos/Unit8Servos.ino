@@ -22,6 +22,12 @@ class : public bluepadhub::Profile {
   // this method is implicitly called after controller startup
   void setup() {
 
+
+    // uncomment to automatically start pairing every time the controller is started
+
+    // enablePairingAfterStartup = true;
+
+
     // uncomment to adjust controller sensivity
     //
     // controllerStickDeadzoneLow = 50;        // 0 = lowest value for stick input
@@ -64,8 +70,8 @@ class : public bluepadhub::Profile {
 
     // alternatevely, you can specify servo rotation angle in degrees
     // this will be recalculated to corresponding pulse range internally
-    // Unit8ServosExt.setServoMaxAngle(CHANNEL_SERVO_1, 45);
-    // Unit8ServosExt.setServoMaxAngle(CHANNEL_SERVO_2, 90);
+    // Unit8ServosExt.setServoMaxAngle(SERVO_1, 45);
+    // Unit8ServosExt.setServoMaxAngle(SERVO_2, 90);
   };
 
   // process updates from controller
@@ -111,8 +117,8 @@ class : public bluepadhub::Profile {
     
     AtomicMotionExt.updateServo(active_channel_atomic_motion, normalizeStickInput(ctl->axisX()));
 
-    AtomicMotionExt.updateMotor(CHANNEL_MOTOR_1, motor1_direction * normalizeTriggerInput(ctl->brake()));
-    AtomicMotionExt.updateMotor(CHANNEL_MOTOR_2, motor2_direction * normalizeTriggerInput(ctl->throttle()));
+    AtomicMotionExt.updateMotor(MOTOR_1, motor1_direction * normalizeTriggerInput(ctl->brake()));
+    AtomicMotionExt.updateMotor(MOTOR_2, motor2_direction * normalizeTriggerInput(ctl->throttle()));
 
     // for more details on controller data processing see TestBluePad32 example and Bluepad32 docs
   };

@@ -25,6 +25,9 @@ namespace bluepadhub {
 
             static void button_task(void *param);
 
+        protected:
+            virtual int readButtonState(int pin);
+
         private:
 
             void task();

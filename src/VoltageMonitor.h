@@ -42,7 +42,7 @@ namespace bluepadhub {
             }
             
         protected:
-            virtual double readVoltage() {};
+            virtual double readVoltage() { return 0; };
             
         private:
 

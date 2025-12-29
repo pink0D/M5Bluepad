@@ -22,6 +22,7 @@ void setup() {
     bot.setWiFiPassword("WIFI_PASSWORD");
     bot.setBotToken("XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     bot.setChatId("XXXXXXXXX");
+    bot.setDeviceName("M5 Atom Lite");
 
     bot.sendMessage("Hello from <b>M5Bluepad</b> \xF0\x9F\xA4\x96","HTML");
 }

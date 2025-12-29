@@ -27,7 +27,7 @@ namespace bluepadhub {
             Serial.println("Wake up by timer");
 
             xTaskCreate(task, "deep_sleep_task", 8*1024, this, 0, nullptr);
-            delay(::BluepadHub.getProfile()->deepSleepTaskMaxDuration);
+            vTaskDelayMillis(::BluepadHub.getProfile()->deepSleepTaskMaxDuration);
 
             Serial.println("Deep sleep task time limit");
             startDeepSleep(); // back to deep sleep

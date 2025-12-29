@@ -18,16 +18,29 @@ namespace bluepadhub {
     class MultiMotorUnit : private GenericMotorController {
 
         public:
-            MultiMotorUnit() {        
-                for (int i=0; i<numMotors; i++) {
-                    motors[i].setController(this, i); 
-                } 
+            MultiMotorUnit(bool createMotors = true) {  
+
+                if (createMotors) {
+
+                    motors = new GenericMotor[numMotors];
+
+                    for (int i=0; i<numMotors; i++) {
+                        motors[i].setController(this, i); 
+                    } 
+                }
+
                 dummyMotor.setController(nullptr, -1); 
             };
+
+            ~MultiMotorUnit() {
+                if (motors != nullptr) {
+                    delete [] motors;
+                }
+            }
             
             virtual void stopMotors() {
                 for (int i=0; i<numMotors; i++) {
-                    motors[i].stop(); 
+                    motor(i)->stop(); 
                 } 
             };
 
@@ -40,31 +53,39 @@ namespace bluepadhub {
                     return &dummyMotor;
                     
                 if (channel < numMotors)
-                    return &motors[channel];
+                    return accessMotor(channel);
 
                 return &dummyMotor;
             };
 
             void setMotorLimits(uint8_t channel, double limit_min, double limit_max) {
-                if (channel >= 0 && channel < numMotors) {
-                    motors[channel].setLimits(limit_min, limit_max);
-                }
+                motor(channel)->setLimits(limit_min, limit_max);
             };
 
             void updateMotorSpeed(uint8_t channel, double normalized_speed) {
-                if (channel >= 0 && channel < numMotors) {
-                    motors[channel].updateSpeed(normalized_speed);
-                }
+                motor(channel)->updateSpeed(normalized_speed);
+            };
+
+            void updateMotor(uint8_t channel, double normalized_speed) {
+                updateMotorSpeed(channel, normalized_speed);
             };
 
             void brakeMotor(uint8_t channel) {
-                if (channel >= 0 && channel < numMotors) {
-                    motors[channel].brake();
-                }
+                motor(channel)->brake();
+            };
+
+        protected:
+        
+            virtual GenericMotor* accessMotor(uint8_t channel) {
+
+                if (motors != nullptr)
+                    return &motors[channel];
+                
+                return &dummyMotor;
             };
 
         private:
-            GenericMotor motors[numMotors];
+            GenericMotor *motors = nullptr;
             GenericMotor dummyMotor;
     };
 

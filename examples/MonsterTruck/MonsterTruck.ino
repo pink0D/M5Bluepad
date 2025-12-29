@@ -21,10 +21,10 @@ M5AtomicMotionExt     AtomicMotionExt;    // M5AtomicMotion extension
 
 class : public bluepadhub::Profile {
 
-  uint8_t FWD_motor = CHANNEL_SERVO_1;
-  uint8_t RWD_motor = CHANNEL_SERVO_2;
-  uint8_t FWD_steer = CHANNEL_SERVO_3;
-  uint8_t RWD_steer = CHANNEL_SERVO_4;
+  uint8_t FWD_motor = SERVO_1;
+  uint8_t RWD_motor = SERVO_2;
+  uint8_t FWD_steer = SERVO_3;
+  uint8_t RWD_steer = SERVO_4;
 
   double add_steer_start = 0.75;  // rear steering start threshold
 

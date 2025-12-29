@@ -31,13 +31,13 @@ class : public bluepadhub::Profile {
 
 
     // if Deep Sleep is used, AtomDeepSleep.begin() must be called before any other initialization
-    // when battery is connected, the controller goes to deep sleep mode - click Atom to for wake up
+    // when battery is connected, the controller goes to deep sleep mode - click Atom Lite button to for wake up
     AtomDeepSleep.begin();
     
     // WARNING: 
     // Deep Sleep only lowers power consumption for ESP32 chip
     // It does not disconnect the power supply!
-    // Many other components (DC buck converter, LDO, DRV8876, CH552T, built-in LED in HDriver base)
+    // Many other components remain powered (DC buck converter, LDO, DRV8876, CH552T, built-in LED in HDriver base)
     // Power consumption in deep sleep mode is about 15mA, which will drain a 450mAh battery in just ~30 hours
     // Since there's no hardware protection, this will discharge it below minimum safe level
 
@@ -50,6 +50,12 @@ class : public bluepadhub::Profile {
     // hold button to enable pairing, continue holding to forget paired devices  
     AtomLiteButton.begin();
 
+
+    // uncomment to automatically start pairing every time the controller is started
+
+    // enablePairingAfterStartup = true;
+
+
     // uncomment to adjust controller sensivity
     //
     // controllerStickDeadzoneLow = 50;        // 0 = lowest value for stick input
@@ -58,7 +64,7 @@ class : public bluepadhub::Profile {
     // controllerTriggerDeadzoneHigh = 1000;   // 1024 = highest value for trigger input 
 
     // actual deadzone values depend on type of controller used
-    // BluePad32 example can be used to analyze raw values sent by controller
+    // TestBluePad32 example can be used to analyze raw values sent by controller
 
 
     // some DC motors start running only at 25% duty cycle.
@@ -157,6 +163,7 @@ class : public bluepadhub::Profile {
     bot.setWiFiPassword("WIFI_PASSWORD");
     bot.setBotToken("XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     bot.setChatId("XXXXXXXXX");
+    bot.setDeviceName("M5Stack Atomic HDriver Base");
 
     bot.sendVoltageStatus(HDriverBaseExt.getVoltage(), isLowBatteryState());
   }

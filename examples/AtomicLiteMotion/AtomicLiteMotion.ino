@@ -21,6 +21,11 @@ class : public bluepadhub::Profile {
   // this method is implicitly called after controller startup
   void setup() {
 
+    // uncomment to automatically start pairing every time the controller is started
+
+    // enablePairingAfterStartup = true;
+
+
     // uncomment to adjust controller sensivity
     //
     // controllerStickDeadzoneLow = 50;        // 0 = lowest value for stick input
@@ -46,22 +51,22 @@ class : public bluepadhub::Profile {
 
     // specify 500..2500us pulse for 360-servo
     // if no pulse range is specified, then default 1000..2000us will be used (180-servo)
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_1, 500, 2500);
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_2, 500, 2500);
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_3, 500, 2500);
-    AtomicMotionExt.setServoPulseRange(CHANNEL_SERVO_4, 500, 2500);
+    AtomicMotionExt.setServoPulseRange(SERVO_1, 500, 2500);
+    AtomicMotionExt.setServoPulseRange(SERVO_2, 500, 2500);
+    AtomicMotionExt.setServoPulseRange(SERVO_3, 500, 2500);
+    AtomicMotionExt.setServoPulseRange(SERVO_4, 500, 2500);
 
     // alternatevely, you can specify servo rotation angle in degrees
     // this will be recalculated to corresponding pulse range internally
-    // AtomicMotionExt.setServoMaxAngle(CHANNEL_SERVO_1, 45);
-    // AtomicMotionExt.setServoMaxAngle(CHANNEL_SERVO_2, 90);
+    // AtomicMotionExt.setServoMaxAngle(SERVO_1, 45);
+    // AtomicMotionExt.setServoMaxAngle(SERVO_2, 90);
 
     // PWM duty cycle for M1 & M2 can be limited from 0 to 100% (default is full range)
     // usually this is not needed, but some motors start only when PWM is more than 25-30%
-    // AtomicMotionExt.setMotorLimits(CHANNEL_MOTOR_1, 0.25, 1.0);
+    // AtomicMotionExt.setMotorLimits(MOTOR_1, 0.25, 1.0);
 
     // if necessary, the upper PWM limit can be also specified to limit maximum motor power 
-    // AtomicMotionExt.setMotorLimits(CHANNEL_MOTOR_2, 0.25, 0.75);
+    // AtomicMotionExt.setMotorLimits(MOTOR_2, 0.25, 0.75);
   };
 
   // process updates from controller
@@ -88,13 +93,13 @@ class : public bluepadhub::Profile {
     // normalizeStickInput/normalizeTriggerInput methods apply deadzone correction to raw values
     // then integer values from controller are mapped to normalized range (-1.0, 1.0) 
    
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_1, normalizeStickInput(ctl->axisX()));
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_2, normalizeStickInput(ctl->axisY()));
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_3, normalizeStickInput(ctl->axisRX()));
-    AtomicMotionExt.updateServo(CHANNEL_SERVO_4, normalizeStickInput(ctl->axisRY()));
+    AtomicMotionExt.updateServo(SERVO_1, normalizeStickInput(ctl->axisX()));
+    AtomicMotionExt.updateServo(SERVO_2, normalizeStickInput(ctl->axisY()));
+    AtomicMotionExt.updateServo(SERVO_3, normalizeStickInput(ctl->axisRX()));
+    AtomicMotionExt.updateServo(SERVO_4, normalizeStickInput(ctl->axisRY()));
 
-    AtomicMotionExt.updateMotor(CHANNEL_MOTOR_1, motor1_direction * normalizeTriggerInput(ctl->brake()));
-    AtomicMotionExt.updateMotor(CHANNEL_MOTOR_2, motor2_direction * normalizeTriggerInput(ctl->throttle()));
+    AtomicMotionExt.updateMotor(MOTOR_1, motor1_direction * normalizeTriggerInput(ctl->brake()));
+    AtomicMotionExt.updateMotor(MOTOR_2, motor2_direction * normalizeTriggerInput(ctl->throttle()));
 
     // for more details on controller data processing see TestBluePad32 example and Bluepad32 docs
   };

@@ -18,16 +18,29 @@ namespace bluepadhub {
     class MultiServoUnit : private GenericServoController {
 
         public:
-            MultiServoUnit() {
-                for (int i=0; i<numServos; i++) {
-                    servos[i].setController(this, i); 
+            MultiServoUnit(bool createServos = true) {
+
+                if (createServos) {
+
+                    servos = new GenericServo[numServos];
+
+                    for (int i=0; i<numServos; i++) {
+                        servos[i].setController(this, i); 
+                    } 
                 } 
+
                 dummyServo.setController(nullptr, -1);            
             };
+
+            ~MultiServoUnit() {
+                if (servos != nullptr) {
+                    delete [] servos;
+                }
+            }
             
             virtual void stopServos() {
                 for (int i=0; i<numServos; i++) {
-                    servos[i].stop(); 
+                    servo(i)->stop(); 
                 } 
             };
 
@@ -40,31 +53,35 @@ namespace bluepadhub {
                     return &dummyServo;
 
                 if (channel < numServos)
-                    return &servos[channel];
+                    return accessServo(channel);
 
                 return &dummyServo;
             };
 
             void setServoPulseRange(uint8_t channel, uint16_t pulse_min, uint16_t pulse_max) {
-                if (channel >= 0 && channel < numServos) {
-                    servos[channel].setServoPulseRange(pulse_min, pulse_max);
-                }
+                servo(channel)->setServoPulseRange(pulse_min, pulse_max);
             };
 
             void setServoMaxAngle(uint8_t channel, uint16_t angle_max) {
-                if (channel >= 0 && channel < numServos) {
-                    servos[channel].setServoMaxAngle(angle_max);
-                }
+                servo(channel)->setServoMaxAngle(angle_max);
             };
 
             void updateServo(uint8_t channel, double normalized_position) {
-                if (channel >= 0 && channel < numServos) {
-                    servos[channel].updateServo(normalized_position);
-                }
+                servo(channel)->updateServo(normalized_position);
+            };
+
+        protected:
+        
+            virtual GenericServo* accessServo(uint8_t channel) {
+
+                if (servos != nullptr)
+                    return &servos[channel];
+                
+                return &dummyServo;
             };
 
         private:        
-            GenericServo servos[numServos];
+            GenericServo *servos = nullptr;
             GenericServo dummyServo;
     };
 
