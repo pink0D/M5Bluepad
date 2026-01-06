@@ -14,30 +14,19 @@
 
 namespace bluepadhub {
 
-    template <int numMotors>
+    template <int numMotors, class MotorClass = GenericMotor>
     class MultiMotorUnit : private GenericMotorController {
 
         public:
-            MultiMotorUnit(bool createMotors = true) {  
+            MultiMotorUnit() {  
 
-                if (createMotors) {
-
-                    motors = new GenericMotor[numMotors];
-
-                    for (int i=0; i<numMotors; i++) {
-                        motors[i].setController(this, i); 
-                    } 
-                }
+                for (int i=0; i<numMotors; i++) {
+                    motors[i].setController(this, i); 
+                } 
 
                 dummyMotor.setController(nullptr, -1); 
             };
 
-            ~MultiMotorUnit() {
-                if (motors != nullptr) {
-                    delete [] motors;
-                }
-            }
-            
             virtual void stopMotors() {
                 for (int i=0; i<numMotors; i++) {
                     motor(i)->stop(); 
@@ -48,12 +37,12 @@ namespace bluepadhub {
                 stopMotors();
             };
             
-            GenericMotor* motor(int channel) {
+            inline MotorClass* motor(int channel) {
                 if (channel < 0)
                     return &dummyMotor;
                     
                 if (channel < numMotors)
-                    return accessMotor(channel);
+                    return &motors[channel];
 
                 return &dummyMotor;
             };
@@ -74,19 +63,9 @@ namespace bluepadhub {
                 motor(channel)->brake();
             };
 
-        protected:
-        
-            virtual GenericMotor* accessMotor(uint8_t channel) {
-
-                if (motors != nullptr)
-                    return &motors[channel];
-                
-                return &dummyMotor;
-            };
-
         private:
-            GenericMotor *motors = nullptr;
-            GenericMotor dummyMotor;
+            MotorClass motors[numMotors];
+            MotorClass dummyMotor;
     };
 
 }

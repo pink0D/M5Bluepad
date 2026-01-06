@@ -38,7 +38,10 @@ double M5HDriverBaseExt::readVoltage() {
     
   setupPins();
   
-  fault = (digitalRead(22) == 0);
-
   return analogReadMilliVolts(33) * 0.01;
+}
+
+void M5HDriverBaseExt::updateStatus() {
+
+  fault = (digitalRead(22) == 0);
 }

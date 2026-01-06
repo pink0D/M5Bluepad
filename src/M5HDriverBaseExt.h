@@ -26,6 +26,7 @@ class M5HDriverBaseExt : public bluepadhub::MotorDriverHBridge, public bluepadhu
         bool fault = false;
 
         virtual double readVoltage();
+        virtual void updateStatus();
 
         void setupPins();
 };

@@ -25,9 +25,7 @@ namespace bluepadhub {
   };
 
   void ServoPWM::outputServoPulse(int channel, uint16_t pulse) {
-    if (!attached())
-      return; // don't update any outputs if it was not initialized
-
+    
     writeMicroseconds((int) pulse);
   }
 

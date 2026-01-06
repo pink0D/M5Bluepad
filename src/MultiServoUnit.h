@@ -14,30 +14,19 @@
 
 namespace bluepadhub {
 
-    template <int numServos>
+    template <int numServos, class ServoClass = GenericServo>
     class MultiServoUnit : private GenericServoController {
 
         public:
-            MultiServoUnit(bool createServos = true) {
+            MultiServoUnit() {
 
-                if (createServos) {
-
-                    servos = new GenericServo[numServos];
-
-                    for (int i=0; i<numServos; i++) {
-                        servos[i].setController(this, i); 
-                    } 
+                for (int i=0; i<numServos; i++) {
+                    servos[i].setController(this, i); 
                 } 
 
                 dummyServo.setController(nullptr, -1);            
             };
 
-            ~MultiServoUnit() {
-                if (servos != nullptr) {
-                    delete [] servos;
-                }
-            }
-            
             virtual void stopServos() {
                 for (int i=0; i<numServos; i++) {
                     servo(i)->stop(); 
@@ -48,12 +37,12 @@ namespace bluepadhub {
                 stopServos();
             };
             
-            GenericServo* servo(int channel) {
+            inline ServoClass* servo(int channel) {
                 if (channel < 0)
                     return &dummyServo;
 
                 if (channel < numServos)
-                    return accessServo(channel);
+                    return &servos[channel];
 
                 return &dummyServo;
             };
@@ -70,19 +59,9 @@ namespace bluepadhub {
                 servo(channel)->updateServo(normalized_position);
             };
 
-        protected:
-        
-            virtual GenericServo* accessServo(uint8_t channel) {
-
-                if (servos != nullptr)
-                    return &servos[channel];
-                
-                return &dummyServo;
-            };
-
         private:        
-            GenericServo *servos = nullptr;
-            GenericServo dummyServo;
+            ServoClass servos[numServos];
+            ServoClass dummyServo;
     };
 
 }
