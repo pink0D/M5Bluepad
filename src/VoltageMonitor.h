@@ -68,7 +68,7 @@ namespace bluepadhub {
                 if (size > 0) {
                     voltageSampleCount = size;
                 } else {
-                    voltageSampleCount = 5;
+                    voltageSampleCount = 20;
                 }
 
                 voltageSamples = new double[voltageSampleCount];
@@ -100,8 +100,8 @@ namespace bluepadhub {
             long time_next_update = 0;
             long update_interval = 500000;
 
-            int voltageReadCount = 1;
-            int voltageSampleCount = 5;
+            int voltageReadCount = 5;
+            int voltageSampleCount = 20;
             double *voltageSamples = nullptr;
             int voltageIndex = 0;
 
