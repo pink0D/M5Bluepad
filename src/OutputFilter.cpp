@@ -14,9 +14,6 @@
 
 namespace bluepadhub {
 
-  // static members
-  bool OutputFilter::idleState = false;
-
   void OutputFilter::setLimits(double _limitMin, double _limitMax) {
     if (_limitMin < 0)
       _limitMin = 0;

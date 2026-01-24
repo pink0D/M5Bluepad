@@ -36,7 +36,7 @@ namespace bluepadhub {
           double limitMax = 1.0;
           double value = 0.0;
 
-          static bool idleState;
+          static inline bool idleState = false;
   };  
 
 }

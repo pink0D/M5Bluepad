@@ -96,12 +96,49 @@ namespace bluepadhub {
       }
     }
 
-    if (eventPattern == EventPattern::ProfileSelect) {
+    if (eventPattern == EventPattern::Select) {
       setLedColor(0xFFFFFF);  
       vTaskDelayMillis(250);
       setLedColor(0);  
       vTaskDelayMillis(250);
     }
+
+    if (eventPattern == EventPattern::Success) {
+      for (int i=0; i<3; i++) {
+        setLedColor(0x00FF00);  
+        vTaskDelayMillis(250);
+        setLedColor(0);  
+        vTaskDelayMillis(250);
+      }
+    }
+
+    if (eventPattern == EventPattern::Error) {
+      for (int i=0; i<3; i++) {
+        setLedColor(0xFF0000);  
+        vTaskDelayMillis(250);
+        setLedColor(0);  
+        vTaskDelayMillis(250);
+      }
+    }
+
+    if (eventPattern == EventPattern::Warning) {
+      for (int i=0; i<3; i++) {
+        setLedColor(0xFFA500);  
+        vTaskDelayMillis(250);
+        setLedColor(0);  
+        vTaskDelayMillis(250);
+      }
+    }
+
+    if (eventPattern == EventPattern::Info) {
+      for (int i=0; i<3; i++) {
+        setLedColor(0xCC33FF);  
+        vTaskDelayMillis(250);
+        setLedColor(0);  
+        vTaskDelayMillis(250);
+      }
+    }
+
   }
 
 }

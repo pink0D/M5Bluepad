@@ -14,10 +14,6 @@
 
 namespace bluepadhub {
 
-  void MultiFunctionButton::button_task(void *param) {
-    static_cast<MultiFunctionButton*>(param)->task();  
-  }
-
   void MultiFunctionButton::task() {
 
     vTaskDelayMillis(1000); // wait 1sec after startup
@@ -93,7 +89,11 @@ namespace bluepadhub {
 
     pinMode(button_pin, _pin_mode);
 
-    xTaskCreate(button_task, "button_task", 8*1024, this, 0, nullptr);
+    xTaskCreate( [](void* ctx) {
+
+        static_cast<MultiFunctionButton*>(ctx)->task();
+
+    }, "MultiFunctionButton", 8*1024, this, 0, nullptr);
   }
 
   int MultiFunctionButton::readButtonState(int pin) {

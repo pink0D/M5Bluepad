@@ -21,12 +21,16 @@ namespace bluepadhub {
         if (setBluepadHubDeepSleep) 
             ::BluepadHub.setDeepSleep(this);
 
-
         if (esp_sleep_get_wakeup_cause() == ESP_SLEEP_WAKEUP_TIMER) {
 
             Serial.println("Wake up by timer");
 
-            xTaskCreate(task, "deep_sleep_task", 8*1024, this, 0, nullptr);
+            xTaskCreate( [](void* ctx) {
+
+                static_cast<DeepSleep*>(ctx)->task();
+
+            }, "DeepSleep", 8*1024, this, 0, nullptr);
+
             vTaskDelayMillis(::BluepadHub.getProfile()->deepSleepTaskMaxDuration);
 
             Serial.println("Deep sleep task time limit");
@@ -44,11 +48,7 @@ namespace bluepadhub {
         beforeSleep();        
     }
 
-    void DeepSleep::task(void *param) {
-        static_cast<DeepSleep*>(param)->runDeepSleepTask(); 
-    }
-
-    void DeepSleep::runDeepSleepTask() {
+    void DeepSleep::task() {
         // execute profile implemented task
         if (::BluepadHub.getProfile() != nullptr) {
             ::BluepadHub.getProfile()->deepSleepTimer();

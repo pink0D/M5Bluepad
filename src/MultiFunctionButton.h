@@ -23,8 +23,6 @@ namespace bluepadhub {
 
             void begin(unsigned long _click_time, unsigned long _hold1_time, unsigned long _hold2_time, int _button_pin, int _pin_mode = INPUT_PULLUP);
 
-            static void button_task(void *param);
-
         protected:
             virtual int readButtonState(int pin);
 

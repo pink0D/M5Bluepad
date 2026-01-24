@@ -93,12 +93,12 @@ class : public bluepadhub::Profile {
     // press sticks to select servo channels
     if (wasClicked(ctl->thumbL())) {
       active_channel_atomic_motion = (active_channel_atomic_motion+1) % 4;
-      AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::ProfileSelect);
+      AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::Select);
     }
 
     if (wasClicked(ctl->thumbR())) {
       active_channel_unit_8servos = (active_channel_unit_8servos+1) % 8;
-      AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::ProfileSelect);
+      AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::Select);
     }
 
     // updateServo/updateMotor methods set new values for servo/motor channels output with anti-jitter filtering

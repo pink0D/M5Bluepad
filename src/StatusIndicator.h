@@ -17,7 +17,7 @@ namespace bluepadhub {
       StatusIndicator() {};
 
       enum class StatusPattern {None, Idle, Pairing, Connected, Error, Warning, PowerOff};
-      enum class EventPattern {None, Reset, ProfileSelect, SettingSaved};
+      enum class EventPattern {None, Reset, Success, Error, Warning, Info, Select};
 
       virtual void begin(bool setBluepadHubStatusIndicator = true);
 
@@ -94,7 +94,7 @@ namespace bluepadhub {
     private:
       bool isStopped = false;
 
-      static void taskStatusIndicator(void *param);
+      void task();
   };  
 
 }

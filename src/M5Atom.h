@@ -26,9 +26,21 @@ class M5AtomDeepSleep : public bluepadhub::DeepSleep {
     public:
         M5AtomDeepSleep() {}; 
 
+    void setCheckWakeUpReason(bool checkWakeUpReason) {
+      this->checkWakeUpReason = checkWakeUpReason;
+    };
+
+    bool getCheckWakeUpReason() {
+      return checkWakeUpReason;
+    };
+
     protected:
         virtual void afterStartup();
         virtual void beforeSleep();
+
+    private:
+        bool checkWakeUpReason = true;
+
 };
 
 class M5AtomLiteButton : public bluepadhub::MultiFunctionButton {

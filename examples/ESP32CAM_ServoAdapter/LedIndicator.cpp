@@ -84,7 +84,7 @@ void LedIndicator::showEventPattern() {
     }
   }
 
-  if (eventPattern == EventPattern::ProfileSelect) {
+  if (eventPattern == EventPattern::Select) {
     setLedLevel(1); 
     vTaskDelayMillis(200);
     setLedLevel(0);  

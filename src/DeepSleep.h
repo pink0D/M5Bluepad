@@ -27,8 +27,7 @@ namespace bluepadhub {
             virtual void beforeSleep() {};
 
         private:
-            static void task(void *param);
-            void runDeepSleepTask();
+            void task();
     };
 
 }

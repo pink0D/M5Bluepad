@@ -24,7 +24,7 @@ void M5AtomLiteIndicator::begin(int16_t pin_rgb, int16_t pin_ir, bool setBluepad
 void M5AtomDeepSleep::afterStartup() {
     
     // go to deep sleep if startup was caused by connecting battery
-    if (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_EXT1) {
+    if ( (getCheckWakeUpReason()) && (esp_sleep_get_wakeup_cause() != ESP_SLEEP_WAKEUP_EXT1) ) {
         Serial.println("Startup not by ext1, going to deep sleep");
         startDeepSleep();
     }

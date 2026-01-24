@@ -193,6 +193,7 @@ namespace bluepadhub {
 
   void BluepadHub::disconnectController() {
     if (bp32Controller != nullptr) {
+      
       bp32Controller->disconnect();
       bp32Controller = nullptr;
       Serial.println("BP32: Controller disconnected");
@@ -200,6 +201,8 @@ namespace bluepadhub {
       statusIndicator->setStatusPattern(StatusIndicator::StatusPattern::Idle);
 
       vTaskDelayMillis(100); // delay to ensure BT communication is completed before power off
+
+      profile->failsafe();
     }
   }
 
@@ -222,9 +225,13 @@ namespace bluepadhub {
 
   void BluepadHub::startDeepSleep() {
 
-    if (isDeepSleepEnabled()) {
+    if (isDeepSleepEnabled()) {   
+
       statusIndicator->stop();
-      disconnectController();      
+      disconnectController();  
+      profile->failsafe();  
+        
+      vTaskDelayMillis(100);
       deepSleep->startDeepSleep();    
     } else {
       Serial.println("WARNING: deep sleep was not initialized");

@@ -13,10 +13,11 @@
 
 namespace bluepadhub {
 
-  void StatusIndicator::taskStatusIndicator(void *param) {
+  void StatusIndicator::task() {
+    
     while (1) {
       vTaskDelay(1);
-      static_cast<StatusIndicator*>(param)->showStatusPattern();
+      showStatusPattern();
     }
   }
 
@@ -26,7 +27,11 @@ namespace bluepadhub {
         ::BluepadHub.setStatusIndicator(this);
     }
     
-    xTaskCreate(taskStatusIndicator, "StatusIndicator", TASK_STACK_SIZE, this, 0, NULL);
+    xTaskCreate( [](void* ctx) {
+
+        static_cast<StatusIndicator*>(ctx)->task();
+
+    }, "StatusIndicator", TASK_STACK_SIZE, this, 0, NULL);
   }
 
   void StatusIndicator::patternDelayMillis(int timeout) {

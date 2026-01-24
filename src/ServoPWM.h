@@ -27,6 +27,10 @@ namespace bluepadhub {
             void begin() {
                 begin(pwm_pin);
             };
+            
+            void detach() {
+                Servo::detach();
+            };
 
         private:
             virtual void outputServoPulse(int channel, uint16_t pulse);  

@@ -18,7 +18,6 @@
 //
 
 #include <BluepadHub.h>
-#include <ServoPWM.h>
 #include <MouldKingExtensions.h>
 
 #include "LedIndicator.h"

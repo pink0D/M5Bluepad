@@ -133,7 +133,7 @@ class : public bluepadhub::Profile {
     MK.connect(); // broadcast connect message to module
 
     // indicate event
-    AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::ProfileSelect);
+    AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::Select);
   }
 
 } MyProfile;
