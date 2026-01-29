@@ -63,9 +63,9 @@ class : public bluepadhub::Profile {
   };
 
   // this method is called after BLE initialization is complete
-  // since MK module is controlled over Bluetooth, connect() method must be here, not in setup()
+  // since MK module is controlled over Bluetooth, connectAsync() method must be here, not in setup()
   void afterSetup() {
-    mk.connect();
+    mk.connectAsync();
 
     // comment this line after first pairing
     BluepadHub.enablePairing();

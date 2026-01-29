@@ -72,7 +72,7 @@ namespace bluepadhub {
             case HCI_EVENT_PACKET:
                 switch (hci_event_packet_get_type(packet)) {
 
-                    // these events are handles in Bluepad32's handler
+                    // these events are handled in Bluepad32's handler
                     /*
                     case HCI_EVENT_PIN_CODE_REQUEST:
                         // inform about pin code request

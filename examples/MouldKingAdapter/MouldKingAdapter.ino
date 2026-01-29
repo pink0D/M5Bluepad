@@ -75,9 +75,9 @@ class : public bluepadhub::Profile {
   };
 
   // this method is called after BLE initialization is complete
-  // since MK module is controlled over Bluetooth, connect() method must be here, not in setup()
+  // since MK module is controlled over Bluetooth, connectAsync() method must be here, not in setup()
   void afterSetup() {
-    MK.connect();
+    MK.connectAsync();
   };  
 
   // process updates from controller
@@ -130,7 +130,7 @@ class : public bluepadhub::Profile {
 
     // set which MK module is controlled - up to three modules can be selected
     MK.setInstanceNumber( (++instanceNum) % 3 ); 
-    MK.connect(); // broadcast connect message to module
+    MK.connectAsync(); // broadcast connect message to module
 
     // indicate event
     AtomLiteIndicator.setEventPattern(bluepadhub::StatusIndicator::EventPattern::Select);

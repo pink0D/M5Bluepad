@@ -1,0 +1,19 @@
+====JSON START====
+{
+    requestType: "updateConfig",
+    requestPayload: {
+        "motorMinPWM": 25,
+        "motorInvert": false,
+        "motorBrake": true,
+        "servoMaxAngle": 90,
+        "servoInvert": false,
+        "simpleMode": false,
+        "autoPowerOn": false,
+        "wifiSSID": "WIFI_SSID",
+        "wifiPassword": "WIFI_PASSWORD",
+        "botToken": "XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        "chatId": "XXXXXXXXX",
+        "deviceName": "M5Stack Atomic HDriver Base"
+    }
+}
+====JSON END====

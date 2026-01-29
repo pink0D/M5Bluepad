@@ -97,4 +97,74 @@ namespace bluepadhub {
     }
   }
 
+  double Profile::getInputValue(BluepadController* ctl, BluepadControllerInput input) {
+
+    if (input == BluepadControllerInput::NullInput)
+        return 0;
+
+    if (input == BluepadControllerInput::L2)
+        return normalizeTriggerInput(ctl->brake());
+
+    if (input == BluepadControllerInput::R2)
+        return normalizeTriggerInput(ctl->throttle());
+
+    if (input == BluepadControllerInput::LeftStickX)
+        return normalizeStickInput(ctl->axisX());
+
+    if (input == BluepadControllerInput::LeftStickY)
+        return normalizeStickInput(ctl->axisY());
+
+    if (input == BluepadControllerInput::RightStickX)
+        return normalizeStickInput(ctl->axisRX());
+
+    if (input == BluepadControllerInput::RightStickY)
+        return normalizeStickInput(ctl->axisRY());
+
+    return 0;
+  }
+
+  bool Profile::getButtonValue(BluepadController* ctl, BluepadControllerButton button) {
+
+    if (button == BluepadControllerButton::NullButton)
+        return false;
+
+    if (button == BluepadControllerButton::L1)
+        return ctl->l1();
+
+    if (button == BluepadControllerButton::R1)
+        return ctl->r1();
+
+    if (button == BluepadControllerButton::L3)
+        return ctl->thumbL();
+
+    if (button == BluepadControllerButton::R3)
+        return ctl->thumbR();
+
+    if (button == BluepadControllerButton::Square)
+        return ctl->x();
+
+    if (button == BluepadControllerButton::Triangle)
+        return ctl->y();
+
+    if (button == BluepadControllerButton::Cross)
+        return ctl->a();
+
+    if (button == BluepadControllerButton::Circle)
+        return ctl->b();
+
+    if (button == BluepadControllerButton::DpadUp)
+        return ctl->dpad() & 0x01;
+
+    if (button == BluepadControllerButton::DpadDown)
+        return ctl->dpad() & 0x02;
+
+    if (button == BluepadControllerButton::DpadLeft)
+        return ctl->dpad() & 0x04;
+
+    if (button == BluepadControllerButton::DpadRight)
+        return ctl->dpad() & 0x08;
+
+    return false;
+  }  
+
 }

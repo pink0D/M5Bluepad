@@ -24,6 +24,13 @@ typedef Controller BluepadController;
 
 namespace bluepadhub {
 
+  enum class BluepadControllerButton {NullButton, 
+      DpadUp, DpadDown, DpadLeft, DpadRight, 
+      L1, R1, L3, R3, 
+      Square, Triangle, Cross, Circle};
+
+  enum class BluepadControllerInput {NullInput, L2, R2, LeftStickX, LeftStickY, RightStickX, RightStickY};
+
   struct ConfigParams { 
 
     /*
@@ -74,6 +81,12 @@ namespace bluepadhub {
 
       // returns normalized value in -1..1 range, with center and outer deadzone correction
       double normalizeStickInput(int input);
+
+      // returns normilized value in -1..1 for given controller input      
+      double getInputValue(BluepadController* ctl, BluepadControllerInput input);
+
+      // returns pressed state for given controller button
+      bool getButtonValue(BluepadController* ctl, BluepadControllerButton button);
   };
 
 }

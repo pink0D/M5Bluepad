@@ -202,6 +202,10 @@ namespace bluepadhub {
             return saveSettingsToJson();
         }
 
+        else if (requestType == "getDeviceInfo") {
+            return getDeviceInfo();
+        }
+
         else if (requestType == "updateConfig") {
 
             JsonDocument jsonConfig = request["requestPayload"];

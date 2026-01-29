@@ -49,7 +49,9 @@ namespace bluepadhub {
             virtual void applySettings() {};
 
             virtual bool loadSettingsFromJson(JsonDocument &json) { return false; };
-            virtual JsonDocument saveSettingsToJson() { return JsonDocument(); }; 
+            virtual JsonDocument saveSettingsToJson() { return JsonDocument(); };
+
+            virtual JsonDocument getDeviceInfo() { return JsonDocument(); };
 
         private:
 
