@@ -23,8 +23,8 @@ namespace bluepadhub {
                 this->pwm_pin = pwm_pin;
             };
             
-            void begin(int pwm_pin);
-            void begin() {
+            virtual void begin(int pwm_pin);
+            virtual void begin() {
                 begin(pwm_pin);
             };
             

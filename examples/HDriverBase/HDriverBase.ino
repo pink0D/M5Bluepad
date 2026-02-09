@@ -32,6 +32,7 @@ class : public bluepadhub::Profile {
 
     // if Deep Sleep is used, AtomDeepSleep.begin() must be called before any other initialization
     // when battery is connected, the controller goes to deep sleep mode - click Atom Lite button to for wake up
+    AtomDeepSleep.setCheckWakeUpReason(true);
     AtomDeepSleep.begin();
     
     // WARNING: 

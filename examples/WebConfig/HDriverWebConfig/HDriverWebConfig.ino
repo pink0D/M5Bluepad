@@ -9,9 +9,11 @@
 
 #include <BluepadHub.h>
 #include <M5Extensions.h>
+#include <light\DumboRCLED.h>
 #include <TelegramBot.h>
 #include <WebConfig.h>
 #include <string>
+
 
 // TelegramBot significantly increases the size of compiled sketch
 // Before upload, set partition scheme to "Minimal SPIFFS (Large APPS with OTA)" 
@@ -22,7 +24,7 @@ M5AtomDeepSleep       AtomDeepSleep;
 
 M5HDriverBaseExt HDriverBaseExt;                    // HDriverBase extension
 M5GroveServo GroveServo(SERVO_ATOM_LITE_PORT_A1);   // Servo connected directy to Atom's grove port
-M5GroveServo LEDServo(SERVO_ATOM_LITE_PORT_A2);     // LED Servo 
+DumboRCLED RCLed(SERVO_ATOM_LITE_PORT_A2);     // LED Servo 
 
 class : public bluepadhub::Profile, public bluepadhub::WebConfig {
 
@@ -139,8 +141,7 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
 
     GroveServo.begin();
 
-    LEDServo.begin();
-    LEDServo.updateServo(-1.0);
+    RCLed.begin();
   };
 
   void applySettings() {
@@ -203,26 +204,19 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
     // toggle lights mode
     if (wasClicked(ctl->dpad() & 0x01)) {
 
-      xTaskCreate( [](void* p) {
-
-        LEDServo.updateServo(-1.0);
-        vTaskDelayMillis(200);
-        LEDServo.updateServo(0.0);
-        vTaskDelete(NULL);
-
-      }, "taskLight", 8*1024, nullptr, 0, nullptr);
+      RCLed.toggleMode();
     }
 
     // lights off
     if (wasClicked(ctl->dpad() & 0x02)) {
-      LEDServo.updateServo(-1.0);
+      RCLed.stop();
     }
   };
 
   void failsafe() {
     GroveServo.stop();
     HDriverBaseExt.stop();
-    LEDServo.updateServo(-1.0);
+    RCLed.stop();
   };
 
   bool isLowBatteryState() {

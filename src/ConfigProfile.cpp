@@ -153,16 +153,16 @@ namespace bluepadhub {
         return ctl->b();
 
     if (button == BluepadControllerButton::DpadUp)
-        return ctl->dpad() & 0x01;
+        return ctl->dpad() & DPAD_UP;
 
     if (button == BluepadControllerButton::DpadDown)
-        return ctl->dpad() & 0x02;
+        return ctl->dpad() & DPAD_DOWN;
 
     if (button == BluepadControllerButton::DpadLeft)
-        return ctl->dpad() & 0x04;
+        return ctl->dpad() & DPAD_LEFT;
 
     if (button == BluepadControllerButton::DpadRight)
-        return ctl->dpad() & 0x08;
+        return ctl->dpad() & DPAD_RIGHT;
 
     return false;
   }  

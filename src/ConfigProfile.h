@@ -20,6 +20,11 @@
 
 #define wasClicked(btn) wasClickedImpl(__LINE__,(btn))
 
+#define DPAD_UP     0x01
+#define DPAD_DOWN   0x02
+#define DPAD_LEFT   0x08
+#define DPAD_RIGHT  0x04
+
 typedef Controller BluepadController;
 
 namespace bluepadhub {
@@ -64,6 +69,7 @@ namespace bluepadhub {
       virtual void beforeSetup() {};
       virtual void setup() {};   
       virtual void afterSetup() {};   
+      virtual void update() {};
       virtual void processBluepadController(BluepadController *ctl) {};
       virtual void failsafe() {};
       virtual void processButtonClick() {};

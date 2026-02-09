@@ -54,7 +54,9 @@ namespace bluepadhub {
 
     time_idle_wait = profile->idleTimeout * 1000;
    
-    BP32.setup(&onConnectedController, &onDisconnectedController);
+    BP32.setup([](BluepadController* ctl) { ::BluepadHub.onConnectedController(ctl); },
+               [](BluepadController* ctl) { ::BluepadHub.onDisconnectedController(ctl); });
+
     BP32.enableVirtualDevice(false);
 
     auto initialStatusPattern = StatusIndicator::StatusPattern::Idle;
@@ -72,6 +74,7 @@ namespace bluepadhub {
     Serial.println("BluepadHub::begin completed");
 
     profile->afterSetup();
+    profile->failsafe();
 
     if (profile->enablePairingAfterStartup) {
       enablePairing();
@@ -86,8 +89,8 @@ namespace bluepadhub {
 
     long time_now = esp_timer_get_time();
 
-    // stop motors if controller is not sending updates (possible out of range)
-    if ( (time_controller_update > 0) && (time_now > time_controller_update + profile->controllerTimeout*1000) ){
+    // stop motors if controller is not sending updates (possible out of range) and controllerTimeout is enabled
+    if ( (time_controller_update > 0) && (profile->controllerTimeout > 0) && (time_now > time_controller_update + profile->controllerTimeout*1000) ) {
       Serial.println("Controller timeout");
       time_controller_update = 0;
       
@@ -95,8 +98,6 @@ namespace bluepadhub {
     }
 
     // idle timeout 
-    static bool idle_timeout_handled = false;
-
     if (time_now > time_idle_wait) {
 
       if (!idle_timeout_handled) {
@@ -162,17 +163,33 @@ namespace bluepadhub {
       // vTaskDelay(100);
     }
 
+    // XBox controllers might not send updates continiously, 
+    // profile->update() is called even if there was no data from controller
+    profile->update();
+
   }
 
   void BluepadHub::onConnectedController(BluepadController* ctl) {
-    if (::BluepadHub.bp32Controller == nullptr) {
+
+    if (bp32Controller == nullptr) {
+
       ControllerProperties properties = ctl->getProperties();
       Serial.printf("BP32: controller connected: %s, VID=0x%04x, PID=0x%04x\n", ctl->getModelName().c_str(), properties.vendor_id, properties.product_id);
-      ::BluepadHub.bp32Controller = ctl;
-      ::BluepadHub.time_controller_update = 0;
-      BP32.enableNewBluetoothConnections(false); // exit pairing mode after connection
       
-      ::BluepadHub.statusIndicator->setStatusPattern(StatusIndicator::StatusPattern::Connected);
+      bp32Controller = ctl;
+      time_idle_wait = esp_timer_get_time() + profile->idleTimeout * 1000;
+      idle_timeout_handled = false;
+      
+      BP32.enableNewBluetoothConnections(false); // exit pairing mode after connection
+
+      String model = ctl->getModelName();
+      model.toLowerCase();
+
+      // disable controller timeouts for XBox Controllers
+      if (model.indexOf("xbox") > -1)
+        profile->controllerTimeout = 0;
+      
+      statusIndicator->setStatusPattern(StatusIndicator::StatusPattern::Connected);
 
     } else {
       Serial.println("BP32: refusing new connection since another controller is already connected");
@@ -181,14 +198,15 @@ namespace bluepadhub {
   }
 
   void BluepadHub::onDisconnectedController(BluepadController* ctl) {
-      if (::BluepadHub.bp32Controller == ctl) {
+      if (bp32Controller == ctl) {
           Serial.println("BP32: Controller disconnected");
-          ::BluepadHub.bp32Controller = nullptr;
+          bp32Controller = nullptr;
       } else {
           Serial.println("BP32: Unknown controller disconnected");
       }
 
-      ::BluepadHub.statusIndicator->setStatusPattern(StatusIndicator::StatusPattern::Idle);
+      profile->failsafe();
+      statusIndicator->setStatusPattern(StatusIndicator::StatusPattern::Idle);
   }
 
   void BluepadHub::disconnectController() {

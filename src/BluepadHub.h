@@ -63,13 +63,14 @@ namespace bluepadhub {
 
     private:
 
-      static void onConnectedController(BluepadController* ctl);
-      static void onDisconnectedController(BluepadController* ctl);
+      void onConnectedController(BluepadController* ctl);
+      void onDisconnectedController(BluepadController* ctl);
 
       BluepadController* bp32Controller = nullptr;
 
       long time_controller_update = 0;
       long time_idle_wait = 0;
+      bool idle_timeout_handled = false;
 
       Profile* profile = nullptr;
       StatusIndicator* statusIndicator = nullptr;

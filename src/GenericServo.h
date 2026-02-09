@@ -28,7 +28,7 @@ namespace bluepadhub {
 
             void setController(GenericServoController* _controller, int _channel);
             
-            void stop();
+            virtual void stop();
 
             void setServoPulseRange(uint16_t pulse_min, uint16_t pulse_max);
             void setServoMaxAngle(uint16_t angle_max);
