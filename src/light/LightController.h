@@ -20,6 +20,7 @@ namespace bluepadhub
                                 
                 bool DRL = false;
                 bool headlights = false;
+                bool headBlink = false;
 
                 bool leftSignal = false;        
                 bool rightSignal = false;
@@ -48,7 +49,8 @@ namespace bluepadhub
                 brakeTimeout = timeout;
             };
 
-            virtual void begin() {};
+            virtual void begin() { setup(); };
+            virtual void setup() {};
             
             void stop() {
 
@@ -61,6 +63,7 @@ namespace bluepadhub
                 State s;
                 s.DRL = false;
                 s.headlights = false;
+                s.headBlink = false;
                 s.brake = false;
                 s.leftSignal = false;
                 s.rightSignal = false;
@@ -83,6 +86,9 @@ namespace bluepadhub
             };
             void setHeadlights(bool state) { 
                 headlights = state; 
+            };
+            void blinkHeadlights(bool blink) {
+                headBlink = blink;
             };
 
             void toggleHazardLights() { 
@@ -156,6 +162,7 @@ namespace bluepadhub
 
             bool DRL = false;
             bool headlights = false;
+            bool headBlink = false;
             bool hazardLights = false;
             bool leftSignal = false; 
             bool rightSignal = false;

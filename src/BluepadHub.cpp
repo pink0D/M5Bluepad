@@ -245,6 +245,7 @@ namespace bluepadhub {
 
     if (isDeepSleepEnabled()) {   
 
+      statusIndicator->setPowerOffStatus();
       statusIndicator->stop();
       disconnectController();  
       profile->failsafe();  

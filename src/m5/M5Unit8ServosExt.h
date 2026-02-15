@@ -21,7 +21,10 @@ class M5Unit8ServosExt : public M5Unit8Servos, public bluepadhub::MultiServoUnit
                uint8_t addr = M5_UNIT_8SERVO_DEFAULT_ADDR) {
         
       if ( M5Unit8Servos::begin(wire, sda, scl, addr) ) {
-        setAllPinMode(SERVO_CTL_MODE);
+
+        if (setPinMode)
+          setAllPinMode(SERVO_CTL_MODE);
+
         return true;
       }
 
@@ -32,9 +35,15 @@ class M5Unit8ServosExt : public M5Unit8Servos, public bluepadhub::MultiServoUnit
       stopServos();
     };
 
+    void setServoMode(bool set) {
+      this->setPinMode = set;
+    };
+
 
   private:
     virtual void outputServoPulse(int channel, uint16_t pulse);
+
+    bool setPinMode = true;
     
 };
 

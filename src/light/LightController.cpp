@@ -44,6 +44,7 @@ namespace bluepadhub
 
         state.DRL = DRL;
         state.headlights = headlights;
+        state.headBlink = headBlink;
 
         state.signalBlink = this->signalBlink;
 

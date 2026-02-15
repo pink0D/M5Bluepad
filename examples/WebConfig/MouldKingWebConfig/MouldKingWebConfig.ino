@@ -9,7 +9,7 @@
 
 
 #include <BluepadHub.h>
-#include <UniProfile.h>
+#include <web/UniProfile.h>
 #include <M5Extensions.h>
 #include <MouldKingExtensions.h>
 
@@ -43,7 +43,7 @@ class MouldKingUniBase:
           
       AtomLiteButton.begin();
 
-      // enablePairingAfterStartup = true;
+      enablePairingAfterStartup = true;
       
       // controllerStickDeadzoneLow = 50;        // 0 = lowest value for stick input
       // controllerStickDeadzoneHigh = 500;      // 512 = highest value for stick input

@@ -9,8 +9,8 @@
 
 #include <BluepadHub.h>
 #include <M5Extensions.h>
-#include <TelegramBot.h>
 
+#include <web/TelegramBot.h>
 // TelegramBot significantly increases the size of compiled sketch
 // Before upload, set partition scheme to "Minimal SPIFFS (Large APPS with OTA)" 
 

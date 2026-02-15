@@ -9,12 +9,11 @@
 
 #include <BluepadHub.h>
 #include <M5Extensions.h>
-#include <light\DumboRCLED.h>
-#include <TelegramBot.h>
-#include <WebConfig.h>
+#include <light/DumboRCLED.h>
+#include <web/WebConfig.h>
 #include <string>
 
-
+#include <web/TelegramBot.h>
 // TelegramBot significantly increases the size of compiled sketch
 // Before upload, set partition scheme to "Minimal SPIFFS (Large APPS with OTA)" 
 
@@ -38,6 +37,7 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
   bool simpleMode;
 
   bool autoPowerOn;
+  bool autoPairing;
 
   String wifiSSID;
   String wifiPassword;
@@ -55,7 +55,8 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
     servoMaxAngle = 90;
 
     simpleMode = false;
-    autoPowerOn = false;
+    autoPowerOn = true;
+    autoPairing = true;
 
     wifiSSID = "WIFI_SSID";
     wifiPassword = "WIFI_PASSWORD";
@@ -77,6 +78,7 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
 
     json["simpleMode"] = simpleMode;
     json["autoPowerOn"] = autoPowerOn;
+    json["autoPairing"] = autoPairing;
 
     json["wifiSSID"] = wifiSSID;
     json["wifiPassword"] = wifiPassword;
@@ -100,6 +102,7 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
 
     simpleMode = json["simpleMode"];
     autoPowerOn = json["autoPowerOn"];
+    autoPairing = json["autoPairing"];
 
     wifiSSID = String((const char*)json["wifiSSID"]);
     wifiPassword = String((const char*)json["wifiPassword"]);
@@ -125,7 +128,7 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
 
     WebConfig::begin();
 
-    enablePairingAfterStartup = true;
+    enablePairingAfterStartup = autoPairing;
 
     if (autoPowerOn)
       AtomDeepSleep.setCheckWakeUpReason(false);

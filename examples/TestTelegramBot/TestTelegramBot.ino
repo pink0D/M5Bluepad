@@ -7,7 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#include <TelegramBot.h>
+#include <web/TelegramBot.h>
 
 //  Arduino setup function
 void setup() {

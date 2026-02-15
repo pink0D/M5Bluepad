@@ -34,10 +34,11 @@
 #define SERVO_ATOMIC_BASE_PORT_C1  19
 #define SERVO_ATOMIC_BASE_PORT_C2  22
 
-#include "M5AtomicMotionExt.h"
-#include "M5HDriverBaseExt.h"
-#include "M5Unit8ServosExt.h"
-#include "M5Atom.h"
+#include "m5/M5AtomicMotionExt.h"
+#include "m5/M5HDriverBaseExt.h"
+#include "m5/M5Unit8ServosExt.h"
+#include "m5/M5Atom.h"
+#include "m5/M5Unit8ServosLightContoller.h"
 #include "ServoPWM.h"
 
 typedef bluepadhub::ServoPWM M5GroveServo;
