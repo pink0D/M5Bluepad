@@ -58,6 +58,7 @@ namespace bluepadhub {
       void enablePairing();
       void resetPairing();
       void disconnectController();  
+      bool isControllerConnected();
       
       void startDeepSleep();
 

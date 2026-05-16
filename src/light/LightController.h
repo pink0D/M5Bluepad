@@ -27,6 +27,7 @@ namespace bluepadhub
                 bool signalBlink = false;
                  
                 bool brake = false;
+                bool reverse = false;
             };
 
             void enableAutoTurnSignals(bool enable = true) { 
@@ -72,7 +73,7 @@ namespace bluepadhub
                 updateLights(s);
             };
 
-            void update(double steer, double speed, bool brake);
+            void update(double steer, double speed, bool brake, bool reverse);
 
             void toggleDRL() { 
                 DRL = !DRL; 

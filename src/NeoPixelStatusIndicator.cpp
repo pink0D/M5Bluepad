@@ -57,6 +57,14 @@ namespace bluepadhub {
       setLedColor(0x00FF00);  
       patternDelayMillis(100);
     }
+
+    if (statusPattern == StatusPattern::Charging) {
+      for (int i=0; i<255; i+=25) {
+        setLedColor(i << 8);  
+        vTaskDelayMillis(100);  
+      }
+      patternDelayMillis(500);
+    }
     
     if (statusPattern == StatusPattern::Error) {
       setLedColor(0xFF0000);  

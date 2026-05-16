@@ -17,9 +17,9 @@ class M5Unit8ServosLightContoller : public bluepadhub::LightController {
 
   private:
 
-    bool channelActive[8];
-    unsigned long channelColor[8];
-    unsigned long newColor[8];
+    bool channelActive[M5_UNIT_8SERVOS_COUNT];
+    unsigned long channelColor[M5_UNIT_8SERVOS_COUNT];
+    unsigned long newColor[M5_UNIT_8SERVOS_COUNT];
 
     M5Unit8Servos *unit = nullptr;
 
@@ -28,7 +28,7 @@ class M5Unit8ServosLightContoller : public bluepadhub::LightController {
 
     M5Unit8ServosLightContoller() {
 
-        for (int channel=0; channel<8; channel++) {
+        for (int channel=0; channel<M5_UNIT_8SERVOS_COUNT; channel++) {
             channelActive[channel] = false;
             channelColor[channel] = 0;
             newColor[channel] = 0;
@@ -45,8 +45,13 @@ class M5Unit8ServosLightContoller : public bluepadhub::LightController {
 
     void activateChannel(int channel) {
 
+        if ( (channel < 0) || (channel >= M5_UNIT_8SERVOS_COUNT) ) {
+            Serial.println("WARNING: M5Unit8ServosLightContoller::activateChannelinvalid channel");
+            return;
+        }
+
         if (unit == nullptr) {
-            Serial.println("WARNING: no Unit 8Servos was set");
+            Serial.println("WARNING: M5Unit8ServosLightContoller: no Unit 8Servos was set");
             return;
         }
         
@@ -60,13 +65,13 @@ class M5Unit8ServosLightContoller : public bluepadhub::LightController {
     };
 
     void resetColors() {
-      for (int channel=0; channel<8; channel++) {
+      for (int channel=0; channel<M5_UNIT_8SERVOS_COUNT; channel++) {
         newColor[channel] = 0;
       }
     };
 
     void setColor(int channel, unsigned long color) {
-      newColor[channel] = color;
+      newColor[channel % M5_UNIT_8SERVOS_COUNT] = color;
     };
 
     void updateColors() {
@@ -74,7 +79,7 @@ class M5Unit8ServosLightContoller : public bluepadhub::LightController {
       if (unit == nullptr)
         return;
 
-      for (int channel=0; channel<8; channel++) {
+      for (int channel=0; channel<M5_UNIT_8SERVOS_COUNT; channel++) {
 
         if ( (channelActive[channel]) && (channelColor[channel] != newColor[channel]) ) {
           channelColor[channel] = newColor[channel];

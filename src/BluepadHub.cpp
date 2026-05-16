@@ -224,6 +224,11 @@ namespace bluepadhub {
     }
   }
 
+  bool BluepadHub::isControllerConnected() {
+    
+    return bp32Controller != nullptr;
+  }
+
   void BluepadHub::enablePairing() {
     Serial.println("BluepadHub::enablePairing");
 

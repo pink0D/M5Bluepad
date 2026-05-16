@@ -30,6 +30,10 @@ class M5AtomicMotionExt : private M5AtomicMotion, public bluepadhub::MultiServoU
       stopServos();
     };
 
+    INA226* getINA226() {
+      return &ina226;
+    };
+
   private:
     virtual void outputServoPulse(int channel, uint16_t pulse);
     virtual void outputMotorSpeed(int channel, double normalized_speed);

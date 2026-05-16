@@ -13,7 +13,7 @@
 
 namespace bluepadhub
 {
-    void LightController::update(double steer, double speed, bool brake) {
+    void LightController::update(double steer, double speed, bool brake, bool reverse) {
 
         unsigned long time = millis();
 
@@ -45,6 +45,8 @@ namespace bluepadhub
         state.DRL = DRL;
         state.headlights = headlights;
         state.headBlink = headBlink;
+
+        state.reverse = reverse;
 
         state.signalBlink = this->signalBlink;
 

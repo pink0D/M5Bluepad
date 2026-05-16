@@ -16,7 +16,7 @@ namespace bluepadhub {
     public:
       StatusIndicator() {};
 
-      enum class StatusPattern {None, Idle, Pairing, Connected, Error, Warning, PowerOff};
+      enum class StatusPattern {None, Idle, Pairing, Charging, Connected, Error, Warning, PowerOff};
       enum class EventPattern {None, Reset, Success, Error, Warning, Info, Select};
 
       virtual void begin(bool setBluepadHubStatusIndicator = true);
