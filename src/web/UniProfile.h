@@ -59,8 +59,8 @@ namespace bluepadhub {
                     if (config.motor[i].input == BluepadControllerInput::NullInput)
                         continue;
 
-                    double input = this->getInputValue(ctl, config.motor[i].input);
-                    double brake = this->getInputValue(ctl, config.motor[i].brake);
+                    float input = this->getInputValue(ctl, config.motor[i].input);
+                    float brake = this->getInputValue(ctl, config.motor[i].brake);
 
                     if (config.motor[i].invertInput)
                         input = -input;
@@ -79,7 +79,7 @@ namespace bluepadhub {
                     if (config.servo[i].input == BluepadControllerInput::NullInput)
                         continue;
 
-                    double input = this->getInputValue(ctl, config.servo[i].input);
+                    float input = this->getInputValue(ctl, config.servo[i].input);
 
                     if (config.servo[i].invertInput)
                         input = -input;
@@ -102,8 +102,8 @@ namespace bluepadhub {
 
                 for (int i=0; i<this->getNumMotors(); i++) {
 
-                    this->setMotorLimits(i,   ((double)config.motor[i].minPWM) / 100.0, 
-                                            ((double)config.motor[i].maxPWM) / 100.0);
+                    this->setMotorLimits(i,   ((float)config.motor[i].minPWM) / 100.0, 
+                                            ((float)config.motor[i].maxPWM) / 100.0);
                     
                     if (!initialUpdate) {   
                         this->updateMotor(i, 0);

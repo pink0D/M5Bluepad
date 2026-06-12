@@ -23,7 +23,7 @@ namespace bluepadhub {
             void begin(int pwm_pin1, int pwm_pin2, int pwm_frequency);
 
         private:
-            virtual void outputMotorSpeed(int channel, double normalized_speed);
+            virtual void outputMotorSpeed(int channel, float normalized_speed);
             virtual void outputMotorBrake(int channel);
 
             ESP32PWM pwm_c1;

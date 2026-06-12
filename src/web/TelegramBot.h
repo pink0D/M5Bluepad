@@ -39,7 +39,7 @@ namespace bluepadhub {
                 this->device_name = _device_name;
             };
 
-            void sendVoltageStatus(double voltage, bool isLowVoltage);
+            void sendVoltageStatus(float voltage, bool isLowVoltage);
             void sendMessage(const String& text, const String& parse_mode);
 
         private:

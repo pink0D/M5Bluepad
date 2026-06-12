@@ -106,7 +106,7 @@ class : public bluepadhub::Profile {
     // 1.0 = full speed forward / max servo rotation clockwise
     // -1.0 = full speed reverse / max servo rotation counter-clockwise
     // 0.0 stops motors / returns servo to zero position
-    // 0.5 / 0.75 or any other double value = set motor speed / servo rotation to 50% / 75% / etc
+    // 0.5 / 0.75 or any other float value = set motor speed / servo rotation to 50% / 75% / etc
 
     // normalizeStickInput/normalizeTriggerInput methods apply deadzone correction to raw values
     // then integer values from controller are mapped to normalized range (-1.0, 1.0) 

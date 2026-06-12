@@ -13,7 +13,7 @@
 
 namespace bluepadhub
 {
-    void LightController::update(double steer, double speed, bool brake, bool reverse) {
+    void LightController::update(float steer, float speed, bool brake, bool reverse) {
 
         unsigned long time = millis();
 

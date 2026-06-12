@@ -21,7 +21,7 @@ class MKModuleExt : public BaseClass, public bluepadhub::MultiMotorUnit<numChann
         MKModuleExt(int instanceNum = 0, bool immediateUpdate = false) : BaseClass(instanceNum, immediateUpdate) {};
 
         // override updateMotorOutput from MouldKingino so the value goes through OutputFilter in MultiMotorUnit
-        virtual void updateMotorOutput(int channel, double normalized_value) {
+        virtual void updateMotorOutput(int channel, float normalized_value) {
             bluepadhub::MultiMotorUnit<numChannels>::updateMotorSpeed(channel, normalized_value);
         };
 
@@ -36,7 +36,7 @@ class MKModuleExt : public BaseClass, public bluepadhub::MultiMotorUnit<numChann
         };
 
     private:
-        virtual void outputMotorSpeed(int channel, double normalized_speed) {            
+        virtual void outputMotorSpeed(int channel, float normalized_speed) {            
             BaseClass::updateMotorOutput(channel, normalized_speed);
         };
 

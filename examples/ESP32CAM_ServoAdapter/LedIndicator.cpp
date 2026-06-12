@@ -28,9 +28,9 @@ void LedIndicator::clear() {
   setLedLevel(0);
 }
 
-void LedIndicator::setLedLevel(double level) {
+void LedIndicator::setLedLevel(float level) {
     
-  pwm.writeScaled( ( ( (double)level)  / 255.0 ) * ledBrightness);
+  pwm.writeScaled( ( ( (float)level)  / 255.0 ) * ledBrightness);
 }
 
 void LedIndicator::showStatusPattern() {

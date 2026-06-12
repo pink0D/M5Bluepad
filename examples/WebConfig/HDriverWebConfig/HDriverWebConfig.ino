@@ -174,8 +174,8 @@ class : public bluepadhub::Profile, public bluepadhub::WebConfig {
     if (this->wasClicked(ctl->miscButtons() & 0x04))
         setDiscoverable(60);    
 
-    double speed = normalizeTriggerInput(ctl->throttle());  // R trigger to accelerate
-    double steer = normalizeStickInput(ctl->axisX());       // L stick to steer
+    float speed = normalizeTriggerInput(ctl->throttle());  // R trigger to accelerate
+    float steer = normalizeStickInput(ctl->axisX());       // L stick to steer
     bool brake =  normalizeTriggerInput(ctl->brake()) > 0;  // L trigger to brake
 
     if (ctl->y() || ctl->r1()) // reverse while holding Y or R1

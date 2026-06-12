@@ -38,7 +38,7 @@ namespace bluepadhub {
     if (angle_max > 180)
       angle_max = 180;
 
-    double delta = 500.0 * ( ((double) angle_max) / 90.0 );
+    float delta = 500.0 * ( ((float) angle_max) / 90.0 );
 
     servoPulseMin = 1500 - delta;
     servoPulseMax = 1500 + delta;
@@ -46,9 +46,9 @@ namespace bluepadhub {
     servoPulseWidth = delta;
   }
 
-  void GenericServo::updateServo(double normalized_position) {
+  void GenericServo::updateServo(float normalized_position) {
 
-    double pulse = servoPulseMiddle + servoPulseWidth * updateValue(normalized_position);
+    float pulse = servoPulseMiddle + servoPulseWidth * updateValue(normalized_position);
 
     if (controller != nullptr)
       controller->outputServoPulse(channel, pulse);

@@ -42,7 +42,7 @@ namespace bluepadhub
                 hardBrakeBlinking = enable;
             };
 
-            void setAutoTurnSignalsMinSteer(double value) {
+            void setAutoTurnSignalsMinSteer(float value) {
                 autoTurnSignalsMinSteer = value;
             };
 
@@ -73,7 +73,7 @@ namespace bluepadhub
                 updateLights(s);
             };
 
-            void update(double steer, double speed, bool brake, bool reverse);
+            void update(float steer, float speed, bool brake, bool reverse);
 
             void toggleDRL() { 
                 DRL = !DRL; 
@@ -153,7 +153,7 @@ namespace bluepadhub
             bool autoBrakeSignals = false;
             bool hardBrakeBlinking = false;
 
-            double autoTurnSignalsMinSteer = 0.5;
+            float autoTurnSignalsMinSteer = 0.5;
 
             unsigned long brakeTimeout = 1000;
             unsigned long autoBrakeTimeout;
@@ -172,8 +172,8 @@ namespace bluepadhub
             bool signalBlink = false;
             unsigned long blinkTimeout = 0;
 
-            double speed = 0;
-            double steer = 0;
+            float speed = 0;
+            float steer = 0;
             bool brake = false;
 
 

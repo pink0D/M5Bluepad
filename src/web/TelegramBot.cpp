@@ -15,7 +15,7 @@
 
 namespace bluepadhub {
 
-  void TelegramBot::sendVoltageStatus(double voltage, bool isLowVoltage) {
+  void TelegramBot::sendVoltageStatus(float voltage, bool isLowVoltage) {
 
     String mac = WiFi.macAddress();
 

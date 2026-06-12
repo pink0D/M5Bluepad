@@ -30,13 +30,13 @@ namespace bluepadhub {
                 return lowBattery;
             };
 
-            double getVoltage() {
+            float getVoltage() {
                 update();
                 return voltage;
             };
 
             // sets cut-off value for a single lithium cell
-            void setMinCellVoltage(double min_cell_voltage) {
+            void setMinCellVoltage(float min_cell_voltage) {
                 minCellVoltage = min_cell_voltage;
             };
 
@@ -71,7 +71,7 @@ namespace bluepadhub {
                     voltageSampleCount = 20;
                 }
 
-                voltageSamples = new double[voltageSampleCount];
+                voltageSamples = new float[voltageSampleCount];
 
                 for (int i=0; i<voltageSampleCount; i++) {
                     voltageSamples[i] = 0;
@@ -83,26 +83,26 @@ namespace bluepadhub {
             }
             
         protected:
-            virtual double readVoltage() { return 0; };
+            virtual float readVoltage() { return 0; };
             virtual void updateStatus() {};
             
         private:
 
             void update();
-            bool isLowVoltage(double voltage);
+            bool isLowVoltage(float voltage);
 
-            static double getAverageFromSamples(double *samples, int sampleCount);
+            static float getAverageFromSamples(float *samples, int sampleCount);
 
-            double voltage = 0;
+            float voltage = 0;
             bool lowBattery = false;
-            double minCellVoltage = 3.2;
+            float minCellVoltage = 3.2;
 
             long time_next_update = 0;
             long update_interval = 500000;
 
             int voltageReadCount = 5;
             int voltageSampleCount = 20;
-            double *voltageSamples = nullptr;
+            float *voltageSamples = nullptr;
             int voltageIndex = 0;
 
             bool printVoltageEnabled = false;

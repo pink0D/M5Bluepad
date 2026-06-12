@@ -20,7 +20,7 @@ namespace bluepadhub {
     setController(this, 0); 
   }
 
-  void MotorDriverHBridge::outputMotorSpeed(int channel, double normalized_speed) {
+  void MotorDriverHBridge::outputMotorSpeed(int channel, float normalized_speed) {
     if (isZeroValue(normalized_speed)) {
       pwm_c1.write(0);
       pwm_c2.write(0);

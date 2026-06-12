@@ -47,15 +47,15 @@ namespace bluepadhub {
                 return &dummyMotor;
             };
 
-            void setMotorLimits(uint8_t channel, double limit_min, double limit_max) {
+            void setMotorLimits(uint8_t channel, float limit_min, float limit_max) {
                 motor(channel)->setLimits(limit_min, limit_max);
             };
 
-            void updateMotorSpeed(uint8_t channel, double normalized_speed) {
+            void updateMotorSpeed(uint8_t channel, float normalized_speed) {
                 motor(channel)->updateSpeed(normalized_speed);
             };
 
-            void updateMotor(uint8_t channel, double normalized_speed) {
+            void updateMotor(uint8_t channel, float normalized_speed) {
                 updateMotorSpeed(channel, normalized_speed);
             };
 

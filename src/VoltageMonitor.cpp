@@ -13,10 +13,10 @@
 
 namespace bluepadhub {
 
-  double VoltageMonitor::getAverageFromSamples(double *samples, int sampleCount) {
+  float VoltageMonitor::getAverageFromSamples(float *samples, int sampleCount) {
 
     int num_samples = 0;
-    double sum = 0;
+    float sum = 0;
 
     for (int i=0; i<sampleCount; i++) {
       if (samples[i] > 0.5) {
@@ -26,7 +26,7 @@ namespace bluepadhub {
     }
 
     if (num_samples > 0) {
-      return sum / ( (double)num_samples);
+      return sum / ( (float)num_samples);
     } 
 
     return 0;
@@ -60,7 +60,7 @@ namespace bluepadhub {
     }
   }
 
-  bool VoltageMonitor::isLowVoltage(double voltage) {
+  bool VoltageMonitor::isLowVoltage(float voltage) {
 
     if (voltage > 0) {
 

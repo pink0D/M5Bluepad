@@ -35,7 +35,7 @@ namespace bluepadhub {
   }
 
 
-  double Profile::normalizeTriggerInput(int input) {
+  float Profile::normalizeTriggerInput(int input) {
 
     if (input < controllerTriggerDeadzoneLow)
       return 0;
@@ -43,20 +43,20 @@ namespace bluepadhub {
     if (input > controllerTriggerDeadzoneHigh)
       return 1;
 
-    return ((double)input) / 1024.0 ;
+    return ((float)input) / 1024.0 ;
   }
 
 
-  double Profile::normalizeStickInput(int input) {
+  float Profile::normalizeStickInput(int input) {
 
     if (abs(input) < controllerStickDeadzoneLow)
       return 0;
 
-    double sign = input > 0 ? 1.0 : -1.0;
+    float sign = input > 0 ? 1.0 : -1.0;
     if (abs(input) > controllerStickDeadzoneHigh)
       return sign;
 
-    return ((double)input) / 512.0;
+    return ((float)input) / 512.0;
   }
 
   void Profile::processButtonEvent(MultiFunctionButton::EventType eventType, MultiFunctionButton::ButtonState buttonState) {
@@ -97,7 +97,7 @@ namespace bluepadhub {
     }
   }
 
-  double Profile::getInputValue(BluepadController* ctl, BluepadControllerInput input) {
+  float Profile::getInputValue(BluepadController* ctl, BluepadControllerInput input) {
 
     if (input == BluepadControllerInput::NullInput)
         return 0;

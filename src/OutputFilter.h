@@ -17,24 +17,24 @@ namespace bluepadhub {
       public:
           OutputFilter() {};    
 
-          void setAntiJitter(double _antiJitter);
+          void setAntiJitter(float _antiJitter);
 
           static void resetIdleState() { idleState = true; };
           static bool isIdleState() { return idleState; };
 
       protected:
 
-          void setLimits(double _limitMin, double _limitMax);
-          double updateValue(double newValue);
-          double getValue() { return value; };
-          bool isZeroValue(double value);
+          void setLimits(float _limitMin, float _limitMax);
+          float updateValue(float newValue);
+          float getValue() { return value; };
+          bool isZeroValue(float value);
 
       private:
       
-          double antiJitter = 0.025;
-          double limitMin = 0.0;
-          double limitMax = 1.0;
-          double value = 0.0;
+          float antiJitter = 0.025;
+          float limitMin = 0.0;
+          float limitMax = 1.0;
+          float value = 0.0;
 
           static inline bool idleState = false;
   };  

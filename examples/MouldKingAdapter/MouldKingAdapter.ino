@@ -86,8 +86,8 @@ class : public bluepadhub::Profile {
     // normalizeStickInput/normalizeTriggerInput methods apply deadzone correction to raw values
     // then integer values from controller are mapped to normalized range (-1.0, 1.0) 
 
-    double speed = normalizeTriggerInput(ctl->throttle());  // R trigger to accelerate
-    double steer = normalizeStickInput(ctl->axisX());       // L stick to steer
+    float speed = normalizeTriggerInput(ctl->throttle());  // R trigger to accelerate
+    float steer = normalizeStickInput(ctl->axisX());       // L stick to steer
 
     if (ctl->y() || ctl->r1()) // reverse while holding Y or R1
       speed = -speed;

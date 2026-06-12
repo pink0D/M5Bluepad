@@ -14,7 +14,7 @@
 
 namespace bluepadhub {
 
-  void OutputFilter::setLimits(double _limitMin, double _limitMax) {
+  void OutputFilter::setLimits(float _limitMin, float _limitMax) {
     if (_limitMin < 0)
       _limitMin = 0;
 
@@ -25,15 +25,15 @@ namespace bluepadhub {
     limitMax = _limitMax;
   }
 
-  void OutputFilter::setAntiJitter(double _antiJitter) { 
+  void OutputFilter::setAntiJitter(float _antiJitter) { 
     antiJitter = _antiJitter;
   }
 
-  bool OutputFilter::isZeroValue(double value) {
+  bool OutputFilter::isZeroValue(float value) {
     return abs(value) < antiJitter;
   }
 
-  double OutputFilter::updateValue(double newValue) {
+  float OutputFilter::updateValue(float newValue) {
 
     if (newValue < -1.0)
       newValue = -1.0;
@@ -41,7 +41,7 @@ namespace bluepadhub {
     if (newValue > 1.0)
       newValue = 1.0;
 
-    double calc_value = 0.0; // calculate new value
+    float calc_value = 0.0; // calculate new value
     
     if (newValue > antiJitter)
       calc_value = limitMin + (limitMax - limitMin) * newValue;

@@ -68,7 +68,7 @@ class MouldKingUniBase:
       this->stopServos();
     };
 
-    double getVoltage() {
+    float getVoltage() {
       return HDriverBaseExt.getVoltage();
     };
 

@@ -83,13 +83,13 @@ namespace bluepadhub {
       static bool wasClickedImpl(int index, bool newValue);
 
       // returns normalized value in 0..1 range, with deadzones correction
-      double normalizeTriggerInput(int input);
+      float normalizeTriggerInput(int input);
 
       // returns normalized value in -1..1 range, with center and outer deadzone correction
-      double normalizeStickInput(int input);
+      float normalizeStickInput(int input);
 
       // returns normilized value in -1..1 for given controller input      
-      double getInputValue(BluepadController* ctl, BluepadControllerInput input);
+      float getInputValue(BluepadController* ctl, BluepadControllerInput input);
 
       // returns pressed state for given controller button
       bool getButtonValue(BluepadController* ctl, BluepadControllerButton button);

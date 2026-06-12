@@ -29,7 +29,7 @@ class LedIndicator : public bluepadhub::StatusIndicator {
     void setBrightness(uint8_t _ledBrightness);
 
   private:
-    void setLedLevel(double level);
+    void setLedLevel(float level);
 
     uint8_t ledBrightness = 255;
 

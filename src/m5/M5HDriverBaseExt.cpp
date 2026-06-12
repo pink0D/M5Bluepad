@@ -34,7 +34,7 @@ void M5HDriverBaseExt::setupPins() {
   }
 }
 
-double M5HDriverBaseExt::readVoltage() {
+float M5HDriverBaseExt::readVoltage() {
     
   setupPins();
   

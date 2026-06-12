@@ -55,7 +55,7 @@ namespace bluepadhub {
                 servo(channel)->setServoMaxAngle(angle_max);
             };
 
-            void updateServo(uint8_t channel, double normalized_position) {
+            void updateServo(uint8_t channel, float normalized_position) {
                 servo(channel)->updateServo(normalized_position);
             };
 

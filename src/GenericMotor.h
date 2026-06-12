@@ -19,7 +19,7 @@ namespace bluepadhub {
         public:
             GenericMotorController() {};
 
-            virtual void outputMotorSpeed(int channel, double normalized_speed) {};
+            virtual void outputMotorSpeed(int channel, float normalized_speed) {};
 
             virtual void outputMotorBrake(int channel) { 
                 outputMotorSpeed(channel, 0); // default implementation is setting speed to zero
@@ -35,9 +35,9 @@ namespace bluepadhub {
             
             void stop();
 
-            void setLimits(double limit_min, double limit_max);
+            void setLimits(float limit_min, float limit_max);
             
-            void updateSpeed(double normalized_speed);
+            void updateSpeed(float normalized_speed);
             void brake();
 
             

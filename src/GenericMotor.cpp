@@ -20,11 +20,11 @@ namespace bluepadhub {
     updateSpeed(0);
   };
 
-  void GenericMotor::setLimits(double limit_min, double limit_max) {
+  void GenericMotor::setLimits(float limit_min, float limit_max) {
     OutputFilter::setLimits(limit_min, limit_max);
   }
 
-  void GenericMotor::updateSpeed(double normalized_speed) {
+  void GenericMotor::updateSpeed(float normalized_speed) {
     if (controller != nullptr)
       controller->outputMotorSpeed(channel, updateValue(normalized_speed));
     else

@@ -36,7 +36,7 @@ class M5AtomicMotionExt : private M5AtomicMotion, public bluepadhub::MultiServoU
 
   private:
     virtual void outputServoPulse(int channel, uint16_t pulse);
-    virtual void outputMotorSpeed(int channel, double normalized_speed);
+    virtual void outputMotorSpeed(int channel, float normalized_speed);
     
 };
 
