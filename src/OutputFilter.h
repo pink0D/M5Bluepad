@@ -18,6 +18,7 @@ namespace bluepadhub {
           OutputFilter() {};    
 
           void setAntiJitter(float _antiJitter);
+          void setAccelerationTime(int millis);
 
           static void resetIdleState() { idleState = true; };
           static bool isIdleState() { return idleState; };
@@ -25,6 +26,7 @@ namespace bluepadhub {
       protected:
 
           void setLimits(float _limitMin, float _limitMax);
+
           float updateValue(float newValue);
           float getValue() { return value; };
           bool isZeroValue(float value);
@@ -35,6 +37,9 @@ namespace bluepadhub {
           float limitMin = 0.0;
           float limitMax = 1.0;
           float value = 0.0;
+          
+          int accelerationTime = 0;
+          long updateTime = 0;
 
           static inline bool idleState = false;
   };  
