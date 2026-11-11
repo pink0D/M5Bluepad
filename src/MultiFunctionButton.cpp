@@ -80,12 +80,15 @@ namespace bluepadhub {
     }
   }
 
-  void MultiFunctionButton::begin(unsigned long _click_time, unsigned long _hold1_time, unsigned long _hold2_time, int _button_pin, int _pin_mode) {
-
-    button_pin = _button_pin;
+  void MultiFunctionButton::setTimings(unsigned long _click_time, unsigned long _hold1_time, unsigned long _hold2_time) {
     click_time = _click_time;
     hold1_time = _hold1_time;
     hold2_time = _hold2_time;
+  }
+
+  void MultiFunctionButton::begin(int _button_pin, int _pin_mode) {
+
+    button_pin = _button_pin;
 
     pinMode(button_pin, _pin_mode);
 

@@ -72,9 +72,9 @@ class : public bluepadhub::Profile {
     // max duty can be also specified to limit motor power
     HDriverBaseExt.setLimits(0.25, 1.0);
 
-    // limit max motor acceleration so full power is reached smoothly in 500ms even when throttle is fully pressed
+    // limit max motor acceleration so full power is reached smoothly in 250ms even when throttle is fully pressed
     // this helps to reduce HDriver max current so it does not get into fault state immediately
-    HDriverBaseExt.setAccelerationTime(500);
+    HDriverBaseExt.setAccelerationTime(250);
 
     // uncomment to enable debug output for voltage monitor  
     // HDriverBaseExt.printVoltage(true);

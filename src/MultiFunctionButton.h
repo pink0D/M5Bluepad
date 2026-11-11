@@ -21,7 +21,8 @@ namespace bluepadhub {
             enum class EventType {Click, Hold1, Hold2};
             enum class ButtonState {Pressed, Released};
 
-            void begin(unsigned long _click_time, unsigned long _hold1_time, unsigned long _hold2_time, int _button_pin, int _pin_mode = INPUT_PULLUP);
+            void setTimings(unsigned long _click_time, unsigned long _hold1_time, unsigned long _hold2_time);
+            void begin(int _button_pin, int _pin_mode = INPUT_PULLUP);
 
         protected:
             virtual int readButtonState(int pin);
@@ -29,9 +30,9 @@ namespace bluepadhub {
         private:
 
             void task();
-            unsigned long click_time;
-            unsigned long hold2_time;
-            unsigned long hold1_time;
+            unsigned long click_time = 500;
+            unsigned long hold2_time = 5000;
+            unsigned long hold1_time = 10000;
             int button_pin;
     };
 

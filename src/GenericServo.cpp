@@ -38,17 +38,40 @@ namespace bluepadhub {
     if (angle_max > 180)
       angle_max = 180;
 
+    /*
     float delta = 500.0 * ( ((float) angle_max) / 90.0 );
 
     servoPulseMin = 1500 - delta;
     servoPulseMax = 1500 + delta;
     servoPulseMiddle = 1500;
     servoPulseWidth = delta;
+    */
+
+    setServoAngles(0, angle_max);
+  }
+
+  void GenericServo::setServoAngles(int16_t angle_zero, uint16_t angle_max) {
+
+    servoPulseMiddle = 1500 + 500.0 * ( ((float) angle_zero) / 90.0 );
+    servoPulseWidth = 500.0 * ( ((float) angle_max) / 90.0 );
+
+    servoPulseMin = servoPulseMiddle - servoPulseWidth;
+    servoPulseMax = servoPulseMiddle + servoPulseWidth;
   }
 
   void GenericServo::updateServo(float normalized_position) {
 
     float pulse = servoPulseMiddle + servoPulseWidth * updateValue(normalized_position);
+
+    if (controller != nullptr)
+      controller->outputServoPulse(channel, pulse);
+    else
+      Serial.println("WARNING: no ServoController was set for servo");
+  }
+
+  void GenericServo::setServoPosition(int16_t angle_position) {
+
+    float pulse = 1500.0 + 500.0 * ( ((float) angle_position) / 90.0);
 
     if (controller != nullptr)
       controller->outputServoPulse(channel, pulse);

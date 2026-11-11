@@ -63,14 +63,6 @@ namespace bluepadhub {
       time_now = esp_timer_get_time();
       float max_change = ((time_now - updateTime) / 1000.0f) / ((float)accelerationTime);
 
-      /*
-      if (calc_value < value - max_change)
-        calc_value = value - max_change;
-
-      if (calc_value > value + max_change)
-        calc_value = value + max_change;
-      */
-
       if ( (calc_value > 0) && (calc_value > value + max_change) )
          calc_value = value + max_change;
 

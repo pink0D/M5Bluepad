@@ -21,7 +21,7 @@ namespace bluepadhub {
 
     this->pwm_pin = pwm_pin;
     attach(pwm_pin, servoPulseMin, servoPulseMax);  
-    writeMicroseconds(1500);
+    writeMicroseconds(servoPulseMiddle);
     setController(this, 0);         
   };
 

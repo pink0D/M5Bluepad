@@ -10,6 +10,7 @@
 #include "BluepadHub.h"
 
 #include <esp_timer.h>
+#include <esp_mac.h>
 
 // global instance
 bluepadhub::BluepadHub BluepadHub;
@@ -37,6 +38,16 @@ namespace bluepadhub {
   void BluepadHub::begin() {
 
     Serial.begin(115200);
+
+    uint8_t wifi_mac[6];
+    esp_read_mac(wifi_mac, ESP_MAC_WIFI_STA);
+
+    char str_mac[32];
+    sprintf(str_mac, "%02X:%02X:%02X:%02X:%02X:%02X", wifi_mac[0], wifi_mac[1], wifi_mac[2], 
+                                                      wifi_mac[3], wifi_mac[4], wifi_mac[5]);    
+
+    Serial.print("WiFi MAC: ");
+    Serial.println(str_mac);
 
     if (profile == nullptr) {
       Serial.println("WARNING: Profile was not set");

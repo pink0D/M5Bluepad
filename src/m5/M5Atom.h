@@ -47,8 +47,8 @@ class M5AtomLiteButton : public bluepadhub::MultiFunctionButton {
   public:
     M5AtomLiteButton() {};
 
-    void begin(unsigned long _click_time = 500, unsigned long _hold1_time = 5000, unsigned long _hold2_time = 10000, int _button_pin = 39, int _pin_mode = INPUT_PULLUP) {
-      bluepadhub::MultiFunctionButton::begin(_click_time, _hold1_time, _hold2_time, _button_pin, _pin_mode);
+    void begin(int _button_pin = 39, int _pin_mode = INPUT_PULLUP) {
+      bluepadhub::MultiFunctionButton::begin(_button_pin, _pin_mode);
     };
 };
 

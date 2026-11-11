@@ -32,8 +32,10 @@ namespace bluepadhub {
 
             void setServoPulseRange(uint16_t pulse_min, uint16_t pulse_max);
             void setServoMaxAngle(uint16_t angle_max);
+            void setServoAngles(int16_t angle_zero, uint16_t angle_max);
 
             void updateServo(float normalized_position);
+            void setServoPosition(int16_t angle_position);
 
 
         protected:
