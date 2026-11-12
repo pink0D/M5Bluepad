@@ -33,7 +33,9 @@ namespace bluepadhub {
             };
 
         private:
-            virtual void outputServoPulse(int channel, uint16_t pulse);  
+            virtual void outputServoPulse(int channel, uint16_t pulse);
+            virtual void updateServoPulseRange() {}; 
+             
             int pwm_pin = 0;      
     };
 }

@@ -31,6 +31,8 @@ namespace bluepadhub {
     servoPulseMax = pulse_max;
     servoPulseMiddle = (servoPulseMax + servoPulseMin) / 2.0;
     servoPulseWidth = (servoPulseMax - servoPulseMin) / 2.0;
+
+    updateServoPulseRange();
   }
 
   void GenericServo::setServoMaxAngle(uint16_t angle_max) {
@@ -57,6 +59,8 @@ namespace bluepadhub {
 
     servoPulseMin = servoPulseMiddle - servoPulseWidth;
     servoPulseMax = servoPulseMiddle + servoPulseWidth;
+
+    updateServoPulseRange();
   }
 
   void GenericServo::updateServo(float normalized_position) {

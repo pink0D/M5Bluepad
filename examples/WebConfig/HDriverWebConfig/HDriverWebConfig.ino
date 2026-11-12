@@ -9,7 +9,7 @@
 
 #include <BluepadHub.h>
 #include <M5Extensions.h>
-#include <light/DumboRCLED.h>
+#include <ext/DumboRCLED.h>
 #include <web/WebConfig.h>
 #include <string>
 

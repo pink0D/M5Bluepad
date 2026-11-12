@@ -10,7 +10,7 @@
 #ifndef _M5_UNIT_8SERVOS_LIGHT_CONTROLLER_H_
 #define _M5_UNIT_8SERVOS_LIGHT_CONTROLLER_H_
 
-#include "light/LightController.h"
+#include "ext/LightController.h"
 #include "M5Unit8Servos.h"
 
 class M5Unit8ServosLightContoller : public bluepadhub::LightController {

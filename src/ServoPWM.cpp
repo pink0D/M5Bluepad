@@ -25,6 +25,14 @@ namespace bluepadhub {
     setController(this, 0);         
   };
 
+  void ServoPWM::updateServoPulseRange() {
+
+    if (attached()) {
+      detach();
+      begin();
+    }
+  }
+
   void ServoPWM::outputServoPulse(int channel, uint16_t pulse) {
     
     writeMicroseconds((int) pulse);
