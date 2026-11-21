@@ -60,6 +60,7 @@ namespace bluepadhub {
 
     bool forgetBluetoothDevices = false;    // reset BT pairing on every startup
     bool enablePairingAfterStartup = false; // go to pairing mode after every startup
+    bool rebootAfterControllerDisconnect = false; // reboots ESP32 after controller disconnect to fix some chip's reconnect issues
   };  
   
   class Profile : public ConfigParams {

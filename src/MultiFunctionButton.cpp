@@ -103,4 +103,8 @@ namespace bluepadhub {
     return digitalRead(pin);
   }
 
+  bool MultiFunctionButton::isPressed() {
+    return readButtonState(pin) == LOW;
+  }
+
 }

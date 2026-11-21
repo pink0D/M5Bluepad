@@ -218,6 +218,10 @@ namespace bluepadhub {
 
       profile->failsafe();
       statusIndicator->setStatusPattern(StatusIndicator::StatusPattern::Idle);
+
+      if (profile->rebootAfterControllerDisconnect) {
+        esp_restart();
+      }
   }
 
   void BluepadHub::disconnectController() {
@@ -232,6 +236,10 @@ namespace bluepadhub {
       vTaskDelayMillis(100); // delay to ensure BT communication is completed before power off
 
       profile->failsafe();
+
+      if (profile->rebootAfterControllerDisconnect) {
+        esp_restart();
+      }
     }
   }
 

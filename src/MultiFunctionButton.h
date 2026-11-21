@@ -24,6 +24,8 @@ namespace bluepadhub {
             void setTimings(unsigned long _click_time, unsigned long _hold1_time, unsigned long _hold2_time);
             void begin(int _button_pin, int _pin_mode = INPUT_PULLUP);
 
+            bool isPressed();
+
         protected:
             virtual int readButtonState(int pin);
 

@@ -31,8 +31,8 @@ namespace bluepadhub
                 begin();
             };
 
-            void setAngles(int angleNeutral, int angleEngaged) {
-                setAngles(angleNeutral, angleNeutral, angleEngaged, angleEngaged);
+            void setAngles(int angleNeutral, int angleEngaged, long forceTimeoutMillis) {
+                setAngles(angleNeutral, angleNeutral, angleEngaged, angleEngaged, forceTimeoutMillis);
             };
 
             void setAngles(int angleNeutral, int angleNeutralForced, int angleEngaged, int angleEngagedForced, long forceTimeoutMillis) {
