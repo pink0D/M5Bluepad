@@ -82,31 +82,41 @@ namespace bluepadhub {
     class ConfigComponent {
 
         public:
-            ConfigComponent(std::string name, std::string label, bool extension = false) {
+            ConfigComponent(std::string name, std::string label, bool extension = false, bool enableProfiles = false) {
                 this->name = name;
                 this->label = label;
                 this->extension = extension;      
+                this->enableProfiles = enableProfiles;
             };
 
             void begin();
+            void reload();
 
             std::string getName() { return name; };
 
             void setLabel(std::string label) { this->label = label; };
             std::string getLabel() { return label; };
+
+            bool isInitialized() { return loadCompleted; };
             bool isExtension() { return extension; };
-            bool isInitialized() { return beginCompleted; };
+            bool hasProfiles() { return enableProfiles; };
 
             virtual bool isEnabled() { return true; };        
             
+            // main overridable methods
             virtual void loadDefaultSettings() {};
             virtual void applySettings() {};
 
             virtual bool loadSettingsFromJson(JsonDocument &json) { return true; };
             virtual JsonDocument saveSettingsToJson() { return JsonDocument(); };
 
+            // flash storage impementation, usually reusable. override if no flash storage is required
             virtual void loadSettingsFromStorage();
             virtual void saveSettingsToStorage();
+
+            // static methods
+
+            static void initFS();
 
             static void registerConfigComponent(std::string name, ConfigComponent* component);
             static void unregisterConfigComponent(std::string name);
@@ -117,8 +127,9 @@ namespace bluepadhub {
         private:
             std::string name;
             std::string label;
-            bool beginCompleted = false;
+            bool loadCompleted = false;
             bool extension = false;
+            bool enableProfiles = false;
 
             String getConfigPath();
 

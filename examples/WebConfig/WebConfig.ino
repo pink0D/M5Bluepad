@@ -11,47 +11,53 @@
 #include <M5Extensions.h>
 
 #include <web/WebConfig.h>
-//#include <web/TelegramBot.h>
+#include <web/BluetoothSettings.h>
+#include <web/ProfileManager.h>
+
+#include <web/TelegramBot.h>
+
+#include "esp_bt.h"
 
 #include "m5stack_files.h"
 
 
 M5AtomLiteIndicator   AtomLiteIndicator;
 M5AtomLiteButton      AtomLiteButton;
-//M5AtomDeepSleep       AtomDeepSleep;
+M5AtomDeepSleep       AtomDeepSleep;
 
-M5HDriverBaseExt HDriverBaseExt;                   // HDriverBase extension
-M5GroveServo GroveServo(SERVO_ATOM_LITE_PORT_A);   // Servo connected directy to Atom's grove port
+M5HDriverBaseExt HDriverBaseExt;                   
+M5GroveServo GroveServo(SERVO_ATOM_LITE_PORT_A);   
 
-bluepadhub::WebConfig webConfig;
+bluepadhub::WebConfig WebConfig;
+bluepadhub::BluetoothSettings BluetoothSettings;
+bluepadhub::ProfileManager ProfileManager;
 
-//bluepadhub::TelegramBot bot;
-
+bluepadhub::TelegramBot TelegramBot;
 
 class : public bluepadhub::Profile {
 
-  // this method is implicitly called after controller startup
   void setup() {
 
-    //AtomDeepSleep.setCheckWakeUpReason(true);
-    //AtomDeepSleep.begin();
+    AtomDeepSleep.setCheckWakeUpReason(true);
+    AtomDeepSleep.begin();
     
     AtomLiteIndicator.setBrightness(20);
     AtomLiteIndicator.begin();
         
     AtomLiteButton.begin();
 
-    enablePairingAfterStartup = true;
-
     HDriverBaseExt.begin(); 
 
     GroveServo.begin();
 
-    webConfig.webServer.addWebFiles(m5stack_web_data);
-    //webConfig.setWiFiTaskDelay(1000);
-    webConfig.begin();
+    WebConfig.webServer.addWebFiles(m5stack_web_data);
+    WebConfig.setWiFiTaskDelay(1000);
+    WebConfig.begin();
 
-    //bot.begin();
+    BluetoothSettings.begin();
+    ProfileManager.begin();
+
+    TelegramBot.begin();
   };
 
   void processBluepadController(BluepadController* ctl) {
@@ -72,39 +78,44 @@ class : public bluepadhub::Profile {
     return HDriverBaseExt.isFault();
   }
 
-  // NOT WORKING - memory issues during TLS connection
-  // need more optimizations in WebConfig memory usage
-  /*
 
   void deepSleepTimer() {
 
+    // free memory allocated for bluetooth stack 
+    // TLS connection to Telegram API requires lots of free heap 
+    if (esp_bt_controller_get_status() == ESP_BT_CONTROLLER_STATUS_ENABLED) {
+      esp_bt_controller_disable();
+    }
+    if (esp_bt_controller_get_status() != ESP_BT_CONTROLLER_STATUS_IDLE ) {
+      esp_bt_controller_deinit();
+    }
+    esp_bt_mem_release(ESP_BT_MODE_BTDM);
+
     Serial.println("Sending telegram notification");
 
-    bot.begin();
+    TelegramBot.begin();
 
-    if (!bot.isEnabled()) {
+    if (!TelegramBot.isEnabled()) {
       Serial.println("TelegramBot not enabled by config");
       return;
     }
 
-    if (!webConfig.wifiManager.connect(false, false)) {
+    if (!WebConfig.wifiManager.connect(false, false)) {
       Serial.println("Could not connect to WiFi network to reach Telegram");
       return;
     }
 
-    bot.sendVoltageStatus(HDriverBaseExt.getVoltage(), isLowBatteryState());
+    TelegramBot.sendVoltageStatus(HDriverBaseExt.getVoltage(), isLowBatteryState());
   }
 
   void idleTimer() {
     // check web server activity before going to sleep mode (5 minutes)
-    if (webConfig.webServer.getLastActivityTime() < esp_timer_get_time() - 5*60*1000*1000) {
+    if (WebConfig.webServer.getLastActivityTime() < esp_timer_get_time() - 5*60*1000*1000) {
         BluepadHub.startDeepSleep();
     } else {
       Serial.println("WebServer is active, sleep not started");
     }
-  }
-
-  */
+  } 
 
 } WebConfigProfile;
 

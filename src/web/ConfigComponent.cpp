@@ -8,6 +8,7 @@
 //
 
 #include "ConfigComponent.h"
+#include "ProfileManager.h"
 
 #include <FS.h>
 #include <LittleFS.h>
@@ -17,6 +18,23 @@ namespace bluepadhub {
     /*
     STATIC MEMBERS
     */
+
+    void ConfigComponent::initFS() {
+
+        static bool fs_init_done = false;
+
+        if (!fs_init_done) {
+
+            if (!LittleFS.begin(true)) {
+                
+                Serial.println("WARNING: LittleFS begin Failed");
+
+                LittleFS.mkdir("/config");
+                return;
+            }
+            fs_init_done = true;
+        }
+    }
 
     void ConfigComponent::registerConfigComponent(std::string name, ConfigComponent* component) {
 
@@ -53,31 +71,42 @@ namespace bluepadhub {
     INSTANCE METHODS
     */
 
-    void ConfigComponent::begin() {
+    void ConfigComponent::begin() {       
+
+        ConfigComponent::registerConfigComponent(name, this);
+
+        
+        if (hasProfiles()) {
+            // config will be reloaded when ProfileManager initializes
+
+        } else {
+            // load config for components without profile support
+            reload();
+        }
+    }
+
+    void ConfigComponent::reload() {
+
         loadDefaultSettings();
         loadSettingsFromStorage();
         applySettings();    
         
-        ConfigComponent::registerConfigComponent(name, this);
-
-        beginCompleted = true;
-    };
+        loadCompleted = true;
+    }   
 
     String ConfigComponent::getConfigPath() {
-        return String("/") + String(name.c_str()) + String(".json");
+
+        String configRoot = "/config";
+
+        if (enableProfiles)
+            configRoot = ProfileManager::getActiveProfileDirectory();
+
+        return configRoot + String("/") + String(name.c_str()) + String(".json");
     }
 
     void ConfigComponent::loadSettingsFromStorage() {
 
-        static bool fs_init_done = false;
-
-        if (!fs_init_done) {
-            if (!LittleFS.begin(true)) {
-                Serial.println("WARNING: LittleFS begin Failed");
-                return;
-            }
-            fs_init_done = true;
-        }
+        ConfigComponent::initFS();
 
         File file = LittleFS.open(getConfigPath(), FILE_READ);
         if (!file) {
@@ -103,16 +132,17 @@ namespace bluepadhub {
     };
     
     void ConfigComponent::saveSettingsToStorage() {
-        File file = LittleFS.open(getConfigPath(), FILE_WRITE);
+        String path = getConfigPath();
+        File file = LittleFS.open(path, FILE_WRITE, true);
         if (!file) {
             Serial.print("WARNING: Failed to open config file for writing: ");
-            Serial.println(getConfigPath());
+            Serial.println(path);
             return;
         }
 
         if (serializeJson(saveSettingsToJson(), file) == 0) {
             Serial.print("Failed to write to config file: ");
-            Serial.println(getConfigPath());
+            Serial.println(path);
         }
 
         file.close();
