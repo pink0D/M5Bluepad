@@ -11,43 +11,52 @@
 #define _TELEGRAM_BOT_H_
 
 #include <Arduino.h>
+#include "ConfigComponent.h"
 
 namespace bluepadhub {
 
-    class TelegramBot {
+    class TelegramBot : public ConfigComponent {
 
         public:
-            TelegramBot() {};
+            TelegramBot() : ConfigComponent("TelegramBot", "TelegramBot", true) {};
 
-            void setWiFiSSID(const String& _wifi_ssid) {
+            void setWiFiSSID(const std::string& _wifi_ssid) {
                 this->wifi_ssid = _wifi_ssid;
             };
 
-            void setWiFiPassword(const String& _wifi_password) {
+            void setWiFiPassword(const std::string& _wifi_password) {
                 this->wifi_password = _wifi_password;
             };
 
-            void setBotToken(const String& _bot_token) {
+            void setBotToken(const std::string& _bot_token) {
                 this->bot_token = _bot_token;
             };
 
-            void setChatId(const String& _chat_id) {
+            void setChatId(const std::string& _chat_id) {
                 this->chat_id = _chat_id;
             };
 
-            void setDeviceName(const String& _device_name) {
+            void setDeviceName(const std::string& _device_name) {
                 this->device_name = _device_name;
             };
 
             void sendVoltageStatus(float voltage, bool isLowVoltage);
             void sendMessage(const String& text, const String& parse_mode);
 
+            bool isEnabled() override { return enabled; };   
+
         private:
-            String wifi_ssid;
-            String wifi_password;
-            String bot_token;
-            String chat_id;
-            String device_name;
+            std::string wifi_ssid;
+            std::string wifi_password;
+            std::string bot_token;
+            std::string chat_id;
+            std::string device_name;
+            bool enabled = false;
+
+            void loadDefaultSettings() override;
+
+            bool loadSettingsFromJson(JsonDocument &json) override;
+            JsonDocument saveSettingsToJson() override;
             
     };
 

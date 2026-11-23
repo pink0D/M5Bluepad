@@ -21,6 +21,7 @@
 
 #include "ConfigProfile.h"
 #include "StatusIndicator.h"
+#include "MultiFunctionButton.h"
 #include "OutputFilter.h"
 #include "DeepSleep.h"
 #include "ServoPWM.h"
@@ -38,6 +39,14 @@ namespace bluepadhub {
 
       StatusIndicator* getStatusIndicator() {
         return statusIndicator;
+      };
+
+      void setMultiFunctionButton(MultiFunctionButton* _button) {
+        button = _button;
+      };
+
+      MultiFunctionButton* getMultiFunctionButton() {
+        return button;
       };
 
       void setProfile(Profile* _profile);
@@ -75,6 +84,7 @@ namespace bluepadhub {
 
       Profile* profile = nullptr;
       StatusIndicator* statusIndicator = nullptr;
+      MultiFunctionButton *button = nullptr;
       DeepSleep* deepSleep = nullptr;
   };
 }

@@ -8,7 +8,7 @@
 //
 
 //
-// See https://github.com/pink0D/CameraBrick for more details on creating GeekServo adapter with ESP32CAM
+// See https://github.com/pink0D/CameraBrick/tree/legacy for more details on creating GeekServo adapter with ESP32CAM
 //
 // This sketch is an alternate way for controlling the servo with the adapter:
 // 1. The gamepad is connected to ESP32

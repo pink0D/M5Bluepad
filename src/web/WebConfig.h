@@ -10,69 +10,41 @@
 #ifndef _WEB_CONFIG_H_
 #define _WEB_CONFIG_H_
 
-#include <ArduinoJson.h>
-#include "RFCommServer.h"
-
-#include <functional>
+#include "ConfigComponent.h"
+#include "WiFiManager.h"
+#include "WebServer.h"
+#include "ConfigProfile.h"
 
 namespace bluepadhub {
 
-    class StreamPointerWriter {
+    class WebConfig {
 
         public:
-            StreamPointerWriter(Stream* stream) {
-                this->stream = stream;
+
+            WebConfig() {};
+
+            void setDefaultHostname(std::string hostname);
+            void setDefaultSSID(std::string ssid);
+            void setWiFiTaskDelay(long wifiTaskDelayMillis) {
+                this->wifiTaskDelayMillis = wifiTaskDelayMillis;
             };
-
-            size_t write(uint8_t c) {
-                return stream->write(c);
-            };
-
-            size_t write(const uint8_t *buffer, size_t length) {
-                return stream->write(buffer, length);
-            };
-        
-        private:
-            Stream *stream;
-    };    
-
-    class WebConfig : private RFCommServer::Listener {
-        public:
-
-            WebConfig() {}
 
             void begin();
-            void setDeviceName(std::string deviceName);
-            void setDiscoverable(int seconds);
 
-            virtual void loadDefaultSettings() {};
-            virtual void applySettings() {};
-
-            virtual bool loadSettingsFromJson(JsonDocument &json) { return false; };
-            virtual JsonDocument saveSettingsToJson() { return JsonDocument(); };
-
-            virtual JsonDocument getDeviceInfo() { return JsonDocument(); };
+        public:
+            WebServer webServer;
+            WiFiManager wifiManager;
 
         private:
 
-            struct StreamListenerTaskParams {
-                WebConfig *obj;
-                Stream *stream;
-                std::function<bool()> checkStreamClosed;
-            };
+            long wifiTaskDelayMillis = 0;
+            bool isResetting = false;
+            
+            void wifiStartupTask();
+            void wifiConnectTask();
 
-            void loadSettingsFromStorage();
-            void saveSettingsToStorage();
+            void resetConfig();
 
-            JsonDocument processRequest(JsonDocument &request);
-
-            void streamOpened(bluepadhub::RFCommStream *stream);            
-
-            void startStreamListener(Stream* stream, std::function<bool()> checkStreamClosed);
-            void streamListenerTask(StreamListenerTaskParams *taskParams);
-
-            RFCommServer rfcomm;
-            unsigned long discoverableTimeoutMillis;
     };
 
 }

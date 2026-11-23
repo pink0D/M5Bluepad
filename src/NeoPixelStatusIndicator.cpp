@@ -96,11 +96,11 @@ namespace bluepadhub {
   void NeoPixelStatusIndicator::showEventPattern() {
 
     if (eventPattern == EventPattern::Reset) {
-      for (int i=0; i<3; i++) {
+      for (int i=0; i<5; i++) {
         setLedColor(0xFFFFFF);  
-        vTaskDelayMillis(200);
+        vTaskDelayMillis(250);
         setLedColor(0);  
-        vTaskDelayMillis(200);
+        vTaskDelayMillis(250);
       }
     }
 
@@ -145,6 +145,32 @@ namespace bluepadhub {
         setLedColor(0);  
         vTaskDelayMillis(250);
       }
+    }
+
+    if (eventPattern == EventPattern::WiFi_STA) {
+      for (int i=0; i<2; i++) {
+        setLedColor(0xCC33FF);  
+        vTaskDelayMillis(200);
+        setLedColor(0);  
+        vTaskDelayMillis(200);
+      }
+      setLedColor(0x0000FF);  
+      vTaskDelayMillis(200);
+      setLedColor(0);  
+      vTaskDelayMillis(200);
+    }
+
+    if (eventPattern == EventPattern::WiFi_AP) {
+      for (int i=0; i<2; i++) {
+        setLedColor(0xCC33FF);  
+        vTaskDelayMillis(200);
+        setLedColor(0);  
+        vTaskDelayMillis(200);
+      }
+      setLedColor(0x00FF00);  
+      vTaskDelayMillis(200);
+      setLedColor(0);  
+      vTaskDelayMillis(200);
     }
 
   }

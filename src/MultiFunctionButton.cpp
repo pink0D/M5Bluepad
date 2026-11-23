@@ -86,11 +86,15 @@ namespace bluepadhub {
     hold2_time = _hold2_time;
   }
 
-  void MultiFunctionButton::begin(int _button_pin, int _pin_mode) {
+  void MultiFunctionButton::begin(int _button_pin, int _pin_mode, bool setBluepadHubButton) {
 
     button_pin = _button_pin;
 
     pinMode(button_pin, _pin_mode);
+
+    if (setBluepadHubButton) {
+      ::BluepadHub.setMultiFunctionButton(this);
+    }
 
     xTaskCreate( [](void* ctx) {
 
@@ -104,7 +108,7 @@ namespace bluepadhub {
   }
 
   bool MultiFunctionButton::isPressed() {
-    return readButtonState(pin) == LOW;
+    return readButtonState(button_pin) == LOW;
   }
 
 }
