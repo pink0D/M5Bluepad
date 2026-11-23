@@ -25,6 +25,11 @@ namespace bluepadhub {
 
     void WebConfig::begin() {
 
+        if (ConfigComponent::initFS() == false) {
+            noConfigFS = true;
+        }
+
+
         xTaskCreate( [](void* ctx) {    
             static_cast<WebConfig*>(ctx)->wifiStartupTask();
         }, "wifiStartupTask", TASK_STACK_SIZE, this, 0, NULL);
@@ -36,8 +41,8 @@ namespace bluepadhub {
         // delay on startup to wait until power button is released normally
         vTaskDelayMillis(wifiTaskDelayMillis);
 
-        // enable WiFi if button is pressed during startup
-        if (::BluepadHub.getMultiFunctionButton()->isPressed()) {
+        // enable WiFi if button is pressed during startup or if there's no config FS
+        if (noConfigFS || ::BluepadHub.getMultiFunctionButton()->isPressed()) {
 
             // connect to wifi in async task so it does not delay possible hard reset event
             xTaskCreate( [](void* ctx) {    
@@ -45,24 +50,32 @@ namespace bluepadhub {
             }, "wifiConnectTask", TASK_STACK_SIZE, this, 0, NULL);
         }
 
-        vTaskDelayMillis(10000);
+        long timeout = 10000;
+        while (timeout > 0) {
+
+            // end task if button is released before hard reset timeout
+            if (::BluepadHub.getMultiFunctionButton()->isPressed() == false) {
+                vTaskDelete(NULL);
+                return;
+            }
+
+            timeout -= 100;
+            vTaskDelayMillis(100);
+        }        
 
         // if the button is still pressed then perform a hard reset
-        if (::BluepadHub.getMultiFunctionButton()->isPressed()) {
-            resetConfig();
-        }
+        resetConfig();
 
         vTaskDelete(NULL);
     }
 
     void WebConfig::wifiConnectTask() {
-
-        ::BluepadHub.getStatusIndicator()->setEventPattern(StatusIndicator::EventPattern::Info);
-
+      
         wifiManager.connect();
         webServer.start();
 
         while (true) {
+            vTaskDelayMillis(5000);
             if (!isResetting) {
                 if (wifiManager.isActiveAP()) {
                     ::BluepadHub.getStatusIndicator()->setEventPattern(StatusIndicator::EventPattern::WiFi_AP);
@@ -70,7 +83,6 @@ namespace bluepadhub {
                     ::BluepadHub.getStatusIndicator()->setEventPattern(StatusIndicator::EventPattern::WiFi_STA);
                 }
             }
-            vTaskDelayMillis(5000);
         }
             
     }

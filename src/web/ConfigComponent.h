@@ -116,7 +116,8 @@ namespace bluepadhub {
 
             // static methods
 
-            static void initFS();
+            static bool initFS();
+            static void createDir(std::string dir);
 
             static void registerConfigComponent(std::string name, ConfigComponent* component);
             static void unregisterConfigComponent(std::string name);
@@ -134,6 +135,8 @@ namespace bluepadhub {
             String getConfigPath();
 
             static inline std::map<std::string, ConfigComponent*> configComponents;
+
+            static bool directoryExists(const char *path);
 
     };
 

@@ -21,7 +21,7 @@ namespace bluepadhub {
     class ProfileManager : public ConfigComponent {
 
         public:
-            ProfileManager() : ConfigComponent("Extension", "Ext", true, false) {};
+            ProfileManager() : ConfigComponent("ProfileManager", "ProfileManager", true, false) {};
 
             static String getActiveProfileDirectory();
 

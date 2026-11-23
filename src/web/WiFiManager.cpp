@@ -9,6 +9,8 @@
 
 #include "WiFiManager.h"
 
+#include "BluepadHub.h"
+
 #include <WiFi.h>
 #include <esp_mac.h>
 #include <esp_wifi.h>
@@ -53,6 +55,8 @@ namespace bluepadhub {
 
             Serial.print("Connecting to ");
             Serial.print(network.ssid.c_str());
+
+            ::BluepadHub.getStatusIndicator()->setEventPattern(StatusIndicator::EventPattern::Info);
 
             int timeout = this->connectTimeout;
 
@@ -154,7 +158,7 @@ namespace bluepadhub {
         ap.password = "";
 
         hostname = defaultHostname;
-        connectTimeout = 10;
+        connectTimeout = 15;
 
         reboot = false;
     }

@@ -29,16 +29,18 @@ M5HDriverBaseExt HDriverBaseExt;
 M5GroveServo GroveServo(SERVO_ATOM_LITE_PORT_A);   
 
 bluepadhub::WebConfig WebConfig;
-bluepadhub::BluetoothSettings BluetoothSettings;
+
 bluepadhub::ProfileManager ProfileManager;
 
 bluepadhub::TelegramBot TelegramBot;
+bluepadhub::BluetoothSettings BluetoothSettings;
+
 
 class : public bluepadhub::Profile {
 
   void setup() {
 
-    AtomDeepSleep.setCheckWakeUpReason(true);
+    AtomDeepSleep.setCheckWakeUpReason(false);
     AtomDeepSleep.begin();
     
     AtomLiteIndicator.setBrightness(20);
@@ -55,9 +57,10 @@ class : public bluepadhub::Profile {
     WebConfig.begin();
 
     BluetoothSettings.begin();
+    TelegramBot.begin();
+
     ProfileManager.begin();
 
-    TelegramBot.begin();
   };
 
   void processBluepadController(BluepadController* ctl) {
@@ -72,12 +75,11 @@ class : public bluepadhub::Profile {
 
   bool isLowBatteryState() {
     return HDriverBaseExt.isLowBattery();
-  }
+  };
 
   bool isFaultState() {
     return HDriverBaseExt.isFault();
-  }
-
+  };
 
   void deepSleepTimer() {
 
@@ -106,7 +108,7 @@ class : public bluepadhub::Profile {
     }
 
     TelegramBot.sendVoltageStatus(HDriverBaseExt.getVoltage(), isLowBatteryState());
-  }
+  };
 
   void idleTimer() {
     // check web server activity before going to sleep mode (5 minutes)
@@ -115,7 +117,7 @@ class : public bluepadhub::Profile {
     } else {
       Serial.println("WebServer is active, sleep not started");
     }
-  } 
+  }; 
 
 } WebConfigProfile;
 

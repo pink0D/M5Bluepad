@@ -13,13 +13,38 @@
 #include <FS.h>
 #include <LittleFS.h>
 
+/*
+void printTree(fs::FS &fs, const char *dirname, uint8_t levels, String indent = "") {
+  File root = fs.open(dirname);
+  if (!root || !root.isDirectory()) {
+    Serial.println("Failed to open directory");
+    return;
+  }
+
+  File file = root.openNextFile();
+  while (file) {
+    if (file.isDirectory()) {
+      Serial.printf("%s[DIR]  %s\n", indent.c_str(), file.name());
+      if (levels > 0) {
+        // file.path() returns the full path needed for recursion on ESP32
+        printTree(fs, file.path(), levels - 1, indent + "  ");
+      }
+    } else {
+      Serial.printf("%s[FILE] %s (%u bytes)\n", indent.c_str(), file.name(), file.size());
+    }
+    file = root.openNextFile();
+  }
+}*/
+
 namespace bluepadhub {
 
     /*
     STATIC MEMBERS
     */
 
-    void ConfigComponent::initFS() {
+    bool ConfigComponent::initFS() {
+
+        bool result = true;
 
         static bool fs_init_done = false;
 
@@ -27,13 +52,47 @@ namespace bluepadhub {
 
             if (!LittleFS.begin(true)) {
                 
-                Serial.println("WARNING: LittleFS begin Failed");
-
-                LittleFS.mkdir("/config");
-                return;
+                Serial.println("WARNING: LittleFS begin Failed");                
+                return false;
             }
+
+            result = directoryExists("/config");
+
+            ConfigComponent::createDir("/config");
+            
             fs_init_done = true;
+
+            //Serial.println("LITTLEFS");
+            //printTree(LittleFS, "/", 5);
         }
+
+        return result;
+    }
+
+    bool ConfigComponent::directoryExists(const char *path) {
+
+        File dir = LittleFS.open(path);
+        if (!dir) {
+            return false; // Path does not exist
+        }
+
+        bool isDir = dir.isDirectory();
+        dir.close();
+        return isDir;
+    }
+
+    void ConfigComponent::createDir(std::string dir) {
+        
+        LittleFS.mkdir(dir.c_str());
+
+        std::string path = dir + "/.d";
+        File file = LittleFS.open(path.c_str(), "a"); 
+        if (!file) {
+            Serial.print("Failed to touch file in new dir ");
+            Serial.println(dir.c_str());
+            return;
+        }
+        file.close();
     }
 
     void ConfigComponent::registerConfigComponent(std::string name, ConfigComponent* component) {
@@ -111,7 +170,8 @@ namespace bluepadhub {
         File file = LittleFS.open(getConfigPath(), FILE_READ);
         if (!file) {
             Serial.print("WARNING: Failed to open config file for reading: ");
-            Serial.println(getConfigPath());
+            Serial.print(getConfigPath());
+            Serial.println(" - default config will be loaded");
             return;
         }
 

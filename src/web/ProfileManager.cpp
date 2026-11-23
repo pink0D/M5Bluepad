@@ -33,7 +33,7 @@ namespace bluepadhub {
             return false;
         }
 
-        if (!dir || !dir.isDirectory()) {
+        if (!dir.isDirectory()) {
             dir.close();
             return false;
         }
@@ -65,8 +65,8 @@ namespace bluepadhub {
 
     void ProfileManager::createDefaultProfile() {
 
-        LittleFS.mkdir("/config/profiles");
-        LittleFS.mkdir("/config/profiles/Default");
+        ConfigComponent::createDir("/config/profiles");
+        ConfigComponent::createDir("/config/profiles/Default");
     }
 
     /*
@@ -107,11 +107,14 @@ namespace bluepadhub {
         for (JsonObject profile : profiles) {
 
             std::string name = profile["name"].as<std::string>();
+            std::string name_new = profile["name_new"].as<std::string>();
 
             bool active_flag = profile["active"];
             bool delete_flag = profile["delete"];
+            bool rename_flag = profile["rename"];
 
-            std::string dir = "/config/profiles/" + name;                       
+            std::string dir =       "/config/profiles/" + name;                       
+            std::string dir_new =   "/config/profiles/" + name_new;                       
 
             if (active_flag) {
                 activeProfile = name;
@@ -124,8 +127,13 @@ namespace bluepadhub {
                 if (activeProfile == name)
                     activeProfile = "Default";
 
+            } else if (rename_flag) {
+
+                LittleFS.rename(dir.c_str(), dir_new.c_str());
+                activeProfile = name_new;
+
             } else {
-                LittleFS.mkdir(dir.c_str());
+                ConfigComponent::createDir(dir.c_str());
             }
         }
 
