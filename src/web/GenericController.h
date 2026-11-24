@@ -28,10 +28,10 @@ namespace bluepadhub {
         protected:
 
             virtual int getChannelCount() { return 0; };
-            virtual std::string getChannelLabel(int channel) { return ""; };
+            virtual void setChannelDefaults(int channel, GenericChannel *settings) {};
 
             virtual void updateOutput(int channel, float value, bool brake) {};
-            virtual void applyOutputSettings(int channel, GenericChannel settings) {};
+            virtual void applyOutputSettings(int channel, GenericChannel *settings) {};
 
         private:
 

@@ -18,11 +18,14 @@ namespace bluepadhub {
     class MultiMotorController : public GenericController{
 
         public:
-            MultiMotorController(std::string name, std::string label) : GenericController(name, label) {};
-            MultiMotorController(IMultiMotorUnit *unit, std::string name, std::string label) : GenericController(name, label) {
-                setUnit(unit);
-            };
-            MultiMotorController(IMultiMotorUnit &unit, std::string name, std::string label) : GenericController(name, label) {
+            MultiMotorController(std::string label)
+            : MultiMotorController(nullptr, label) {};
+
+            MultiMotorController(IMultiMotorUnit &unit, std::string label) 
+            : MultiMotorController(&unit, label) {};
+            
+            MultiMotorController(IMultiMotorUnit *unit, std::string label) 
+            : GenericController("MotorProfile", label) {
                 setUnit(unit);
             };
             
@@ -61,11 +64,11 @@ namespace bluepadhub {
 
             };
 
-            virtual void applyOutputSettings(int channel, GenericChannel settings) {
+            virtual void applyOutputSettings(int channel, GenericChannel *settings) {
                 if (unit == nullptr)
                     return;
 
-                unit->getMotor(channel)->setLimits((float)settings.minPower / 100.0, (float) settings.maxPower / 100.0);
+                unit->getMotor(channel)->setLimits((float)settings->minPower / 100.0, (float) settings->maxPower / 100.0);
             };            
 
         private:

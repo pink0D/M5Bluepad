@@ -18,14 +18,17 @@ namespace bluepadhub {
     class MultiServoController : public GenericController{
 
         public:
-            MultiServoController(std::string name, std::string label) : GenericController(name, label) {};
-            MultiServoController(IMultiServoUnit *unit, std::string name, std::string label) : GenericController(name, label) {
-                setUnit(unit);
-            };
-            MultiServoController(IMultiServoUnit &unit, std::string name, std::string label) : GenericController(name, label) {
-                setUnit(unit);
-            };
+            MultiServoController(std::string label)
+            : MultiServoController(nullptr, label) {};
+
+            MultiServoController(IMultiServoUnit &unit, std::string label) 
+            : MultiServoController(&unit, label) {};
             
+            MultiServoController(IMultiServoUnit *unit, std::string label) 
+            : GenericController("ServoProfile", label) {
+                setUnit(unit);
+            };    
+
             virtual ~MultiServoController() {};
 
             void setUnit(IMultiServoUnit *unit) {
@@ -56,16 +59,16 @@ namespace bluepadhub {
                 unit->getServo(channel)->updateServo(value);            
             };
 
-            virtual void applyOutputSettings(int channel, GenericChannel settings) {
+            virtual void applyOutputSettings(int channel, GenericChannel *settings) {
                 if (unit == nullptr)
                     return;
 
-                if (settings.servoUnits == ServoUnits::Micros) {
-                    unit->getServo(channel)->setServoPulseRange(settings.servoMin, settings.servoMax);
+                if (settings->servoUnits == ServoUnits::Micros) {
+                    unit->getServo(channel)->setServoPulseRange(settings->servoMin, settings->servoMax);
                 }
 
-                if (settings.servoUnits == ServoUnits::Angle) {
-                    unit->getServo(channel)->setServoAngles(settings.servoCenter, settings.servoMaxAngle);
+                if (settings->servoUnits == ServoUnits::Angle) {
+                    unit->getServo(channel)->setServoAngles(settings->servoCenter, settings->servoMaxAngle);
                 }
             };            
 

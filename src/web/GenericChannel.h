@@ -102,6 +102,7 @@ namespace bluepadhub {
 
             // settings
 
+            std::string label;
             ChannelType type;
             BluepadControllerInput input;
             bool invertInput;

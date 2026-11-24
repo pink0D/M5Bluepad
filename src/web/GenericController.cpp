@@ -32,13 +32,14 @@ namespace bluepadhub {
 
     for (int i=0; i<getChannelCount(); i++) {
       channels[i].loadDefaultSettings();
+      setChannelDefaults(i,&channels[i]);
     }
   }
 
   void GenericController::applySettings() {
     for (int i=0; i<getChannelCount(); i++) {
       channels[i].applySettings();
-      applyOutputSettings(i, channels[i]);
+      applyOutputSettings(i, &channels[i]);
     }
   }
 

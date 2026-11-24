@@ -36,30 +36,32 @@ bluepadhub::ProfileManager ProfileManager;
 bluepadhub::TelegramBot TelegramBot;
 bluepadhub::BluetoothSettings BluetoothSettings;
 
+
 class : public bluepadhub::MultiMotorController {
   using bluepadhub::MultiMotorController::MultiMotorController;
 
-  std::string getChannelLabel(int channel) override {
-     return "DRV8876"; 
-  };
+  void setChannelDefaults(int channel, bluepadhub::GenericChannel *settings) override {
+    settings->label = "DRV8876";
+    settings->minPower = 25;
+  }; 
 
-} MotorController(MotorUnit, "HDriverProfile","HDriver");
+} MotorController(MotorUnit, "HDriver");
+
 
 class : public bluepadhub::MultiServoController {
   using bluepadhub::MultiServoController::MultiServoController;
 
-  std::string getChannelLabel(int channel) override {
+  void setChannelDefaults(int channel, bluepadhub::GenericChannel *settings) override {
 
     if (channel == 0)
-      return "Grove Servo 1 (Yellow wire)";
+      settings->label = "Grove Servo 1 (Yellow wire)";
 
     if (channel == 1)
-      return "Grove Servo 2 (White wire)";
+      settings->label = "Grove Servo 2 (White wire)";
 
-    return ""; 
-  };
+  }; 
 
-} ServoController(ServoUnit, "ServoProfile", "Servo");
+} ServoController(ServoUnit, "Servo");
 
 
 class : public bluepadhub::Profile {
@@ -88,7 +90,8 @@ class : public bluepadhub::Profile {
     // ProfileManager must be set up last so it loads configs for all other components
     ProfileManager.begin();
 
-    // set up physical devices after their config has been updated during profile loading
+
+    // set up physical devices after their configs have been updated during profile loading
 
     MotorUnit.motor(0)->begin(); 
 
