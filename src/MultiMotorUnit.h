@@ -14,8 +14,15 @@
 
 namespace bluepadhub {
 
+    class IMultiMotorUnit {
+        public:
+            virtual int getMotorCount() = 0;
+            virtual GenericMotor* getMotor(int channel) = 0;
+            virtual void stopMotors() = 0;
+    };
+
     template <int numMotors, class MotorClass = GenericMotor>
-    class MultiMotorUnit : private GenericMotorController {
+    class MultiMotorUnit : public IMultiMotorUnit, private GenericMotorController {
 
         public:
             MultiMotorUnit() {  
@@ -61,6 +68,14 @@ namespace bluepadhub {
 
             void brakeMotor(uint8_t channel) {
                 motor(channel)->brake();
+            };
+
+            virtual int getMotorCount() {
+                return numMotors;
+            };
+
+            virtual GenericMotor* getMotor(int channel) {
+                return motor(channel);
             };
 
         private:

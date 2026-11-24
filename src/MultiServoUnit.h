@@ -14,8 +14,15 @@
 
 namespace bluepadhub {
 
+    class IMultiServoUnit {
+        public:
+            virtual int getServoCount() = 0;
+            virtual GenericServo* getServo(int channel) = 0;
+            virtual void stopServos() = 0;
+    };
+
     template <int numServos, class ServoClass = GenericServo>
-    class MultiServoUnit : private GenericServoController {
+    class MultiServoUnit : public IMultiServoUnit, private GenericServoController {
 
         public:
             MultiServoUnit() {
@@ -57,6 +64,14 @@ namespace bluepadhub {
 
             void updateServo(uint8_t channel, float normalized_position) {
                 servo(channel)->updateServo(normalized_position);
+            };
+
+            virtual int getServoCount() {
+                return numServos;
+            };
+
+            virtual GenericServo* getServo(int channel) {
+                return servo(channel);
             };
 
         private:        

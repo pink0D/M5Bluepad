@@ -89,6 +89,8 @@ namespace bluepadhub {
                 this->enableProfiles = enableProfiles;
             };
 
+            virtual ~ConfigComponent() {};
+
             void begin();
             void reload();
 

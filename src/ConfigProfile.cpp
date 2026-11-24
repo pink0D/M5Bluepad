@@ -102,10 +102,10 @@ namespace bluepadhub {
     if (input == BluepadControllerInput::NullInput)
         return 0;
 
-    if (input == BluepadControllerInput::L2)
+    if (input == BluepadControllerInput::LeftTrigger)
         return normalizeTriggerInput(ctl->brake());
 
-    if (input == BluepadControllerInput::R2)
+    if (input == BluepadControllerInput::RightTrigger)
         return normalizeTriggerInput(ctl->throttle());
 
     if (input == BluepadControllerInput::LeftStickX)
@@ -152,16 +152,16 @@ namespace bluepadhub {
     if (button == BluepadControllerButton::Circle)
         return ctl->b();
 
-    if (button == BluepadControllerButton::DpadUp)
+    if (button == BluepadControllerButton::DPadUp)
         return ctl->dpad() & DPAD_UP;
 
-    if (button == BluepadControllerButton::DpadDown)
+    if (button == BluepadControllerButton::DPadDown)
         return ctl->dpad() & DPAD_DOWN;
 
-    if (button == BluepadControllerButton::DpadLeft)
+    if (button == BluepadControllerButton::DPadLeft)
         return ctl->dpad() & DPAD_LEFT;
 
-    if (button == BluepadControllerButton::DpadRight)
+    if (button == BluepadControllerButton::DPadRight)
         return ctl->dpad() & DPAD_RIGHT;
 
     return false;

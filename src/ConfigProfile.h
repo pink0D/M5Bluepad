@@ -30,11 +30,12 @@ typedef Controller BluepadController;
 namespace bluepadhub {
 
   enum class BluepadControllerButton {NullButton, 
-      DpadUp, DpadDown, DpadLeft, DpadRight, 
-      L1, R1, L3, R3, 
-      Square, Triangle, Cross, Circle};
+      DPadUp, DPadDown, DPadLeft, DPadRight, 
+      L1, R1, L2, R2, L3, R3, 
+      Square, Triangle, Cross, Circle,
+      Share, Options};
 
-  enum class BluepadControllerInput {NullInput, L2, R2, LeftStickX, LeftStickY, RightStickX, RightStickY};
+  enum class BluepadControllerInput {NullInput, LeftTrigger, RightTrigger, LeftStickX, LeftStickY, RightStickX, RightStickY};
 
   struct ConfigParams { 
 
