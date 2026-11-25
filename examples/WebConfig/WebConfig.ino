@@ -96,6 +96,7 @@ class : public bluepadhub::Profile {
     ServoController.begin();
 
     MouldKingController.enableAdvancedChannels();
+    MouldKingController.enableMultiModule();
     MouldKingController.begin();
 
     // ProfileManager must be set up last so it loads configs for all other components

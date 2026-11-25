@@ -12,12 +12,71 @@
 
 #include <esp_http_server.h>
 
+class HttpdChunkPrint : public Print {
+private:
+    httpd_req_t* _req;
+    char *_buffer; // Fixed array size - heap allocated!
+    size_t _pos = 0;
+    esp_err_t _err = ESP_OK;
+
+public:
+    HttpdChunkPrint(httpd_req_t* req) : _req(req) {
+        _buffer = new char[512];
+    }
+
+    ~HttpdChunkPrint() {
+        delete [] _buffer;
+    }
+
+    size_t write(uint8_t c) override {
+        if (_err != ESP_OK) return 0;
+
+        _buffer[_pos++] = (char)c;
+        if (_pos >= sizeof(_buffer)) {
+            flush();
+            if (_err != ESP_OK) return 0;
+        }
+        return 1;
+    }
+
+    size_t write(const uint8_t* buffer, size_t size) override {
+        if (_err != ESP_OK) return 0;
+
+        size_t written = 0;
+        while (written < size) {
+            size_t space = sizeof(_buffer) - _pos;
+            size_t toCopy = (size - written < space) ? (size - written) : space;
+            
+            memcpy(_buffer + _pos, buffer + written, toCopy);
+            _pos += toCopy;
+            written += toCopy;
+
+            if (_pos >= sizeof(_buffer)) {
+                flush();
+                if (_err != ESP_OK) return written;
+            }
+        }
+        return written;
+    }
+
+    void flush() override {
+        if (_pos > 0 && _err == ESP_OK) {
+            _err = httpd_resp_send_chunk(_req, _buffer, _pos);
+            _pos = 0;
+        }
+    }
+
+    esp_err_t getResult() const { return _err; }
+};
+
 
 namespace bluepadhub::web {    
 
     bool WebServer::start() {
 
         httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+        //config.stack_size = 16*1024;
+        //config.send_wait_timeout = 30;
         config.max_uri_handlers = 16;
         config.uri_match_fn = httpd_uri_match_wildcard;
 
@@ -93,17 +152,45 @@ namespace bluepadhub::web {
         httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
         httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
 
-        size_t jsonLength = measureJsonPretty(json);
-        char* buffer = new char[jsonLength + 1];
+        HttpdChunkPrint writer(req);
+        serializeJsonPretty(json, writer);
+        writer.flush();
 
-        serializeJsonPretty(json, buffer, jsonLength + 1);
+        esp_err_t res = writer.getResult();
 
-        esp_err_t res = httpd_resp_send_chunk(req, buffer, jsonLength);
-        httpd_resp_send_chunk(req, nullptr, 0);
+        if (res != ESP_OK) {
+            return res;
+        }
 
-        delete [] buffer;
+        return httpd_resp_send_chunk(req, nullptr, 0);
 
-        return res;
+        //size_t jsonLength = measureJsonPretty(json);
+        //char* buffer = new char[jsonLength + 1];
+
+        //serializeJsonPretty(json, buffer, jsonLength + 1);
+
+        //esp_err_t res = httpd_resp_send_chunk(req, buffer, jsonLength);
+        //httpd_resp_send_chunk(req, nullptr, 0);
+
+        /*const size_t chunk_size = 2048;
+        size_t offset = 0;
+
+        esp_err_t res= ESP_OK;
+
+        while (offset < jsonLength) {
+            size_t to_send = (jsonLength - offset > chunk_size) ? chunk_size : (jsonLength - offset);
+            esp_err_t err = httpd_resp_send_chunk(req, buffer + offset, to_send);
+            if (err != ESP_OK) {
+                printf("Error: %s (0x%x)\n", esp_err_to_name(err), err);
+                break;
+            }
+            offset += to_send;
+        }
+        httpd_resp_send_chunk(req, NULL, 0);  */      
+
+        //delete [] buffer;
+
+        //return res;
     }
 
     void WebServer::addWebFiles(const web_data &files) {

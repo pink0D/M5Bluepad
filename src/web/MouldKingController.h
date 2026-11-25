@@ -30,7 +30,7 @@ namespace bluepadhub::web {
     };
     extern MouldKingModuleTypeMapperImpl MouldKingModuleTypeMapper;
 
-    typedef MultiMotorUnit<6> MKMaxMultiMotorUnit;
+    typedef MultiMotorUnit<12> MKMaxMultiMotorUnit;
 
     class MouldKingController : public MultiMotorController, private MKMaxMultiMotorUnit {
 
