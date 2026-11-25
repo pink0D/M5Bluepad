@@ -29,10 +29,10 @@ class MKModuleExt : public BaseClass, public bluepadhub::MultiMotorUnit<numChann
             BaseClass::applyUpdates();
         };
 
-        virtual void stop() {
+        /*virtual void stop() {
             bluepadhub::MultiMotorUnit<numChannels>::stop();
             BaseClass::applyUpdates();
-        };
+        };*/
 
     private:
         virtual void outputMotorSpeed(int channel, float normalized_speed) {            
@@ -41,7 +41,7 @@ class MKModuleExt : public BaseClass, public bluepadhub::MultiMotorUnit<numChann
 
 };
 
+typedef MKModuleExt<MouldKingMulti40, 4> MouldKingMulti40Ext;
 typedef MKModuleExt<MouldKing40, 4> MouldKing40Ext;
-
 typedef MKModuleExt<MouldKing60, 6> MouldKing60Ext;
 

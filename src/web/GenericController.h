@@ -21,7 +21,7 @@ namespace bluepadhub::web {
         public:
             GenericController(std::string name, std::string label) : ConfigComponent(name, label, false, true) {};
 
-            void processBluepadController(Profile *profile, BluepadController *ctl);
+            virtual void processBluepadController(Profile *profile, BluepadController *ctl);
             virtual void stop() {};
 
         protected:
@@ -32,14 +32,14 @@ namespace bluepadhub::web {
             virtual void updateOutput(int channel, float value, bool brake) {};
             virtual void applyOutputSettings(int channel, GenericChannel *settings) {};
 
-        private:
-
+            // ConfigComponent overrides
             virtual void loadDefaultSettings();
             virtual void applySettings();
 
             virtual bool loadSettingsFromJson(JsonDocument &json);
             virtual JsonDocument saveSettingsToJson();
 
+        private:
             GenericChannel *channels = nullptr;
 
             

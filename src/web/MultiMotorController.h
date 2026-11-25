@@ -29,6 +29,8 @@ namespace bluepadhub::web {
             : GenericController("MotorProfile", label) {
                 setUnit(unit);
             };
+
+            using GenericController::GenericController;
             
             void setUnit(IMultiMotorUnit *unit) {
                 this->unit = unit;

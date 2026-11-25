@@ -30,6 +30,8 @@ namespace bluepadhub::web {
                 setUnit(unit);
             };    
 
+            using GenericController::GenericController;
+
             void setUnit(IMultiServoUnit *unit) {
                 this->unit = unit;
             };

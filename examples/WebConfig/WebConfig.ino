@@ -19,6 +19,7 @@
 
 #include <web/MultiMotorController.h>
 #include <web/MultiServoController.h>
+#include <web/MouldKingController.h>
 
 #include "esp_bt.h"
 
@@ -38,6 +39,7 @@ bluepadhub::web::TelegramBot TelegramBot;
 bluepadhub::web::BluetoothSettings BluetoothSettings;
 bluepadhub::web::DeepSleepSettings DeepSleepSettings;
 
+bluepadhub::web::MouldKingController MouldKingController("MK");
 
 class : public bluepadhub::web::MultiMotorController {
   using bluepadhub::web::MultiMotorController::MultiMotorController;
@@ -48,6 +50,7 @@ class : public bluepadhub::web::MultiMotorController {
   }; 
 
 } MotorController(MotorUnit, "HDriver");
+
 
 
 class : public bluepadhub::web::MultiServoController {
@@ -92,6 +95,9 @@ class : public bluepadhub::Profile {
     MotorController.begin();
     ServoController.begin();
 
+    MouldKingController.enableAdvancedChannels();
+    MouldKingController.begin();
+
     // ProfileManager must be set up last so it loads configs for all other components
     ProfileManager.begin();
 
@@ -103,14 +109,16 @@ class : public bluepadhub::Profile {
     ServoUnit.servo(1)->begin(SERVO_ATOM_LITE_PORT_A2);
   };
 
-  void processBluepadController(BluepadController* ctl) {
+  void processBluepadController(BluepadController* ctl) {    
     MotorController.processBluepadController(this, ctl);
     ServoController.processBluepadController(this, ctl);
+    MouldKingController.processBluepadController(this, ctl);
   };
 
   void failsafe() {    
     MotorController.stop();
     ServoController.stop();
+    MouldKingController.stop();
   };
 
   bool isLowBatteryState() {
