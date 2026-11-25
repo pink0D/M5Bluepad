@@ -19,10 +19,9 @@ namespace bluepadhub {
     class GenericController : public ConfigComponent{
 
         public:
-            GenericController(std::string name, std::string label);
-            virtual ~GenericController();
+            GenericController(std::string name, std::string label) : ConfigComponent(name, label, false, true) {};
 
-            void processBluepadController(BluepadController *ctl);
+            void processBluepadController(Profile *profile, BluepadController *ctl);
             virtual void stop() {};
 
         protected:

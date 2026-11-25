@@ -25,10 +25,7 @@ namespace bluepadhub {
 
     void WebConfig::begin() {
 
-        if (ConfigComponent::initFS() == false) {
-            noConfigFS = true;
-        }
-
+        ConfigComponent::initFS();
 
         xTaskCreate( [](void* ctx) {    
             static_cast<WebConfig*>(ctx)->wifiStartupTask();
@@ -41,8 +38,8 @@ namespace bluepadhub {
         // delay on startup to wait until power button is released normally
         vTaskDelayMillis(wifiTaskDelayMillis);
 
-        // enable WiFi if button is pressed during startup or if there's no config FS
-        if (noConfigFS || ::BluepadHub.getMultiFunctionButton()->isPressed()) {
+        // enable WiFi if button is pressed during startup or if there was no config FS during startup
+        if (ConfigComponent::isFirstStartup() || ::BluepadHub.getMultiFunctionButton()->isPressed()) {
 
             // connect to wifi in async task so it does not delay possible hard reset event
             xTaskCreate( [](void* ctx) {    

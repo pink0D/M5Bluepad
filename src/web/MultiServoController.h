@@ -18,6 +18,7 @@ namespace bluepadhub {
     class MultiServoController : public GenericController{
 
         public:
+        
             MultiServoController(std::string label)
             : MultiServoController(nullptr, label) {};
 
@@ -29,11 +30,10 @@ namespace bluepadhub {
                 setUnit(unit);
             };    
 
-            virtual ~MultiServoController() {};
-
             void setUnit(IMultiServoUnit *unit) {
                 this->unit = unit;
             };
+
             void setUnit(IMultiServoUnit &unit) {
                 this->unit = &unit;
             };
@@ -46,6 +46,7 @@ namespace bluepadhub {
         protected:
 
             virtual int getChannelCount() {
+
                 if (unit != nullptr)
                     return unit->getServoCount();
 
@@ -53,6 +54,7 @@ namespace bluepadhub {
             };
 
             virtual void updateOutput(int channel, float value, bool brake) {
+
                 if (unit == nullptr)
                     return;
 
@@ -60,6 +62,7 @@ namespace bluepadhub {
             };
 
             virtual void applyOutputSettings(int channel, GenericChannel *settings) {
+
                 if (unit == nullptr)
                     return;
 
@@ -68,7 +71,7 @@ namespace bluepadhub {
                 }
 
                 if (settings->servoUnits == ServoUnits::Angle) {
-                    unit->getServo(channel)->setServoAngles(settings->servoCenter, settings->servoMaxAngle);
+                    unit->getServo(channel)->setServoAngles(settings->servoCenterPos, settings->servoMaxAngle);
                 }
             };            
 

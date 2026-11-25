@@ -39,7 +39,6 @@ namespace bluepadhub {
 
             long wifiTaskDelayMillis = 0;
             bool isResetting = false;
-            bool noConfigFS = false;
             
             void wifiStartupTask();
             void wifiConnectTask();

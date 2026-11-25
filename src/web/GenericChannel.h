@@ -91,9 +91,9 @@ namespace bluepadhub {
         public:
             GenericChannel() {};
 
-            void getOutput(BluepadController *ctl, float *value, bool* brake);
+            void getOutput(Profile *profile, BluepadController *ctl, float *pOutValue, bool* pOutBrake);
 
-            void loadDefaultSettings();
+            void loadDefaultSettings(int channel);
             void applySettings();
 
             bool loadSettingsFromJson(JsonObject json);
@@ -113,16 +113,26 @@ namespace bluepadhub {
             BluepadControllerButton button2;
             BluepadControllerButton buttonStop;
             bool sticky;
-            int steps;
+            int stepCount;
             int minPower;
             int maxPower;
+            int softStartTime;
             ServoUnits servoUnits;
             int servoMin;
             int servoMax;
             int servoMaxAngle;
-            int servoCenter;
+            int servoCenterPos;
+
+        private:
+
+        int channel_index;
 
             // state variables
+
+            float direction;
+            unsigned long timer_brake;
+
+            int step;
                         
     };
 

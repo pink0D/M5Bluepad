@@ -18,6 +18,7 @@ namespace bluepadhub {
     class MultiMotorController : public GenericController{
 
         public:
+
             MultiMotorController(std::string label)
             : MultiMotorController(nullptr, label) {};
 
@@ -29,8 +30,6 @@ namespace bluepadhub {
                 setUnit(unit);
             };
             
-            virtual ~MultiMotorController() {};
-
             void setUnit(IMultiMotorUnit *unit) {
                 this->unit = unit;
             };
@@ -47,6 +46,7 @@ namespace bluepadhub {
         protected:
 
             virtual int getChannelCount() {
+
                 if (unit != nullptr)
                     return unit->getMotorCount();
 
@@ -54,6 +54,7 @@ namespace bluepadhub {
             };
 
             virtual void updateOutput(int channel, float value, bool brake) {
+
                 if (unit == nullptr)
                     return;
 
@@ -65,10 +66,12 @@ namespace bluepadhub {
             };
 
             virtual void applyOutputSettings(int channel, GenericChannel *settings) {
+
                 if (unit == nullptr)
                     return;
 
-                unit->getMotor(channel)->setLimits((float)settings->minPower / 100.0, (float) settings->maxPower / 100.0);
+                unit->getMotor(channel)->setLimits( (float) settings->minPower / 100.0, (float) settings->maxPower / 100.0);
+                unit->getMotor(channel)->setAccelerationTime(settings->softStartTime);
             };            
 
         private:

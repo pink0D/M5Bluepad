@@ -89,8 +89,6 @@ namespace bluepadhub {
                 this->enableProfiles = enableProfiles;
             };
 
-            virtual ~ConfigComponent() {};
-
             void begin();
             void reload();
 
@@ -118,8 +116,9 @@ namespace bluepadhub {
 
             // static methods
 
-            static bool initFS();
+            static void initFS();
             static void createDir(std::string dir);
+            static bool isFirstStartup();
 
             static void registerConfigComponent(std::string name, ConfigComponent* component);
             static void unregisterConfigComponent(std::string name);
@@ -139,6 +138,8 @@ namespace bluepadhub {
             static inline std::map<std::string, ConfigComponent*> configComponents;
 
             static bool directoryExists(const char *path);
+
+            static inline bool firstStartup = false;
 
     };
 

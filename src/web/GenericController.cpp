@@ -11,32 +11,28 @@
 
 namespace bluepadhub {
 
-  GenericController::GenericController(std::string name, std::string label) 
-            : ConfigComponent (name, label, false, true) {
-
-      int count = getChannelCount();
-
-      if (count > 0) {
-        channels = new GenericChannel[count];
-      }
-              
-  }
-
-  GenericController::~GenericController() {
+  void GenericController::loadDefaultSettings() {
 
     if (channels != nullptr)
       delete [] channels;
-  }
 
-  void GenericController::loadDefaultSettings() {
+    int count = getChannelCount();
+
+    if (count > 0) {
+      channels = new GenericChannel[count];
+    }
+
+    // ensures channels have diffrerent index across all controllers
+    static int channel_index = 0;
 
     for (int i=0; i<getChannelCount(); i++) {
-      channels[i].loadDefaultSettings();
+      channels[i].loadDefaultSettings(channel_index++);
       setChannelDefaults(i,&channels[i]);
     }
   }
 
   void GenericController::applySettings() {
+    
     for (int i=0; i<getChannelCount(); i++) {
       channels[i].applySettings();
       applyOutputSettings(i, &channels[i]);
@@ -66,14 +62,14 @@ namespace bluepadhub {
     return json;
   }
 
-  void GenericController::processBluepadController(BluepadController *ctl) {
+  void GenericController::processBluepadController(Profile *profile, BluepadController *ctl) {
 
     for (int i=0; i<getChannelCount(); i++) {
       
       float value = 0;
       bool brake = false;
 
-      channels[i].getOutput(ctl, &value, &brake);
+      channels[i].getOutput(profile, ctl, &value, &brake);
       updateOutput(i, value, brake);
     }
   }

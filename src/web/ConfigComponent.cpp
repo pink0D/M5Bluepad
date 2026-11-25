@@ -42,9 +42,7 @@ namespace bluepadhub {
     STATIC MEMBERS
     */
 
-    bool ConfigComponent::initFS() {
-
-        bool result = true;
+    void ConfigComponent::initFS() {
 
         static bool fs_init_done = false;
 
@@ -53,10 +51,10 @@ namespace bluepadhub {
             if (!LittleFS.begin(true)) {
                 
                 Serial.println("WARNING: LittleFS begin Failed");                
-                return false;
+                return;
             }
 
-            result = directoryExists("/config");
+            firstStartup = !directoryExists("/config");
 
             ConfigComponent::createDir("/config");
             
@@ -65,8 +63,13 @@ namespace bluepadhub {
             //Serial.println("LITTLEFS");
             //printTree(LittleFS, "/", 5);
         }
+    }
 
-        return result;
+    bool ConfigComponent::isFirstStartup() {
+
+        ConfigComponent::initFS();
+        
+        return ConfigComponent::firstStartup;
     }
 
     bool ConfigComponent::directoryExists(const char *path) {

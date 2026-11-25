@@ -15,6 +15,7 @@
 
 #include <web/TelegramBot.h>
 #include <web/BluetoothSettings.h>
+#include <web/DeepSleepSettings.h>
 
 #include <web/MultiMotorController.h>
 #include <web/MultiServoController.h>
@@ -35,6 +36,7 @@ bluepadhub::ProfileManager ProfileManager;
 
 bluepadhub::TelegramBot TelegramBot;
 bluepadhub::BluetoothSettings BluetoothSettings;
+bluepadhub::DeepSleepSettings DeepSleepSettings;
 
 
 class : public bluepadhub::MultiMotorController {
@@ -68,17 +70,20 @@ class : public bluepadhub::Profile {
 
   void setup() {
 
-    AtomDeepSleep.setCheckWakeUpReason(true);
-    AtomDeepSleep.begin();
+    DeepSleepSettings.begin();
+
+    if (DeepSleepSettings.isEnabled()) {
+      AtomDeepSleep.setCheckWakeUpReason(true);
+      AtomDeepSleep.begin();
+    }
     
     AtomLiteIndicator.setBrightness(20);
     AtomLiteIndicator.begin();
         
     AtomLiteButton.begin();
 
-    // WebConfig must be set up before any other configs
     WebConfig.webServer.addWebFiles(m5stack_web_data);
-    WebConfig.setWiFiTaskDelay(1000);
+    WebConfig.setWiFiTaskDelay(DeepSleepSettings.isEnabled() ? 1000 : 0);
     WebConfig.begin();
 
     BluetoothSettings.begin();
@@ -90,8 +95,7 @@ class : public bluepadhub::Profile {
     // ProfileManager must be set up last so it loads configs for all other components
     ProfileManager.begin();
 
-
-    // set up physical devices after their configs have been updated during profile loading
+    // set up devices after their configs have been updated during profile loading
 
     MotorUnit.motor(0)->begin(); 
 
@@ -100,8 +104,8 @@ class : public bluepadhub::Profile {
   };
 
   void processBluepadController(BluepadController* ctl) {
-    MotorController.processBluepadController(ctl);
-    ServoController.processBluepadController(ctl);
+    MotorController.processBluepadController(this, ctl);
+    ServoController.processBluepadController(this, ctl);
   };
 
   void failsafe() {    
