@@ -10,7 +10,7 @@
 #include "BluetoothSettings.h"
 #include "BluepadHub.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
   
   bool BluetoothSettings::loadSettingsFromJson(JsonDocument &json) {
 

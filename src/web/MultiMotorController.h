@@ -13,7 +13,7 @@
 #include "GenericController.h"
 #include "MultiMotorUnit.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class MultiMotorController : public GenericController{
 

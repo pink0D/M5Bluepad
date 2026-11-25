@@ -7,18 +7,13 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _CONFIG_COMPONENT_H
-#define _CONFIG_COMPONENT_H
-
+#pragma once
 
 #include <Arduino.h>
-
 #include <ArduinoJson.h>
-
 #include <map>
 
-
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     template <class EnumClass>
     class EnumMapper {
@@ -155,5 +150,3 @@ namespace bluepadhub {
             void saveSettingsToStorage() override {};
     };
 }
-
-#endif

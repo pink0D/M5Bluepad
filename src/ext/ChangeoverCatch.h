@@ -7,12 +7,11 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _CHANGEOVER_CATCH_H_
-#define _CHANGEOVER_CATCH_H_
+#pragma once
 
 #include "GenericServo.h"
 
-namespace bluepadhub
+namespace bluepadhub::ext
 {
     class ChangeoverCatch {
 
@@ -75,5 +74,3 @@ namespace bluepadhub
     };
     
 } 
-
-#endif

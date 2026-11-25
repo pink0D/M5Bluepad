@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _M5_ATOM_H_
-#define _M5_ATOM_H_
+#pragma once
 
 #include "NeoPixelStatusIndicator.h"
 #include "DeepSleep.h"
@@ -51,6 +50,3 @@ class M5AtomLiteButton : public bluepadhub::MultiFunctionButton {
       bluepadhub::MultiFunctionButton::begin(_button_pin, _pin_mode);
     };
 };
-
-
-#endif

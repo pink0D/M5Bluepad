@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _NEOPIXEL_STATUS_INDICATOR_H_
-#define _NEOPIXEL_STATUS_INDICATOR_H_
+#pragma once
 
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
@@ -38,5 +37,3 @@ namespace bluepadhub {
   };  
   
 }
-
-#endif

@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _M5_EXTENSIONS_H_
-#define _M5_EXTENSIONS_H_
+#pragma once
 
 #define M5_ATOMIC_MOTION_SERVO_COUNT  4
 #define M5_ATOMIC_MOTION_MOTOR_COUNT  2
@@ -42,6 +41,3 @@
 #include "ServoPWM.h"
 
 typedef bluepadhub::ServoPWM M5GroveServo;
-
-
-#endif

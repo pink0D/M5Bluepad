@@ -7,13 +7,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _TELEGRAM_BOT_H_
-#define _TELEGRAM_BOT_H_
+#pragma once
 
 #include <Arduino.h>
 #include "ConfigComponent.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class TelegramBot : public ConfigComponent {
 
@@ -61,5 +60,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

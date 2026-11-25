@@ -36,7 +36,7 @@ void printTree(fs::FS &fs, const char *dirname, uint8_t levels, String indent = 
   }
 }*/
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     /*
     STATIC MEMBERS

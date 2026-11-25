@@ -7,13 +7,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _M5_UNIT_8SERVOS_LIGHT_CONTROLLER_H_
-#define _M5_UNIT_8SERVOS_LIGHT_CONTROLLER_H_
+#pragma once
 
 #include "ext/LightController.h"
 #include "M5Unit8Servos.h"
 
-class M5Unit8ServosLightContoller : public bluepadhub::LightController {
+class M5Unit8ServosLightContoller : public bluepadhub::ext::LightController {
 
   private:
 
@@ -88,5 +87,3 @@ class M5Unit8ServosLightContoller : public bluepadhub::LightController {
       }
     };
 };
-
-#endif

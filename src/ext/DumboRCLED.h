@@ -7,25 +7,24 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _DUMBO_RC_LED_H_
-#define _DUMBO_RC_LED_H_
+#pragma once
 
 #include "ServoPWM.h"
 
-class DumboRCLED : public bluepadhub::ServoPWM {
-    public:
-        DumboRCLED() {};
-        DumboRCLED(int pwm_pin) : bluepadhub::ServoPWM (pwm_pin) {};
+namespace bluepadhub::ext
+{
+    class DumboRCLED : public bluepadhub::ServoPWM {
+        public:
+            DumboRCLED() {};
+            DumboRCLED(int pwm_pin) : bluepadhub::ServoPWM (pwm_pin) {};
 
-        virtual void begin(int pwm_pin);
-        virtual void begin() {
-                bluepadhub::ServoPWM::begin();
-            };
-            
-        virtual void stop();
+            virtual void begin(int pwm_pin);
+            virtual void begin() {
+                    bluepadhub::ServoPWM::begin();
+                };
+                
+            virtual void stop();
 
-        void toggleMode();
-};
-
-
-#endif
+            void toggleMode();
+    };
+}

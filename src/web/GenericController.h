@@ -14,7 +14,7 @@
 #include "ConfigComponent.h"
 #include "GenericChannel.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class GenericController : public ConfigComponent{
 

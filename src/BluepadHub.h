@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _BLUEPAD_HUB_H_
-#define _BLUEPAD_HUB_H_
+#pragma once
 
 #define TASK_STACK_SIZE 8*1024
 #define TASK_DEFAULT_DELAY_MILLIS 50
@@ -90,5 +89,3 @@ namespace bluepadhub {
 }
 
 extern bluepadhub::BluepadHub BluepadHub;  
-
-#endif

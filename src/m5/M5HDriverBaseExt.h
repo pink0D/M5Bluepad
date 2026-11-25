@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _M5HDRIVER_BASE_EXT_H_
-#define _M5HDRIVER_BASE_EXT_H_
+#pragma once
 
 #include "MotorDriverHBridge.h"
 #include "VoltageMonitor.h"
@@ -30,5 +29,3 @@ class M5HDriverBaseExt : public bluepadhub::MotorDriverHBridge, public bluepadhu
 
         void setupPins();
 };
-
-#endif

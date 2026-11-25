@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _MOTOR_HBRIDGE_DRIVER_H_
-#define _MOTOR_HBRIDGE_DRIVER_H_
+#pragma once
 
 #include <ESP32PWM.h>
 #include "GenericMotor.h"
@@ -31,5 +30,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

@@ -13,7 +13,7 @@
 #include <FS.h>
 #include <LittleFS.h>
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     void WebConfig::setDefaultHostname(std::string hostname) {
         wifiManager.setDefaultHostname(hostname);

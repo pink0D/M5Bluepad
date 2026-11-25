@@ -12,7 +12,7 @@
 #include <Arduino.h>
 #include "ConfigComponent.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class DeepSleepSettings : public ConfigComponent {
 

@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _WEB_SERVER_H
-#define _WEB_SERVER_H
+#pragma once
 
 #include <Arduino.h>
 
@@ -35,7 +34,7 @@ struct web_data {
 
 #endif 
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class WebServer {
 
@@ -70,5 +69,3 @@ namespace bluepadhub {
 
     };
 }
-
-#endif

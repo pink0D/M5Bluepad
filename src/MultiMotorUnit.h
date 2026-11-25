@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _MULTI_MOTOR_UNIT_H_
-#define _MULTI_MOTOR_UNIT_H_
+#pragma once
 
 #include "GenericMotor.h"
 
@@ -84,5 +83,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

@@ -13,7 +13,7 @@
 #include "GenericController.h"
 #include "MultiServoUnit.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class MultiServoController : public GenericController{
 

@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _STATUS_INDICATOR_H_
-#define _STATUS_INDICATOR_H_
+#pragma once
 
 namespace bluepadhub {
 
@@ -98,5 +97,3 @@ namespace bluepadhub {
   };  
 
 }
-
-#endif

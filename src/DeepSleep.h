@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _DEEP_SLEEP_H_
-#define _DEEP_SLEEP_H_
+#pragma once
 
 #include <Arduino.h>
 
@@ -31,5 +30,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

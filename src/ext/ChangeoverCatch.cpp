@@ -11,7 +11,7 @@
 
 #include <esp_timer.h>
 
-namespace bluepadhub
+namespace bluepadhub::ext
 {
 
     void ChangeoverCatch::begin() {

@@ -10,7 +10,7 @@
 #include "DeepSleepSettings.h"
 #include "BluepadHub.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
   
   bool DeepSleepSettings::loadSettingsFromJson(JsonDocument &json) {
 

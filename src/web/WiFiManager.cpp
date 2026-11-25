@@ -27,7 +27,7 @@
 #endif
 
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     void WiFiManager::setDefaultHostname(std::string hostname) {
         this->defaultHostname = hostname.substr(0, 16);

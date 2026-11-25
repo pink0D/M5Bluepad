@@ -7,16 +7,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _PROFILE_MANAGER_H
-#define _PROFILE_MANAGER_H
-
+#pragma once
 
 #include <Arduino.h>
 
 #include "ConfigComponent.h"
 
 
-namespace bluepadhub {
+namespace bluepadhub::web {
     
     class ProfileManager : public ConfigComponent {
 
@@ -42,5 +40,3 @@ namespace bluepadhub {
 
     };    
 }
-
-#endif

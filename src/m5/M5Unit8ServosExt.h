@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _M5_UNIT_8SERVOS_EXT_H_
-#define _M5_UNIT_8SERVOS_EXT_H_
+#pragma once
 
 #include "MultiServoUnit.h"
 #include "M5Unit8Servos.h"
@@ -46,5 +45,3 @@ class M5Unit8ServosExt : public M5Unit8Servos, public bluepadhub::MultiServoUnit
     bool setPinMode = true;
     
 };
-
-#endif

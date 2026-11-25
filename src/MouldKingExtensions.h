@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _MOULD_KING_H
-#define _MOULD_KING_H
+#pragma once
 
 #include <MouldKingino.h>
 
@@ -46,4 +45,3 @@ typedef MKModuleExt<MouldKing40, 4> MouldKing40Ext;
 
 typedef MKModuleExt<MouldKing60, 6> MouldKing60Ext;
 
-#endif

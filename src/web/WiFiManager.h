@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _WIFI_MANAGER_H
-#define _WIFI_MANAGER_H
+#pragma once
 
 #include <Arduino.h>
 
@@ -16,7 +15,7 @@
 
 #include "ConfigComponent.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class WiFiManager : public ConfigComponent {
 
@@ -71,5 +70,3 @@ namespace bluepadhub {
             bool isValidHostname(const std::string& s);
     };
 }
-
-#endif

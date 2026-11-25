@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _VOLTAGE_MONITOR_H_
-#define _VOLTAGE_MONITOR_H_
+#pragma once
 
 namespace bluepadhub {
 
@@ -109,5 +108,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

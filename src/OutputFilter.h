@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _OUTPUT_FILTER_H_
-#define _OUTPUT_FILTER_H_
+#pragma once
 
 namespace bluepadhub {
 
@@ -45,5 +44,3 @@ namespace bluepadhub {
   };  
 
 }
-
-#endif

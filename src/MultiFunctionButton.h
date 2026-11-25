@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _MULTI_FUNCTION_BUTTON_H_
-#define _MULTI_FUNCTION_BUTTON_H_
+#pragma once
 
 #include <Arduino.h>
 
@@ -39,5 +38,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

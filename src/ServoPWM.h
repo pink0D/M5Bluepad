@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _SERVO_PWM_H_
-#define _SERVO_PWM_H_
+#pragma once
 
 #include <ESP32Servo.h>
 #include "GenericServo.h"
@@ -41,5 +40,3 @@ namespace bluepadhub {
 }
 
 typedef bluepadhub::ServoPWM GeekServo;
-
-#endif

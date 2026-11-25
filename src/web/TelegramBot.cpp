@@ -13,7 +13,7 @@
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
   void TelegramBot::sendVoltageStatus(float voltage, bool isLowVoltage) {
 

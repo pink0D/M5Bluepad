@@ -7,15 +7,14 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _WEB_CONFIG_H_
-#define _WEB_CONFIG_H_
+#pragma once
 
 #include "ConfigComponent.h"
 #include "WiFiManager.h"
 #include "WebServer.h"
 #include "ConfigProfile.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class WebConfig {
 
@@ -49,4 +48,3 @@ namespace bluepadhub {
 
 }
 
-#endif

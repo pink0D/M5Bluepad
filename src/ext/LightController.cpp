@@ -11,7 +11,7 @@
 
 #include <Arduino.h>
 
-namespace bluepadhub
+namespace bluepadhub::ext
 {
     void LightController::update(float steer, float speed, bool brake, bool reverse) {
 

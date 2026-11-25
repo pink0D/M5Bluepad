@@ -31,18 +31,18 @@ M5AtomDeepSleep       AtomDeepSleep;
 bluepadhub::MultiMotorUnit<1, M5HDriverBaseExt> MotorUnit;
 bluepadhub::MultiServoUnit<2, M5GroveServo> ServoUnit;
 
-bluepadhub::WebConfig WebConfig;
-bluepadhub::ProfileManager ProfileManager;
+bluepadhub::web::WebConfig WebConfig;
+bluepadhub::web::ProfileManager ProfileManager;
 
-bluepadhub::TelegramBot TelegramBot;
-bluepadhub::BluetoothSettings BluetoothSettings;
-bluepadhub::DeepSleepSettings DeepSleepSettings;
+bluepadhub::web::TelegramBot TelegramBot;
+bluepadhub::web::BluetoothSettings BluetoothSettings;
+bluepadhub::web::DeepSleepSettings DeepSleepSettings;
 
 
-class : public bluepadhub::MultiMotorController {
-  using bluepadhub::MultiMotorController::MultiMotorController;
+class : public bluepadhub::web::MultiMotorController {
+  using bluepadhub::web::MultiMotorController::MultiMotorController;
 
-  void setChannelDefaults(int channel, bluepadhub::GenericChannel *settings) override {
+  void setChannelDefaults(int channel, bluepadhub::web::GenericChannel *settings) override {
     settings->label = "DRV8876";
     settings->minPower = 25;
   }; 
@@ -50,10 +50,10 @@ class : public bluepadhub::MultiMotorController {
 } MotorController(MotorUnit, "HDriver");
 
 
-class : public bluepadhub::MultiServoController {
-  using bluepadhub::MultiServoController::MultiServoController;
+class : public bluepadhub::web::MultiServoController {
+  using bluepadhub::web::MultiServoController::MultiServoController;
 
-  void setChannelDefaults(int channel, bluepadhub::GenericChannel *settings) override {
+  void setChannelDefaults(int channel, bluepadhub::web::GenericChannel *settings) override {
 
     if (channel == 0)
       settings->label = "Grove Servo 1 (Yellow wire)";

@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _LED_INDICATOR_H_
-#define _LED_INDICATOR_H_
+#pragma once
 
 #include <Arduino.h>
 
@@ -36,4 +35,3 @@ class LedIndicator : public bluepadhub::StatusIndicator {
     ESP32PWM pwm;
 };  
 
-#endif

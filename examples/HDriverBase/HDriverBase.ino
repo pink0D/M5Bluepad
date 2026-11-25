@@ -161,7 +161,7 @@ class : public bluepadhub::Profile {
     // send telegram notification that the controller is still powered on using battery
     Serial.println("Sending telegram notification");
 
-    bluepadhub::TelegramBot bot;
+    bluepadhub::web::TelegramBot bot;
 
     // check the TestTelegramBot example and test your bot without waiting for deep sleep timer
     bot.setWiFiSSID("WIFI_SSID");

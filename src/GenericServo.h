@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _GENERIC_SERVO_H_
-#define _GENERIC_SERVO_H_
+#pragma once
 
 #include <Arduino.h>
 #include "OutputFilter.h"
@@ -53,5 +52,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

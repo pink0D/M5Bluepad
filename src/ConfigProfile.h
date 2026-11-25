@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _CONTROL_PROFILE_H_
-#define _CONTROL_PROFILE_H_
+#pragma once
 
 #include <stddef.h>
 #include <stdint.h>
@@ -98,5 +97,3 @@ namespace bluepadhub {
   };
 
 }
-
-#endif

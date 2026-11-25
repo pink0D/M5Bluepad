@@ -7,13 +7,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _BT_SETTINGS_H_
-#define _BT_SETTINGS_H_
+#pragma once
 
 #include <Arduino.h>
 #include "ConfigComponent.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     class BluetoothSettings : public ConfigComponent {
 
@@ -29,5 +28,3 @@ namespace bluepadhub {
 
 }
 
-
-#endif

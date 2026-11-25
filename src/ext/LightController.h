@@ -7,10 +7,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _LIGHT_CONTROLLER_H_
-#define _LIGHT_CONTROLLER_H_
+#pragma once
 
-namespace bluepadhub
+namespace bluepadhub::ext
 {
     class LightController {
 
@@ -188,5 +187,3 @@ namespace bluepadhub
     };
     
 } 
-
-#endif

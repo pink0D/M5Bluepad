@@ -9,7 +9,7 @@
 
 #include "GenericChannel.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
   // global instances
   ChannelTypeMapperImpl ChannelTypeMapper;

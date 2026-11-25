@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _MULTI_SERVO_UNIT_H_
-#define _MULTI_SERVO_UNIT_H_
+#pragma once
 
 #include "GenericServo.h"
 
@@ -80,5 +79,3 @@ namespace bluepadhub {
     };
 
 }
-
-#endif

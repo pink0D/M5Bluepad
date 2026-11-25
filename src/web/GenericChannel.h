@@ -14,7 +14,7 @@
 #include "ConfigProfile.h"
 #include "ConfigComponent.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
     enum class ChannelType {Disabled, Analog, Buttons, Stepper};
 

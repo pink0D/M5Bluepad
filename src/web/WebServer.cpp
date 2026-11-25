@@ -13,7 +13,7 @@
 #include <esp_http_server.h>
 
 
-namespace bluepadhub {    
+namespace bluepadhub::web {    
 
     bool WebServer::start() {
 

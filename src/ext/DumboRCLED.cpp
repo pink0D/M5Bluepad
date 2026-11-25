@@ -9,25 +9,30 @@
 
 #include "DumboRCLED.h"
 
-void DumboRCLED::begin(int pwm_pin) {
-    bluepadhub::ServoPWM::begin(pwm_pin);
-    stop();
-}
+namespace bluepadhub::ext
+{
 
-void DumboRCLED::stop() {
-    updateServo(-1.0);
-}
+    void DumboRCLED::begin(int pwm_pin) {
+        bluepadhub::ServoPWM::begin(pwm_pin);
+        stop();
+    }
 
-void DumboRCLED::toggleMode() {
+    void DumboRCLED::stop() {
+        updateServo(-1.0);
+    }
 
-    xTaskCreate( [](void* ctx) {
+    void DumboRCLED::toggleMode() {
 
-        DumboRCLED* obj = static_cast<DumboRCLED*>(ctx);
+        xTaskCreate( [](void* ctx) {
 
-        obj->updateServo(-1.0);
-        vTaskDelay(pdMS_TO_TICKS(200));
-        obj->updateServo(0.0);
-        vTaskDelete(NULL);
+            DumboRCLED* obj = static_cast<DumboRCLED*>(ctx);
 
-      }, "taskLight", 8*1024, this, 0, nullptr);
+            obj->updateServo(-1.0);
+            vTaskDelay(pdMS_TO_TICKS(200));
+            obj->updateServo(0.0);
+            vTaskDelete(NULL);
+
+        }, "taskLight", 8*1024, this, 0, nullptr);
+    }
+    
 }

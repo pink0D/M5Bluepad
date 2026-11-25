@@ -7,8 +7,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
-#ifndef _M5_ATOMIC_MOTION_EXT_H_
-#define _M5_ATOMIC_MOTION_EXT_H_
+#pragma once
 
 #include <M5AtomicMotion.h>
 
@@ -40,4 +39,3 @@ class M5AtomicMotionExt : private M5AtomicMotion, public bluepadhub::MultiServoU
     
 };
 
-#endif

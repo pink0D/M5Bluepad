@@ -9,7 +9,7 @@
 
 #include "GenericController.h"
 
-namespace bluepadhub {
+namespace bluepadhub::web {
 
   void GenericController::loadDefaultSettings() {
 
