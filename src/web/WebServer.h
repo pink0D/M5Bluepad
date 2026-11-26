@@ -39,7 +39,7 @@ namespace bluepadhub::web {
     class WebServer {
 
         public:
-            WebServer() {};
+            WebServer() = default;
 
             bool start();
 

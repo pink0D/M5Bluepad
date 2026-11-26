@@ -14,7 +14,7 @@ namespace bluepadhub {
   class OutputFilter {
 
       public:
-          OutputFilter() {};    
+          OutputFilter() = default;    
 
           void setAntiJitter(float _antiJitter);
           void setAccelerationTime(int millis);

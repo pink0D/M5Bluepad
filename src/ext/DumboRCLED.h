@@ -15,7 +15,7 @@ namespace bluepadhub::ext
 {
     class DumboRCLED : public bluepadhub::ServoPWM {
         public:
-            DumboRCLED() {};
+            DumboRCLED() = default;
             DumboRCLED(int pwm_pin) : bluepadhub::ServoPWM (pwm_pin) {};
 
             virtual void begin(int pwm_pin);

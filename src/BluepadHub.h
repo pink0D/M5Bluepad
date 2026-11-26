@@ -30,7 +30,7 @@ namespace bluepadhub {
   class BluepadHub {
     public:
 
-      BluepadHub() {};
+      BluepadHub() = default;
 
       void setStatusIndicator(StatusIndicator* _statusIndicator) {
         statusIndicator = _statusIndicator;

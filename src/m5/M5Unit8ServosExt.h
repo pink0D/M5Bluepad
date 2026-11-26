@@ -14,7 +14,7 @@
 
 class M5Unit8ServosExt : public M5Unit8Servos, public bluepadhub::MultiServoUnit<8> {
   public:
-    M5Unit8ServosExt() {};
+    M5Unit8ServosExt() = default;
 
     bool begin(TwoWire *wire = &Wire1, uint8_t sda = 26, uint8_t scl = 32,
                uint8_t addr = M5_UNIT_8SERVO_DEFAULT_ADDR) {

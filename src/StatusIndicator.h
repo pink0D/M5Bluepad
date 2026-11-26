@@ -13,7 +13,7 @@ namespace bluepadhub {
 
   class StatusIndicator {
     public:
-      StatusIndicator() {};
+      StatusIndicator() = default;
 
       enum class StatusPattern {None, Idle, Pairing, Charging, Connected, Error, Warning, PowerOff};
       enum class EventPattern {None, Reset, Success, Error, Warning, Info, Select, WiFi_STA, WiFi_AP};

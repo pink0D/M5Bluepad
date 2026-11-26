@@ -89,7 +89,7 @@ namespace bluepadhub::web {
     class GenericChannel  {
 
         public:
-            GenericChannel() {};
+            GenericChannel() = default;
 
             void getOutput(Profile *profile, BluepadController *ctl, float *pOutValue, bool* pOutBrake);
 

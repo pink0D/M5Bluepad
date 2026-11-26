@@ -17,7 +17,7 @@
 class LedIndicator : public bluepadhub::StatusIndicator {
   public:
 
-    LedIndicator() {};
+    LedIndicator() = default;
 
     virtual void begin(int16_t pin, bool setBluepadHubStatusIndicator = true);
     virtual void clear();

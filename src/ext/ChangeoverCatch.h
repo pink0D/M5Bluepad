@@ -17,7 +17,7 @@ namespace bluepadhub::ext
 
         public: 
 
-            ChangeoverCatch() {};
+            ChangeoverCatch() = default;
             ChangeoverCatch(GenericServo& _servo) {
                 this->servo = &_servo;
             };

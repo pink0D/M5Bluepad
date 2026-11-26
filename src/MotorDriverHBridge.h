@@ -17,7 +17,7 @@ namespace bluepadhub {
     class MotorDriverHBridge : public GenericMotor, private GenericMotorController {
 
         public:
-            MotorDriverHBridge() {};
+            MotorDriverHBridge() = default;
             
             void begin(int pwm_pin1, int pwm_pin2, int pwm_frequency);
 

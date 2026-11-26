@@ -19,7 +19,7 @@ namespace bluepadhub {
   class NeoPixelStatusIndicator : public StatusIndicator {
     public:
 
-      NeoPixelStatusIndicator() {};
+      NeoPixelStatusIndicator() = default;
 
       virtual void begin(int16_t pin, bool setBluepadHubStatusIndicator = true);
       virtual void clear();

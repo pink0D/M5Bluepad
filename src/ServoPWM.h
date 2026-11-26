@@ -17,7 +17,7 @@ namespace bluepadhub {
     class ServoPWM : public GenericServo, private Servo, private GenericServoController {
 
         public:
-            ServoPWM() {};
+            ServoPWM() = default;
             ServoPWM(int pwm_pin) {
                 this->pwm_pin = pwm_pin;
             };

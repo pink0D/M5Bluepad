@@ -16,7 +16,7 @@
 
 class M5AtomicMotionExt : private M5AtomicMotion, public bluepadhub::MultiServoUnit<4>, public bluepadhub::MultiMotorUnit<2> {
   public:
-    M5AtomicMotionExt() {};
+    M5AtomicMotionExt() = default;
 
     bool begin(TwoWire *_wire = &Wire, uint8_t addr = M5_ATOMIC_MOTION_I2C_ADDR,
       uint8_t sda = 25, uint8_t scl = 21, long freq = 100000) {

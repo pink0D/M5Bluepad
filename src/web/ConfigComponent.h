@@ -18,7 +18,7 @@ namespace bluepadhub::web {
     template <class EnumClass>
     class EnumMapper {
         public:
-            EnumMapper() {};
+            EnumMapper() = default;
 
             void checkInit() {
                 static bool done = false;

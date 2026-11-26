@@ -16,7 +16,7 @@ namespace bluepadhub {
     class DeepSleep {
 
         public:
-            DeepSleep() {};    
+            DeepSleep() = default;    
 
             void begin(bool setBluepadHubDeepSleep = true);
             void startDeepSleep();

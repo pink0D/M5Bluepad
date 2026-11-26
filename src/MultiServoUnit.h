@@ -15,6 +15,8 @@ namespace bluepadhub {
 
     class IMultiServoUnit {
         public:
+            virtual ~IMultiServoUnit() = default;
+
             virtual int getServoCount() = 0;
             virtual GenericServo* getServo(int channel) = 0;
             virtual void stopServos() = 0;
@@ -32,6 +34,8 @@ namespace bluepadhub {
 
                 dummyServo.setController(nullptr, -1);            
             };
+
+            virtual ~MultiServoUnit() = default;
 
             virtual void stopServos() {
                 for (int i=0; i<numServos; i++) {

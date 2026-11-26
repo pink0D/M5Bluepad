@@ -29,7 +29,7 @@ namespace bluepadhub {
     class GenericMotor : public bluepadhub::OutputFilter {
 
         public:
-            GenericMotor() {};
+            GenericMotor() = default;
 
             void setController(GenericMotorController* _controller, int _channel);
             

@@ -15,7 +15,7 @@ namespace bluepadhub {
 
     class MultiFunctionButton {
         public:
-            MultiFunctionButton() {};
+            MultiFunctionButton() = default;
 
             enum class EventType {Click, Hold1, Hold2};
             enum class ButtonState {Pressed, Released};

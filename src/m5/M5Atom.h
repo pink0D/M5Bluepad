@@ -16,14 +16,14 @@
 class M5AtomLiteIndicator : public bluepadhub::NeoPixelStatusIndicator {
   public:
 
-    M5AtomLiteIndicator() {};
+    M5AtomLiteIndicator() = default;
 
     virtual void begin(int16_t pin_rgb = 27, int16_t pin_ir = 12, bool setBluepadHubStatusIndicator = true);    
 }; 
   
 class M5AtomDeepSleep : public bluepadhub::DeepSleep {
     public:
-        M5AtomDeepSleep() {}; 
+        M5AtomDeepSleep() = default; 
 
     void setCheckWakeUpReason(bool checkWakeUpReason) {
       this->checkWakeUpReason = checkWakeUpReason;
@@ -44,7 +44,7 @@ class M5AtomDeepSleep : public bluepadhub::DeepSleep {
 
 class M5AtomLiteButton : public bluepadhub::MultiFunctionButton {
   public:
-    M5AtomLiteButton() {};
+    M5AtomLiteButton() = default;
 
     void begin(int _button_pin = 39, int _pin_mode = INPUT_PULLUP) {
       bluepadhub::MultiFunctionButton::begin(_button_pin, _pin_mode);

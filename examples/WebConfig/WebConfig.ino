@@ -102,7 +102,7 @@ class : public bluepadhub::Profile {
     ServoController.begin();
 
     MouldKingController.enableAdvancedChannels();
-    //MouldKingController.enableMultiModule();
+    MouldKingController.enableMultiModule();
     MouldKingController.begin();
 
     // ProfileManager must be set up last so it loads configs for all other components
@@ -147,8 +147,6 @@ class : public bluepadhub::Profile {
       esp_bt_controller_deinit();
     }
     esp_bt_mem_release(ESP_BT_MODE_BTDM);
-
-    Serial.println("Sending telegram notification");
 
     TelegramBot.begin();
 

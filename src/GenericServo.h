@@ -16,14 +16,16 @@ namespace bluepadhub {
 
     class GenericServoController {
         public:
-            GenericServoController() {};
+            GenericServoController() = default;
+            virtual ~GenericServoController() = default;
+
             virtual void outputServoPulse(int channel, uint16_t pulse) {};
     };
 
     class GenericServo : public bluepadhub::OutputFilter {
 
         public:
-            GenericServo() {};
+            GenericServo() = default;
 
             void setController(GenericServoController* _controller, int _channel);
             

@@ -20,7 +20,7 @@ namespace bluepadhub::web {
 
         public:
 
-            WebConfig() {};
+            WebConfig() = default;
 
             void setDefaultHostname(std::string hostname);
             void setDefaultSSID(std::string ssid);
