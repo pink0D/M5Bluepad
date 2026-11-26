@@ -76,7 +76,7 @@ namespace bluepadhub::web {
 
         httpd_config_t config = HTTPD_DEFAULT_CONFIG();
         //config.stack_size = 16*1024;
-        //config.send_wait_timeout = 30;
+        config.send_wait_timeout = 15;
         config.max_uri_handlers = 16;
         config.uri_match_fn = httpd_uri_match_wildcard;
 
