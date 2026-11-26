@@ -12,20 +12,6 @@
 
 #include <esp_http_server.h>
 
-/*void printHeapStats(const char* title) {
-  Serial.printf("%s\n", title);
-  Serial.printf("Total Heap: %u bytes\n", ESP.getHeapSize());
-  Serial.printf("Free Heap: %u bytes\n", ESP.getFreeHeap());
-  Serial.printf("Min Free Heap (low water mark): %u bytes\n", ESP.getMinFreeHeap());
-  Serial.printf("Max Allocatable Block: %u bytes\n", ESP.getMaxAllocHeap());
-
-  // Optional: If your board has external PSRAM
-  if (psramFound()) {
-    Serial.printf("Total PSRAM: %u bytes\n", ESP.getPsramSize());
-    Serial.printf("Free PSRAM: %u bytes\n", ESP.getFreePsram());
-  }
-}*/
-
 class HttpdChunkPrint : public Print {
 private:
     httpd_req_t* _req;
@@ -184,35 +170,7 @@ namespace bluepadhub::web {
         //int sockfd = httpd_req_to_sockfd(req);
         //httpd_sess_trigger_close(req->handle, sockfd);
 
-        return res;
-
-        /*size_t jsonLength = measureJsonPretty(json);
-        char* buffer = new char[jsonLength + 1];
-
-        serializeJsonPretty(json, buffer, jsonLength + 1);
-
-        esp_err_t res = httpd_resp_send_chunk(req, buffer, jsonLength);
-        httpd_resp_send_chunk(req, nullptr, 0);*/
-
-        /*const size_t chunk_size = 2048;
-        size_t offset = 0;
-
-        esp_err_t res= ESP_OK;
-
-        while (offset < jsonLength) {
-            size_t to_send = (jsonLength - offset > chunk_size) ? chunk_size : (jsonLength - offset);
-            esp_err_t err = httpd_resp_send_chunk(req, buffer + offset, to_send);
-            if (err != ESP_OK) {
-                printf("Error: %s (0x%x)\n", esp_err_to_name(err), err);
-                break;
-            }
-            offset += to_send;
-        }
-        httpd_resp_send_chunk(req, NULL, 0);  */      
-
-        //delete [] buffer;
-
-        //return res;
+        return res;        
     }
 
     void WebServer::addWebFiles(const web_data &files) {

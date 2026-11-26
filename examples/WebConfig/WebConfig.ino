@@ -116,9 +116,11 @@ class : public bluepadhub::Profile {
     ServoUnit.servo(1)->begin(SERVO_ATOM_LITE_PORT_A2);
   };
 
-  void processBluepadController(BluepadController* ctl) {    
+  void processBluepadController(BluepadController* ctl) {   
+
     MotorController.processBluepadController(this, ctl);
     ServoController.processBluepadController(this, ctl);
+    
     MouldKingController.processBluepadController(this, ctl);
   };
 

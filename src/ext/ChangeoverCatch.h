@@ -19,19 +19,27 @@ namespace bluepadhub::ext
 
             ChangeoverCatch() = default;
             ChangeoverCatch(GenericServo& _servo) {
-                this->servo = &_servo;
+                setServo(_servo);
             };
 
             void begin(GenericServo& _servo) {
                 begin(&_servo);
             };
             void begin(GenericServo *_servo) {
-                this->servo = _servo;
+                setServo(_servo);
                 begin();
             };
 
-            void setAngles(int angleNeutral, int angleEngaged, long forceTimeoutMillis) {
-                setAngles(angleNeutral, angleNeutral, angleEngaged, angleEngaged, forceTimeoutMillis);
+            void setServo(GenericServo& _servo) {
+                setServo(&_servo);
+            }
+
+            void setServo(GenericServo *_servo) {
+                this->servo = _servo;
+            };
+
+            void setAngles(int angleNeutral, int angleEngaged) {
+                setAngles(angleNeutral, angleNeutral, angleEngaged, angleEngaged, 0);
             };
 
             void setAngles(int angleNeutral, int angleNeutralForced, int angleEngaged, int angleEngagedForced, long forceTimeoutMillis) {
