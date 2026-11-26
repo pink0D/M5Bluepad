@@ -16,7 +16,7 @@ namespace bluepadhub::web {
     if (channels != nullptr)
       delete [] channels;
 
-    int count = getChannelCount();
+    int count = reservedChannelCount > 0 ? reservedChannelCount : getChannelCount();
 
     if (count > 0) {
       channels = new GenericChannel[count];
@@ -25,7 +25,7 @@ namespace bluepadhub::web {
     // ensures channels have diffrerent index across all controllers
     static int channel_index = 0;
 
-    for (int i=0; i<getChannelCount(); i++) {
+    for (int i=0; i<count; i++) {
       channels[i].loadDefaultSettings(channel_index++);
       setChannelDefaults(i,&channels[i]);
     }

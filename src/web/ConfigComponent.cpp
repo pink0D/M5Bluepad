@@ -156,6 +156,19 @@ namespace bluepadhub::web {
         loadCompleted = true;
     }   
 
+    bool ConfigComponent::updateSettings(JsonDocument &json) {
+
+         if (loadSettingsFromJson(json)) {
+
+                saveSettingsToStorage();
+                applySettings();
+
+                return true;
+         }
+
+         return false;
+    }
+
     String ConfigComponent::getConfigPath() {
 
         String configRoot = "/config";

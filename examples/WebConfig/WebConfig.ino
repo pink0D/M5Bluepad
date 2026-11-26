@@ -7,6 +7,12 @@
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 //
 
+
+//
+// IMPORTANT
+// Before upload, set partition scheme to "Minimal SPIFFS (Large APPS with OTA)" 
+//
+
 #include <BluepadHub.h>
 #include <M5Extensions.h>
 

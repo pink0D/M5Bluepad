@@ -13,6 +13,20 @@ namespace bluepadhub::web {
   
   MouldKingModuleTypeMapperImpl MouldKingModuleTypeMapper;
 
+  int MouldKingController::getChannelCount() {
+
+    if (moduleType == MouldKingModuleType::MK40)
+      return 4;
+
+    if (moduleType == MouldKingModuleType::MK60)
+      return 6;
+
+    if (moduleType == MouldKingModuleType::MK40x3)
+      return 12;
+
+    return 0;
+  }
+
 
   void MouldKingController::loadDefaultSettings() {
 
@@ -26,7 +40,7 @@ namespace bluepadhub::web {
     if (mk != nullptr) {
 
         // stop BLE advertising if no new MK module is going to be set up. 
-        // otherwise, BLE advertising will be updated with new data by new MK module
+        // otherwise, BLE advertising will be continued by new MK module
         if (moduleType == MouldKingModuleType::None) {
           mk->disconnect();
         }
@@ -35,44 +49,48 @@ namespace bluepadhub::web {
         mk = nullptr;
     }
 
+    MouldKingMulti40Ext *mk40multi;
+    MouldKing40Ext *mk40;
+    MouldKing60Ext *mk60;
+
     switch (moduleType) {
 
         case MouldKingModuleType::None:
             return;
 
         case MouldKingModuleType::MK40:
-            mk = new MouldKing40();
+            mk40 = new MouldKing40Ext();
+            mk = mk40;
+            setUnit(mk40->getMultiMotorUnit());
             break;
 
         case MouldKingModuleType::MK40x3:
-            mk = new MouldKingMulti40();
+            mk40multi = new MouldKingMulti40Ext();
+            mk = mk40multi;
+            setUnit(mk40multi->getMultiMotorUnit());
             break;
 
         case MouldKingModuleType::MK60:
-            mk = new MouldKing60();
+            mk60 = new MouldKing60Ext();
+            mk = mk60;
+            setUnit(mk60->getMultiMotorUnit());
             break;
     }
 
-    mk->connectAsync();   
+    mk->connectAsync();  
 
     MultiMotorController::applySettings();
 
   }
 
-  void MouldKingController::stopMotors() {
+  void MouldKingController::stop() {
 
-      MKMaxMultiMotorUnit::stopMotors();
+      MultiMotorController::stop();
+
       if (mk != nullptr) {
         mk->applyUpdates();
       }
-  };
-
-  void MouldKingController::outputMotorSpeed(int channel, float normalized_speed) { 
-    if (mk != nullptr) {
-        mk->updateMotorOutput(channel, normalized_speed);
-    }           
-  };
-
+  }
 
   void MouldKingController::processBluepadController(Profile *profile, BluepadController *ctl) {
 

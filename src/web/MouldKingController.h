@@ -11,7 +11,7 @@
 
 #include <Arduino.h>
 #include "MultiMotorController.h"
-#include <MouldKingino.h>
+#include <MouldKingExtensions.h>
 
 namespace bluepadhub::web {
 
@@ -30,15 +30,13 @@ namespace bluepadhub::web {
     };
     extern MouldKingModuleTypeMapperImpl MouldKingModuleTypeMapper;
 
-    typedef MultiMotorUnit<12> MKMaxMultiMotorUnit;
-
-    class MouldKingController : public MultiMotorController, private MKMaxMultiMotorUnit {
+    class MouldKingController : public MultiMotorController {
 
         public:
 
             MouldKingController(std::string label)
             : MultiMotorController("MouldKingProfile", label) {
-                setUnit(this);
+                reservedChannelCount = 12;
             };
 
             void enableMultiModule(bool enable = true) { multiModuleEnabled = enable; };
@@ -46,19 +44,13 @@ namespace bluepadhub::web {
 
             virtual void processBluepadController(Profile *profile, BluepadController *ctl);
 
-            using MultiMotorController::stop;
+            virtual void stop();
 
 
         protected:
 
-            virtual int getChannelCount() {
-
-                if (mk != nullptr)
-                    return mk->getChannelCount();
-
-                return MKMaxMultiMotorUnit::getMotorCount();
-            };
-        
+            virtual int getChannelCount();
+       
             virtual void loadDefaultSettings();
             virtual void applySettings();
 
@@ -71,11 +63,7 @@ namespace bluepadhub::web {
             IMKModule *mk = nullptr;
 
             bool advancedChannels = false;
-            bool multiModuleEnabled = false;
-
-            void stopMotors() override;
-            void outputMotorSpeed(int channel, float normalized_speed) override;
-            
+            bool multiModuleEnabled = false;            
     };
 
 }

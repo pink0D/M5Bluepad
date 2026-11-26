@@ -16,7 +16,8 @@ namespace bluepadhub {
 
     class GenericMotorController {
         public:
-            GenericMotorController() {};
+            GenericMotorController() = default;
+            virtual ~GenericMotorController() = default;
 
             virtual void outputMotorSpeed(int channel, float normalized_speed) {};
 

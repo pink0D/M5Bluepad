@@ -12,6 +12,20 @@
 
 #include <esp_http_server.h>
 
+/*void printHeapStats(const char* title) {
+  Serial.printf("%s\n", title);
+  Serial.printf("Total Heap: %u bytes\n", ESP.getHeapSize());
+  Serial.printf("Free Heap: %u bytes\n", ESP.getFreeHeap());
+  Serial.printf("Min Free Heap (low water mark): %u bytes\n", ESP.getMinFreeHeap());
+  Serial.printf("Max Allocatable Block: %u bytes\n", ESP.getMaxAllocHeap());
+
+  // Optional: If your board has external PSRAM
+  if (psramFound()) {
+    Serial.printf("Total PSRAM: %u bytes\n", ESP.getPsramSize());
+    Serial.printf("Free PSRAM: %u bytes\n", ESP.getFreePsram());
+  }
+}*/
+
 class HttpdChunkPrint : public Print {
 private:
     httpd_req_t* _req;
@@ -76,7 +90,9 @@ namespace bluepadhub::web {
 
         httpd_config_t config = HTTPD_DEFAULT_CONFIG();
         //config.stack_size = 16*1024;
-        config.send_wait_timeout = 15;
+        //config.lru_purge_enable = true;
+        //config.send_wait_timeout = 15;
+        //config.recv_wait_timeout = 15;
         config.max_uri_handlers = 16;
         config.uri_match_fn = httpd_uri_match_wildcard;
 
@@ -151,6 +167,7 @@ namespace bluepadhub::web {
         httpd_resp_set_type(req, "application/json");
         httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
         httpd_resp_set_hdr(req, "Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+        //httpd_resp_set_hdr(req, "Connection", "close");
 
         HttpdChunkPrint writer(req);
         serializeJsonPretty(json, writer);
@@ -162,15 +179,20 @@ namespace bluepadhub::web {
             return res;
         }
 
-        return httpd_resp_send_chunk(req, nullptr, 0);
+        res = httpd_resp_send_chunk(req, nullptr, 0);
 
-        //size_t jsonLength = measureJsonPretty(json);
-        //char* buffer = new char[jsonLength + 1];
+        //int sockfd = httpd_req_to_sockfd(req);
+        //httpd_sess_trigger_close(req->handle, sockfd);
 
-        //serializeJsonPretty(json, buffer, jsonLength + 1);
+        return res;
 
-        //esp_err_t res = httpd_resp_send_chunk(req, buffer, jsonLength);
-        //httpd_resp_send_chunk(req, nullptr, 0);
+        /*size_t jsonLength = measureJsonPretty(json);
+        char* buffer = new char[jsonLength + 1];
+
+        serializeJsonPretty(json, buffer, jsonLength + 1);
+
+        esp_err_t res = httpd_resp_send_chunk(req, buffer, jsonLength);
+        httpd_resp_send_chunk(req, nullptr, 0);*/
 
         /*const size_t chunk_size = 2048;
         size_t offset = 0;
@@ -251,6 +273,7 @@ namespace bluepadhub::web {
         httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
         httpd_resp_set_hdr(req, "Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         httpd_resp_set_hdr(req, "Access-Control-Allow-Headers", "Content-Type");
+        httpd_resp_set_hdr(req, "Access-Control-Max-Age", "86400");
 
         httpd_resp_set_status(req, "200 OK");
         httpd_resp_send(req, NULL, 0);
@@ -295,20 +318,20 @@ namespace bluepadhub::web {
             JsonDocument json;
             DeserializationError error = deserializeJson(json, buffer);
 
+            delete [] buffer;
+
             if ( (!error) && (component != nullptr) ) {
 
-                if (component->loadSettingsFromJson(json)) {
-
-                    component->saveSettingsToStorage();
-                    component->applySettings();
+                if (component->updateSettings(json)) {
 
                     // return actual updated JSON config 
                     res = component_config_handler_get(req);
                 }
             }
-        }
+        } else {
 
-        delete [] buffer;
+            delete [] buffer;
+        }
         
         if (res != ESP_OK)
             httpd_resp_send_500(req);

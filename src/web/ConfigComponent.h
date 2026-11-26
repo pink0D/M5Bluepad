@@ -86,6 +86,7 @@ namespace bluepadhub::web {
 
             void begin();
             void reload();
+            bool updateSettings(JsonDocument &json);
 
             std::string getName() { return name; };
 

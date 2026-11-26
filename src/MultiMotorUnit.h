@@ -15,6 +15,8 @@ namespace bluepadhub {
 
     class IMultiMotorUnit {
         public:
+            virtual ~IMultiMotorUnit() = default;
+            
             virtual int getMotorCount() = 0;
             virtual GenericMotor* getMotor(int channel) = 0;
             virtual void stopMotors() = 0;
@@ -32,6 +34,8 @@ namespace bluepadhub {
 
                 dummyMotor.setController(nullptr, -1); 
             };
+
+            virtual ~MultiMotorUnit() = default;
 
             virtual void stopMotors() {
                 for (int i=0; i<numMotors; i++) {

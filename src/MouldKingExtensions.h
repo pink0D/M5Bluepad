@@ -18,6 +18,11 @@ class MKModuleExt : public BaseClass, public bluepadhub::MultiMotorUnit<numChann
 
     public:
         MKModuleExt(int instanceNum = 0, bool immediateUpdate = false) : BaseClass(instanceNum, immediateUpdate) {};
+        virtual ~MKModuleExt() = default;
+
+        virtual bluepadhub::IMultiMotorUnit* getMultiMotorUnit() {
+            return this;
+        };
 
         // override updateMotorOutput from MouldKingino so the value goes through OutputFilter in MultiMotorUnit
         virtual void updateMotorOutput(int channel, float normalized_value) {

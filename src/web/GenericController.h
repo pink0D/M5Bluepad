@@ -39,6 +39,8 @@ namespace bluepadhub::web {
             virtual bool loadSettingsFromJson(JsonDocument &json);
             virtual JsonDocument saveSettingsToJson();
 
+            int reservedChannelCount = 0;
+
         private:
             GenericChannel *channels = nullptr;
 
