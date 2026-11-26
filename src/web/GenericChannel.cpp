@@ -205,7 +205,7 @@ namespace bluepadhub::web {
 
       out_value = ((float) step) / ((float) stepCount);
     }
- 
+
     *pOutValue = out_value;
     *pOutBrake = out_brake;
   }

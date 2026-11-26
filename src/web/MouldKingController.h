@@ -51,9 +51,14 @@ namespace bluepadhub::web {
 
         protected:
 
-            // always return 12 so memory is reserved to store max channel settings
-            //virtual int getChannelCount() { return 12; };
-               
+            virtual int getChannelCount() {
+
+                if (mk != nullptr)
+                    return mk->getChannelCount();
+
+                return MKMaxMultiMotorUnit::getMotorCount();
+            };
+        
             virtual void loadDefaultSettings();
             virtual void applySettings();
 
