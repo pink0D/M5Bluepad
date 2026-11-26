@@ -322,11 +322,11 @@ namespace bluepadhub::web {
 
             if ( (!error) && (component != nullptr) ) {
 
-                if (component->updateSettings(json)) {
+                JsonDocument resp;
 
-                    // return actual updated JSON config 
-                    res = component_config_handler_get(req);
-                }
+                resp["success"] = component->updateSettings(json);
+
+                return httpd_resp_send_json_chunk(req, resp);
             }
         } else {
 
