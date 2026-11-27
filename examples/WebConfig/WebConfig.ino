@@ -45,7 +45,7 @@ bluepadhub::web::TelegramBot TelegramBot;
 bluepadhub::web::BluetoothSettings BluetoothSettings;
 bluepadhub::web::DeepSleepSettings DeepSleepSettings;
 
-bluepadhub::web::MouldKingController MouldKingController("MK");
+bluepadhub::web::MouldKingController MouldKingController("Mould King");
 
 class : public bluepadhub::web::MultiMotorController {
   using bluepadhub::web::MultiMotorController::MultiMotorController;
