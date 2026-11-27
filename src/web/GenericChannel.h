@@ -125,7 +125,7 @@ namespace bluepadhub::web {
 
         private:
 
-        int channel_index;
+            int channel_index;
 
             // state variables
 
