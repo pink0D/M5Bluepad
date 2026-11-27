@@ -12,6 +12,13 @@
 #include <Arduino.h>
 #include "OutputFilter.h"
 
+#define SERVO_1 0
+#define SERVO_2 1
+#define SERVO_3 2
+#define SERVO_4 3
+#define SERVO_5 4
+#define SERVO_6 5
+
 namespace bluepadhub {
 
     class GenericServoController {

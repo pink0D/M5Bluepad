@@ -12,6 +12,16 @@
 #include <Arduino.h>
 #include "OutputFilter.h"
 
+#define MOTOR_1 0
+#define MOTOR_2 1
+
+#define MOTOR_A 0
+#define MOTOR_B 1
+#define MOTOR_C 2
+#define MOTOR_D 3
+#define MOTOR_E 4
+#define MOTOR_F 5
+
 namespace bluepadhub {
 
     class GenericMotorController {

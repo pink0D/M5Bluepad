@@ -155,6 +155,7 @@ namespace bluepadhub {
           OutputFilter::resetIdleState();
 
           profile->processBluepadController(bp32Controller); 
+          profile->afterProcessBluepadController();
 
           time_controller_update = time_now; 
 

@@ -86,8 +86,8 @@ class : public bluepadhub::Profile {
     // GroveServo.setServoPulseRange(500, 2500);  
 
     // limit servo rotation to 75 degrees (pulse range is calculated internally)
-    GroveServo.setServoMaxAngle(75);
-
+    // zero-position can be also adjusted:  setServoAngles(-15, 75) will move servo in -90..+60 range
+    GroveServo.setServoAngles(0, 75);
     GroveServo.begin();
   };
 

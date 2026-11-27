@@ -61,6 +61,9 @@ class : public bluepadhub::Profile {
     // AtomicMotionExt.setServoMaxAngle(SERVO_1, 45);
     // AtomicMotionExt.setServoMaxAngle(SERVO_2, 90);
 
+    // zero-position can be also adjusted:  setServoAngles(-15, 75) will move servo in -90..+60 range
+    // AtomicMotionExt.setServoAngles(SERVO_1, -15, 75);
+
     // PWM duty cycle for M1 & M2 can be limited from 0 to 100% (default is full range)
     // usually this is not needed, but some motors start only when PWM is more than 25-30%
     // AtomicMotionExt.setMotorLimits(MOTOR_1, 0.25, 1.0);

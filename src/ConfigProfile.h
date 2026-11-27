@@ -72,6 +72,7 @@ namespace bluepadhub {
       virtual void afterSetup() {};   
       virtual void update() {};
       virtual void processBluepadController(BluepadController *ctl) {};
+      virtual void afterProcessBluepadController() {};
       virtual void failsafe() {};
       virtual void processButtonClick() {};
       virtual void processButtonEvent(MultiFunctionButton::EventType eventType, MultiFunctionButton::ButtonState buttonState);

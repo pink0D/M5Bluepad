@@ -13,14 +13,6 @@
 #define M5_ATOMIC_MOTION_MOTOR_COUNT  2
 #define M5_UNIT_8SERVOS_COUNT         8
 
-#define SERVO_1 0
-#define SERVO_2 1
-#define SERVO_3 2
-#define SERVO_4 3
-
-#define MOTOR_1 0
-#define MOTOR_2 1
-
 #define SERVO_ATOM_LITE_PORT_A     26
 #define SERVO_ATOM_LITE_PORT_A1    26
 #define SERVO_ATOM_LITE_PORT_A2    32
